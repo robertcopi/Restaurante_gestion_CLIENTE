@@ -181,6 +181,8 @@ def api_crear_comanda(request):
                     observacion     = item.get('notas', ''),
                     fecha_envio_cocina = ahora_linea,
                     tiempo_estimado_min = plato.tiempo_preparacion_min or 0,
+                    estado = LineaComanda.Estado.EN_PREP,
+                    fecha_inicio_prep = ahora_linea,
                 )
 
             # 3. Marcar TODAS las mesas como OCUPADA
@@ -413,7 +415,9 @@ def api_agregar_plato_comanda(request, pk):
         subtotal=plato.precio_actual * cantidad,
         observacion=data.get('notas', ''),
         fecha_envio_cocina=timezone.now(),
+        fecha_inicio_prep=timezone.now(),
         tiempo_estimado_min=plato.tiempo_preparacion_min or 0,
+        estado=LineaComanda.Estado.EN_PREP,
     )
 
     # Calcular totales
@@ -505,7 +509,7 @@ def api_linea_estado(request, pk):
 
     with transaction.atomic():
         try:
-            linea = LineaComanda.objects.select_for_update().select_related('plato', 'comanda').get(pk=pk)
+            linea = LineaComanda.objects.select_for_update(of=('self',)).select_related('plato', 'comanda').get(pk=pk)
         except LineaComanda.DoesNotExist:
             return Response({'error': 'Línea no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -678,7 +682,7 @@ def api_cocina_cambiar_estado(request, pk):
 
     with transaction.atomic():
         try:
-            linea = LineaComanda.objects.select_for_update().select_related('plato', 'comanda', 'comanda__mesa').get(pk=pk)
+            linea = LineaComanda.objects.select_for_update(of=('self',)).select_related('plato', 'comanda', 'comanda__mesa').get(pk=pk)
         except LineaComanda.DoesNotExist:
             return Response({'error': 'Línea no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 

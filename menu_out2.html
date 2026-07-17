@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carta TICUY - Restaurante Campestre</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        :root {
+            color-scheme: dark;
+            --primary: 198 191 255;
+            --secondary: 78 222 163;
+            --bg: 12 14 20;
+            --surface: 26 29 39;
+            --border: 255 255 255;
+            --on-surface: 255 255 255;
+            --on-surface-variant: 165 165 177;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: rgb(var(--bg));
+            color: rgb(var(--on-surface));
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .glass-nav {
+            background: rgba(26, 29, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(26, 29, 39, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, rgb(var(--primary)), rgb(var(--secondary)));
+            color: rgb(var(--bg));
+            font-weight: 700;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .material-symbols-outlined {
+            display: inline-block;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 1;
+            vertical-align: -0.125em;
+            opacity: 0;
+        }
+
+        html.icons-ready .material-symbols-outlined {
+            opacity: 1;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "rgb(var(--primary) / <alpha-value>)",
+                        secondary: "rgb(var(--secondary) / <alpha-value>)",
+                        background: "rgb(var(--bg) / <alpha-value>)",
+                        surface: "rgb(var(--surface) / <alpha-value>)",
+                        "on-surface": "rgb(var(--on-surface) / <alpha-value>)",
+                        "on-surface-variant": "rgb(var(--on-surface-variant) / <alpha-value>)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script>
+        if (document.fonts && document.fonts.load) {
+            document.fonts.load('24px "Material Symbols Outlined"')
+                .then(() => document.documentElement.classList.add('icons-ready'))
+                .catch(() => {});
+        }
+    </script>
+</head>
+
+<body class="antialiased" x-data="cartState()">
+
+    <!-- Navbar -->
+    <nav class="glass-nav sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-2">
+                    <div class="bg-gradient-to-br from-primary to-secondary p-1.5 rounded-lg flex">
+                        <span class="material-symbols-outlined text-background font-bold">restaurant</span>
+                    </div>
+                    <span class="text-lg font-black tracking-tight text-white">TICUY</span>
+                </a>
+
+                <!-- Links Desktop -->
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="/"
+                        class="text-sm font-semibold text-on-surface-variant hover:text-white transition">Inicio</a>
+                    <a href="/clientes/menu/"
+                        class="text-sm font-semibold text-on-surface-variant hover:text-white transition">Menú</a>
+                    <a href="/clientes/nueva-reserva/"
+                        class="text-sm font-semibold text-on-surface-variant hover:text-white transition">Reservar
+                        Mesa</a>
+
+                    <div x-show="itemCount > 0" x-cloak class="w-px h-6 bg-white/10 mx-2"></div>
+
+                    <a href="/clientes/carrito/"
+                        x-show="itemCount > 0" x-cloak
+                        class="relative text-on-surface-variant hover:text-white transition flex items-center">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <span x-text="itemCount"
+                            class="absolute -top-2 -right-2 bg-secondary text-background text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center"></span>
+                    </a>
+
+                    
+                    <a href="/login/"
+                        class="text-sm font-semibold text-on-surface-variant hover:text-white transition">Ingresar</a>
+                    <a href="/clientes/registro/"
+                        class="btn-primary px-4 py-1.5 rounded-full text-sm">Registrarse</a>
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1">
+        
+<div x-data="{ q: '' }" class="bg-[#0a0b0f]">
+    <!-- Menu Hero -->
+    <section class="relative min-h-[62vh] overflow-hidden border-b border-white/10 text-white">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=90&w=1800"
+            alt="Carta de platos TICUY" class="absolute inset-0 h-full w-full object-cover">
+        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.88),rgba(0,0,0,0.42),rgba(0,0,0,0.76))]">
+        </div>
+        <div class="relative z-10 mx-auto flex min-h-[62vh] max-w-7xl items-end px-4 pb-14 pt-24 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <p class="text-xs font-black uppercase tracking-[0.34em] text-secondary">Carta TICUY</p>
+                <h1 class="mt-5 font-['Plus_Jakarta_Sans'] text-5xl font-black leading-tight sm:text-7xl">
+                    Elige, agrega y disfruta.
+                </h1>
+                <p class="mt-6 max-w-2xl text-lg leading-8 text-white/75">
+                    Platos preparados para compartir en mesa, retirar en tienda o llevar a casa. Una carta simple,
+                    visual y lista para ordenar.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Body -->
+    <section class="mx-auto max-w-7xl px-4 py-12 pb-36 sm:px-6 lg:px-8">
+        <div class="mb-10 grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
+            <div>
+                <p class="text-xs font-black uppercase tracking-[0.28em] text-[#f0c15a]">Selección de la casa</p>
+                <h2 class="mt-3 text-3xl font-black text-white sm:text-5xl">Nuestra carta</h2>
+            </div>
+
+            <label class="relative block">
+                <span
+                    class="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/45">search</span>
+                <input x-model.debounce.150ms="q" type="search" placeholder="Buscar plato"
+                    class="h-13 w-full rounded-none border border-white/15 bg-white/[0.06] py-4 pl-12 pr-4 text-sm font-semibold text-white placeholder:text-white/40 focus:border-secondary focus:ring-secondary">
+            </label>
+        </div>
+
+        <div class="grid gap-10 lg:grid-cols-[260px_1fr]">
+            <!-- Categorías -->
+            <aside class="lg:sticky lg:top-24 lg:self-start">
+                <div class="hidden border border-white/10 bg-white/[0.04] p-5 lg:block">
+                    <p class="mb-5 text-[11px] font-black uppercase tracking-[0.24em] text-white/45">Categorías</p>
+                    <div class="space-y-1">
+                        
+                        
+                        <a href="#cat-1"
+                            class="group flex items-center justify-between border-b border-white/10 py-4 text-sm font-black uppercase tracking-[0.12em] text-white/70 transition hover:text-white">
+                            <span>Entradas</span>
+                            <span class="text-xs text-white/35 group-hover:text-secondary">{{ cat.platos.all|length
+                                }}</span>
+                        </a>
+                        
+                        
+                        
+                        <a href="#cat-2"
+                            class="group flex items-center justify-between border-b border-white/10 py-4 text-sm font-black uppercase tracking-[0.12em] text-white/70 transition hover:text-white">
+                            <span>Fondos</span>
+                            <span class="text-xs text-white/35 group-hover:text-secondary">{{ cat.platos.all|length
+                                }}</span>
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="#cat-4"
+                            class="group flex items-center justify-between border-b border-white/10 py-4 text-sm font-black uppercase tracking-[0.12em] text-white/70 transition hover:text-white">
+                            <span>Bebidas</span>
+                            <span class="text-xs text-white/35 group-hover:text-secondary">{{ cat.platos.all|length
+                                }}</span>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                <div class="hide-scroll flex gap-2 overflow-x-auto pb-3 lg:hidden">
+                    
+                    
+                    <a href="#cat-1"
+                        class="shrink-0 border border-white/15 bg-white/[0.06] px-5 py-3 text-xs font-black uppercase tracking-[0.14em] text-white">
+                        Entradas
+                    </a>
+                    
+                    
+                    
+                    <a href="#cat-2"
+                        class="shrink-0 border border-white/15 bg-white/[0.06] px-5 py-3 text-xs font-black uppercase tracking-[0.14em] text-white">
+                        Fondos
+                    </a>
+                    
+                    
+                    
+                    
+                    
+                    <a href="#cat-4"
+                        class="shrink-0 border border-white/15 bg-white/[0.06] px-5 py-3 text-xs font-black uppercase tracking-[0.14em] text-white">
+                        Bebidas
+                    </a>
+                    
+                    
+                </div>
+            </aside>
+
+            <!-- Lista de Platos -->
+            <div class="space-y-16">
+                
+                
+                <section id="cat-1" class="scroll-mt-28">
+                    <div class="mb-7 flex items-end justify-between gap-5 border-b border-white/10 pb-5">
+                        <div>
+                            <p class="text-[11px] font-black uppercase tracking-[0.24em] text-secondary">Categoría</p>
+                            <h3 class="mt-2 text-3xl font-black text-white">Entradas</h3>
+                        </div>
+                        <span class="hidden text-sm font-bold text-white/40 sm:block">2
+                            opciones</span>
+                    </div>
+
+                    <div class="grid gap-6 md:grid-cols-2">
+                        
+                        <article data-name="ceviche entradas"
+                            x-show="!q || $el.dataset.name.includes(q.toLowerCase())" x-transition.opacity
+                            class="group overflow-hidden border border-white/10 bg-[#151720] transition duration-300 hover:-translate-y-1 hover:border-white/25">
+                            <div class="relative aspect-[4/3] overflow-hidden bg-[#10121a]">
+                                
+                                <img src="/static/ceviche.png" alt="Ceviche"
+                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                                
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                                    <div>
+                                        <p class="text-[11px] font-black uppercase tracking-[0.18em] text-white/55">{{
+                                            cat.nombre }}</p>
+                                        <h4 class="mt-1 text-2xl font-black leading-tight text-white">Ceviche
+                                        </h4>
+                                    </div>
+                                    <p class="shrink-0 bg-white px-3 py-2 text-sm font-black text-black">S/ {{
+                                        plato.precio_actual }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex min-h-[132px] flex-col justify-between p-5">
+                                
+                                <p class="text-sm leading-7 text-on-surface-variant">
+                                    Preparado al momento con sabor de casa y una presentación pensada para abrir el
+                                    apetito.
+                                </p>
+                                
+
+                                <div class="mt-5 flex items-center justify-between gap-4">
+                                    <span
+                                        class="text-xs font-black uppercase tracking-[0.18em] text-secondary">Disponible</span>
+                                    <button
+                                        @click="addToCart({ id: 1, nombre: 'Ceviche', precio: 25.00, imagen: '/static/ceviche.png' })"
+                                        class="inline-flex h-11 items-center justify-center gap-2 border border-white/20 px-4 text-xs font-black uppercase tracking-[0.14em] text-white transition hover:border-secondary hover:bg-secondary hover:text-black">
+                                        <span>Agregar</span>
+                                        <span class="material-symbols-outlined text-base">add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article data-name="tequeños entradas"
+                            x-show="!q || $el.dataset.name.includes(q.toLowerCase())" x-transition.opacity
+                            class="group overflow-hidden border border-white/10 bg-[#151720] transition duration-300 hover:-translate-y-1 hover:border-white/25">
+                            <div class="relative aspect-[4/3] overflow-hidden bg-[#10121a]">
+                                
+                                <img src="/static/tequenos.png" alt="Tequeños"
+                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                                
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                                    <div>
+                                        <p class="text-[11px] font-black uppercase tracking-[0.18em] text-white/55">{{
+                                            cat.nombre }}</p>
+                                        <h4 class="mt-1 text-2xl font-black leading-tight text-white">Tequeños
+                                        </h4>
+                                    </div>
+                                    <p class="shrink-0 bg-white px-3 py-2 text-sm font-black text-black">S/ {{
+                                        plato.precio_actual }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex min-h-[132px] flex-col justify-between p-5">
+                                
+                                <p class="text-sm leading-7 text-on-surface-variant">
+                                    Preparado al momento con sabor de casa y una presentación pensada para abrir el
+                                    apetito.
+                                </p>
+                                
+
+                                <div class="mt-5 flex items-center justify-between gap-4">
+                                    <span
+                                        class="text-xs font-black uppercase tracking-[0.18em] text-secondary">Disponible</span>
+                                    <button
+                                        @click="addToCart({ id: 2, nombre: 'Tequeños', precio: 15.00, imagen: '/static/tequenos.png' })"
+                                        class="inline-flex h-11 items-center justify-center gap-2 border border-white/20 px-4 text-xs font-black uppercase tracking-[0.14em] text-white transition hover:border-secondary hover:bg-secondary hover:text-black">
+                                        <span>Agregar</span>
+                                        <span class="material-symbols-outlined text-base">add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section id="cat-2" class="scroll-mt-28">
+                    <div class="mb-7 flex items-end justify-between gap-5 border-b border-white/10 pb-5">
+                        <div>
+                            <p class="text-[11px] font-black uppercase tracking-[0.24em] text-secondary">Categoría</p>
+                            <h3 class="mt-2 text-3xl font-black text-white">Fondos</h3>
+                        </div>
+                        <span class="hidden text-sm font-bold text-white/40 sm:block">2
+                            opciones</span>
+                    </div>
+
+                    <div class="grid gap-6 md:grid-cols-2">
+                        
+                        <article data-name="aji de gallina fondos"
+                            x-show="!q || $el.dataset.name.includes(q.toLowerCase())" x-transition.opacity
+                            class="group overflow-hidden border border-white/10 bg-[#151720] transition duration-300 hover:-translate-y-1 hover:border-white/25">
+                            <div class="relative aspect-[4/3] overflow-hidden bg-[#10121a]">
+                                
+                                <img src="/static/aji_de_gallina.png" alt="Aji de Gallina"
+                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                                
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                                    <div>
+                                        <p class="text-[11px] font-black uppercase tracking-[0.18em] text-white/55">{{
+                                            cat.nombre }}</p>
+                                        <h4 class="mt-1 text-2xl font-black leading-tight text-white">Aji de Gallina
+                                        </h4>
+                                    </div>
+                                    <p class="shrink-0 bg-white px-3 py-2 text-sm font-black text-black">S/ {{
+                                        plato.precio_actual }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex min-h-[132px] flex-col justify-between p-5">
+                                
+                                <p class="text-sm leading-7 text-on-surface-variant">
+                                    Preparado al momento con sabor de casa y una presentación pensada para abrir el
+                                    apetito.
+                                </p>
+                                
+
+                                <div class="mt-5 flex items-center justify-between gap-4">
+                                    <span
+                                        class="text-xs font-black uppercase tracking-[0.18em] text-secondary">Disponible</span>
+                                    <button
+                                        @click="addToCart({ id: 4, nombre: 'Aji de Gallina', precio: 28.00, imagen: '/static/aji_de_gallina.png' })"
+                                        class="inline-flex h-11 items-center justify-center gap-2 border border-white/20 px-4 text-xs font-black uppercase tracking-[0.14em] text-white transition hover:border-secondary hover:bg-secondary hover:text-black">
+                                        <span>Agregar</span>
+                                        <span class="material-symbols-outlined text-base">add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article data-name="lomo saltado fondos"
+                            x-show="!q || $el.dataset.name.includes(q.toLowerCase())" x-transition.opacity
+                            class="group overflow-hidden border border-white/10 bg-[#151720] transition duration-300 hover:-translate-y-1 hover:border-white/25">
+                            <div class="relative aspect-[4/3] overflow-hidden bg-[#10121a]">
+                                
+                                <img src="/static/lomo_saltado.png" alt="Lomo Saltado"
+                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                                
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                                    <div>
+                                        <p class="text-[11px] font-black uppercase tracking-[0.18em] text-white/55">{{
+                                            cat.nombre }}</p>
+                                        <h4 class="mt-1 text-2xl font-black leading-tight text-white">Lomo Saltado
+                                        </h4>
+                                    </div>
+                                    <p class="shrink-0 bg-white px-3 py-2 text-sm font-black text-black">S/ {{
+                                        plato.precio_actual }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex min-h-[132px] flex-col justify-between p-5">
+                                
+                                <p class="text-sm leading-7 text-on-surface-variant">
+                                    Preparado al momento con sabor de casa y una presentación pensada para abrir el
+                                    apetito.
+                                </p>
+                                
+
+                                <div class="mt-5 flex items-center justify-between gap-4">
+                                    <span
+                                        class="text-xs font-black uppercase tracking-[0.18em] text-secondary">Disponible</span>
+                                    <button
+                                        @click="addToCart({ id: 3, nombre: 'Lomo Saltado', precio: 35.00, imagen: '/static/lomo_saltado.png' })"
+                                        class="inline-flex h-11 items-center justify-center gap-2 border border-white/20 px-4 text-xs font-black uppercase tracking-[0.14em] text-white transition hover:border-secondary hover:bg-secondary hover:text-black">
+                                        <span>Agregar</span>
+                                        <span class="material-symbols-outlined text-base">add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                    </div>
+                </section>
+                
+                
+                
+                
+                
+                <section id="cat-4" class="scroll-mt-28">
+                    <div class="mb-7 flex items-end justify-between gap-5 border-b border-white/10 pb-5">
+                        <div>
+                            <p class="text-[11px] font-black uppercase tracking-[0.24em] text-secondary">Categoría</p>
+                            <h3 class="mt-2 text-3xl font-black text-white">Bebidas</h3>
+                        </div>
+                        <span class="hidden text-sm font-bold text-white/40 sm:block">2
+                            opciones</span>
+                    </div>
+
+                    <div class="grid gap-6 md:grid-cols-2">
+                        
+                        <article data-name="inca kola bebidas"
+                            x-show="!q || $el.dataset.name.includes(q.toLowerCase())" x-transition.opacity
+                            class="group overflow-hidden border border-white/10 bg-[#151720] transition duration-300 hover:-translate-y-1 hover:border-white/25">
+                            <div class="relative aspect-[4/3] overflow-hidden bg-[#10121a]">
+                                
+                                <img src="/static/inca_kola.png" alt="Inca Kola"
+                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                                
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                                    <div>
+                                        <p class="text-[11px] font-black uppercase tracking-[0.18em] text-white/55">{{
+                                            cat.nombre }}</p>
+                                        <h4 class="mt-1 text-2xl font-black leading-tight text-white">Inca Kola
+                                        </h4>
+                                    </div>
+                                    <p class="shrink-0 bg-white px-3 py-2 text-sm font-black text-black">S/ {{
+                                        plato.precio_actual }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex min-h-[132px] flex-col justify-between p-5">
+                                
+                                <p class="text-sm leading-7 text-on-surface-variant">
+                                    Preparado al momento con sabor de casa y una presentación pensada para abrir el
+                                    apetito.
+                                </p>
+                                
+
+                                <div class="mt-5 flex items-center justify-between gap-4">
+                                    <span
+                                        class="text-xs font-black uppercase tracking-[0.18em] text-secondary">Disponible</span>
+                                    <button
+                                        @click="addToCart({ id: 5, nombre: 'Inca Kola', precio: 6.00, imagen: '/static/inca_kola.png' })"
+                                        class="inline-flex h-11 items-center justify-center gap-2 border border-white/20 px-4 text-xs font-black uppercase tracking-[0.14em] text-white transition hover:border-secondary hover:bg-secondary hover:text-black">
+                                        <span>Agregar</span>
+                                        <span class="material-symbols-outlined text-base">add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article data-name="pisco sour bebidas"
+                            x-show="!q || $el.dataset.name.includes(q.toLowerCase())" x-transition.opacity
+                            class="group overflow-hidden border border-white/10 bg-[#151720] transition duration-300 hover:-translate-y-1 hover:border-white/25">
+                            <div class="relative aspect-[4/3] overflow-hidden bg-[#10121a]">
+                                
+                                <img src="/static/pisco_sour.png" alt="Pisco Sour"
+                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                                
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                                    <div>
+                                        <p class="text-[11px] font-black uppercase tracking-[0.18em] text-white/55">{{
+                                            cat.nombre }}</p>
+                                        <h4 class="mt-1 text-2xl font-black leading-tight text-white">Pisco Sour
+                                        </h4>
+                                    </div>
+                                    <p class="shrink-0 bg-white px-3 py-2 text-sm font-black text-black">S/ {{
+                                        plato.precio_actual }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex min-h-[132px] flex-col justify-between p-5">
+                                
+                                <p class="text-sm leading-7 text-on-surface-variant">
+                                    Preparado al momento con sabor de casa y una presentación pensada para abrir el
+                                    apetito.
+                                </p>
+                                
+
+                                <div class="mt-5 flex items-center justify-between gap-4">
+                                    <span
+                                        class="text-xs font-black uppercase tracking-[0.18em] text-secondary">Disponible</span>
+                                    <button
+                                        @click="addToCart({ id: 6, nombre: 'Pisco Sour', precio: 18.00, imagen: '/static/pisco_sour.png' })"
+                                        class="inline-flex h-11 items-center justify-center gap-2 border border-white/20 px-4 text-xs font-black uppercase tracking-[0.14em] text-white transition hover:border-secondary hover:bg-secondary hover:text-black">
+                                        <span>Agregar</span>
+                                        <span class="material-symbols-outlined text-base">add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                    </div>
+                </section>
+                
+                
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Barra flotante para ir al carrito -->
+<div x-show="itemCount > 0" x-transition.opacity
+    class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-bg via-bg/95 to-transparent p-4 md:p-6">
+    <div
+        class="mx-auto flex max-w-2xl items-center justify-between border border-secondary/25 bg-[#11131b]/95 p-3 pl-5 shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-md">
+        <div class="flex items-center gap-4">
+            <div
+                class="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-sm font-black text-bg">
+                <span x-text="itemCount"></span>
+            </div>
+            <div>
+                <p class="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant">Total</p>
+                <p class="text-xl font-black leading-none text-white">S/ <span x-text="cartTotal"></span></p>
+            </div>
+        </div>
+        <a href="/clientes/carrito/"
+            class="btn-primary inline-flex min-h-11 items-center justify-center gap-2 px-5 text-xs font-black uppercase tracking-[0.12em]">
+            Ver carrito
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </a>
+    </div>
+</div>
+
+<style>
+    .hide-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .hide-scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+
+    </main>
+
+    <footer class="glass-nav mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center items-center gap-2 mb-4">
+                <span class="material-symbols-outlined text-primary">restaurant</span>
+                <span class="font-black text-white text-xl">TICUY</span>
+            </div>
+            <p class="text-on-surface-variant text-sm mb-4">Restaurante Campestre - El mejor sabor de la región.</p>
+            <div class="text-xs text-on-surface-variant/60">
+                &copy; 2026 TICUY. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function cartState() {
+            return {
+                items: [],
+                init() {
+                    const stored = localStorage.getItem('ticuy_cart');
+                    if (stored) {
+                        try {
+                            this.items = JSON.parse(stored);
+                        } catch (e) { }
+                    }
+                    this.$watch('items', val => {
+                        localStorage.setItem('ticuy_cart', JSON.stringify(val));
+                    });
+                },
+                get itemCount() {
+                    return this.items.reduce((sum, item) => sum + parseInt(item.cantidad), 0);
+                },
+                get cartTotal() {
+                    return this.items.reduce((sum, item) => sum + (parseFloat(item.precio) * item.cantidad), 0).toFixed(2);
+                },
+                formatMoney(value) {
+                    return (parseFloat(value) || 0).toFixed(2);
+                },
+                lineTotal(item) {
+                    return ((parseFloat(item.precio) || 0) * (parseInt(item.cantidad) || 0)).toFixed(2);
+                },
+                cartImage(item) {
+                    if (item.imagen) return item.imagen;
+                    const name = (item.nombre || '').toLowerCase();
+                    if (name.includes('ceviche')) return 'https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&q=85&w=900';
+                    if (name.includes('lomo')) return 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=85&w=900';
+                    if (name.includes('pisco')) return 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=85&w=900';
+                    if (name.includes('kola') || name.includes('bebida')) return 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&q=85&w=900';
+                    return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=85&w=900';
+                },
+                addToCart(plato) {
+                    const exists = this.items.find(i => i.id === plato.id);
+                    if (exists) {
+                        exists.cantidad += 1;
+                    } else {
+                        this.items.push({
+                            id: plato.id,
+                            nombre: plato.nombre,
+                            precio: plato.precio,
+                            imagen: plato.imagen,
+                            cantidad: 1
+                        });
+                    }
+                    // Animación visual u opcional trigger
+                },
+                updateQuantity(id, qty) {
+                    const item = this.items.find(i => i.id === id);
+                    if (item) {
+                        item.cantidad = Math.max(1, qty);
+                    }
+                },
+                removeItem(id) {
+                    this.items = this.items.filter(i => i.id !== id);
+                },
+                clearCart() {
+                    this.items = [];
+                },
+                clearCartForLogout() {
+                    this.items = [];
+                    localStorage.removeItem('ticuy_cart');
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

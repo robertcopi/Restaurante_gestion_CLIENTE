@@ -7,7 +7,8 @@
     <section class="relative overflow-hidden border-b border-white/10">
         <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&q=90&w=1800"
             alt="Pedido TICUY listo para revisar" class="absolute inset-0 h-full w-full object-cover">
-        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.93),rgba(0,0,0,0.56),rgba(0,0,0,0.86))]"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.93),rgba(0,0,0,0.56),rgba(0,0,0,0.86))]">
+        </div>
 
         <div class="relative z-10 mx-auto flex min-h-[42vh] max-w-7xl items-end px-4 pb-12 pt-24 sm:px-6 lg:px-8">
             <div class="max-w-3xl">
@@ -68,14 +69,18 @@
                 <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
                     <div class="space-y-4">
                         <template x-for="item in items" :key="item.id">
-                            <article class="group overflow-hidden border border-white/10 bg-[#11131b] transition hover:border-white/25">
+                            <article
+                                class="group overflow-hidden border border-white/10 bg-[#11131b] transition hover:border-white/25">
                                 <div class="grid gap-0 sm:grid-cols-[220px_1fr]">
                                     <div class="relative min-h-[190px] overflow-hidden bg-[#10121a]">
                                         <img :src="cartImage(item)" :alt="item.nombre"
                                             @error="$event.target.src = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=85&w=900'"
                                             class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/72 via-black/10 to-transparent"></div>
-                                        <p class="absolute bottom-4 left-4 bg-white px-3 py-2 text-sm font-black text-black">
+                                        <div
+                                            class="absolute inset-0 bg-gradient-to-t from-black/72 via-black/10 to-transparent">
+                                        </div>
+                                        <p
+                                            class="absolute bottom-4 left-4 bg-white px-3 py-2 text-sm font-black text-black">
                                             S/ <span x-text="formatMoney(item.precio)"></span>
                                         </p>
                                     </div>
@@ -83,8 +88,11 @@
                                     <div class="flex min-h-[190px] flex-col justify-between p-5">
                                         <div class="flex items-start justify-between gap-4">
                                             <div class="min-w-0">
-                                                <p class="text-[11px] font-black uppercase tracking-[0.2em] text-secondary">Producto</p>
-                                                <h3 class="mt-2 text-2xl font-black leading-tight text-white" x-text="item.nombre"></h3>
+                                                <p
+                                                    class="text-[11px] font-black uppercase tracking-[0.2em] text-secondary">
+                                                    Producto</p>
+                                                <h3 class="mt-2 text-2xl font-black leading-tight text-white"
+                                                    x-text="item.nombre"></h3>
                                             </div>
                                             <button type="button" @click="removeItem(item.id)"
                                                 class="shrink-0 border border-white/10 bg-white/[0.035] p-3 text-white/55 transition hover:border-red-300/30 hover:bg-red-500/10 hover:text-red-200"
@@ -93,16 +101,24 @@
                                             </button>
                                         </div>
 
-                                        <div class="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
+                                        <div
+                                            class="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
                                             <div>
-                                                <p class="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Cantidad</p>
-                                                <div class="mt-2 inline-flex items-center border border-white/12 bg-white/[0.04]">
-                                                    <button type="button" @click="updateQuantity(item.id, parseInt(item.cantidad) - 1)"
+                                                <p
+                                                    class="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">
+                                                    Cantidad</p>
+                                                <div
+                                                    class="mt-2 inline-flex items-center border border-white/12 bg-white/[0.04]">
+                                                    <button type="button"
+                                                        @click="updateQuantity(item.id, parseInt(item.cantidad) - 1)"
                                                         class="flex h-11 w-11 items-center justify-center text-white/70 transition hover:bg-white/10 hover:text-white">
                                                         <span class="material-symbols-outlined text-base">remove</span>
                                                     </button>
-                                                    <span class="w-12 select-none text-center text-sm font-black text-white" x-text="item.cantidad"></span>
-                                                    <button type="button" @click="updateQuantity(item.id, parseInt(item.cantidad) + 1)"
+                                                    <span
+                                                        class="w-12 select-none text-center text-sm font-black text-white"
+                                                        x-text="item.cantidad"></span>
+                                                    <button type="button"
+                                                        @click="updateQuantity(item.id, parseInt(item.cantidad) + 1)"
                                                         class="flex h-11 w-11 items-center justify-center text-white/70 transition hover:bg-white/10 hover:text-white">
                                                         <span class="material-symbols-outlined text-base">add</span>
                                                     </button>
@@ -110,7 +126,9 @@
                                             </div>
 
                                             <div class="text-right">
-                                                <p class="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Subtotal</p>
+                                                <p
+                                                    class="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">
+                                                    Subtotal</p>
                                                 <p class="mt-2 text-2xl font-black text-white">
                                                     S/ <span x-text="lineTotal(item)"></span>
                                                 </p>
@@ -147,12 +165,13 @@
 
                             <div class="flex items-end justify-between gap-4">
                                 <span class="text-lg font-black text-white">Total</span>
-                                <span class="text-3xl font-black text-secondary">S/ <span x-text="cartTotal"></span></span>
+                                <span class="text-3xl font-black text-secondary">S/ <span
+                                        x-text="cartTotal"></span></span>
                             </div>
 
-                            <a href="{% url 'clientes:checkout' %}"
+                            <a href="{% url 'clientes:nueva_reserva' %}"
                                 class="btn-primary mt-7 inline-flex min-h-12 w-full items-center justify-center gap-2 px-5 text-xs font-black uppercase tracking-[0.16em]">
-                                Ir a pagar
+                                Continuar con tu reserva
                                 <span class="material-symbols-outlined text-base">arrow_forward</span>
                             </a>
 
