@@ -51,8 +51,9 @@
                         {% if cat.platos.all %}
                         <a href="#cat-{{ cat.id }}"
                             class="group flex items-center justify-between border-b border-white/10 py-4 text-sm font-black uppercase tracking-[0.12em] text-white/70 transition hover:text-white">
-                            <span>{{ cat.nombre }}</span>
-                            <span class="text-xs text-white/35 group-hover:text-secondary">{{ cat.platos.all|length                                 }}</span>
+                            <span>{{cat.nombre}}</span>
+                            <span
+                                class="text-xs text-white/35 group-hover:text-secondary">{{cat.platos.all|length}}</span>
                         </a>
                         {% endif %}
                         {% endfor %}
@@ -91,23 +92,8 @@
                             x-show="!q || $el.dataset.name.includes(q.toLowerCase())" x-transition.opacity
                             class="group overflow-hidden border border-white/10 bg-[#151720] transition duration-300 hover:-translate-y-1 hover:border-white/25">
                             <div class="relative aspect-[4/3] overflow-hidden bg-[#10121a]">
-                                {% if plato.nombre == 'Ceviche' %}
-                                <img src="/static/ceviche.png" alt="{{ plato.nombre }}"
-                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                                {% elif plato.nombre == 'Lomo Saltado' %}
-                                <img src="/static/lomo_saltado.png" alt="{{ plato.nombre }}"
-                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                                {% elif plato.nombre == 'Aji de Gallina' or plato.nombre == 'Ají de Gallina' %}
-                                <img src="/static/aji_de_gallina.png" alt="{{ plato.nombre }}"
-                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                                {% elif plato.nombre == 'Tequeños' %}
-                                <img src="/static/tequenos.png" alt="{{ plato.nombre }}"
-                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                                {% elif plato.nombre == 'Pisco Sour' %}
-                                <img src="/static/pisco_sour.png" alt="{{ plato.nombre }}"
-                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                                {% elif plato.nombre == 'Inca Kola' %}
-                                <img src="/static/inca_kola.png" alt="{{ plato.nombre }}"
+                                {% if plato.imagen_url %}
+                                <img src="{{ plato.imagen_url }}" alt="{{ plato.nombre }}"
                                     class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
                                 {% else %}
                                 <img src="/static/imagendelogin.png" alt="{{ plato.nombre }}"
@@ -118,11 +104,11 @@
                                 </div>
                                 <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
                                     <div>
-                                        <p class="text-[11px] font-black uppercase tracking-[0.18em] text-white/55">{{                                             cat.nombre }}</p>
-                                        <h4 class="mt-1 text-2xl font-black leading-tight text-white">{{ plato.nombre }}
+                                        <p class="text-[11px] font-black uppercase tracking-[0.18em] text-white/55">
+                                            {{cat.nombre}}</p>
+                                        <h4 class="mt-1 text-2xl font-black leading-tight text-white">{{plato.nombre}}
                                         </h4>
                                     </div>
-                                    <p class="shrink-0 bg-white px-3 py-2 text-sm font-black text-black">S/ {{                                         plato.precio_actual }}</p>
                                 </div>
                             </div>
 
@@ -139,12 +125,11 @@
                                 <div class="mt-5 flex items-center justify-between gap-4">
                                     <span
                                         class="text-xs font-black uppercase tracking-[0.18em] text-secondary">Disponible</span>
-                                    <button
-                                        @click="addToCart({ id: {{ plato.id }}, nombre: '{{ plato.nombre|escapejs }}', precio: {{ plato.precio_actual|unlocalize }}, imagen: '{% if plato.nombre == 'Ceviche' %}/static/ceviche.png{% elif plato.nombre == 'Lomo Saltado' %}/static/lomo_saltado.png{% elif plato.nombre == 'Aji de Gallina' or plato.nombre == 'Ají de Gallina' %}/static/aji_de_gallina.png{% elif plato.nombre == 'Tequeños' %}/static/tequenos.png{% elif plato.nombre == 'Pisco Sour' %}/static/pisco_sour.png{% elif plato.nombre == 'Inca Kola' %}/static/inca_kola.png{% else %}/static/imagendelogin.png{% endif %}' })"
+                                    <a href="{% url 'clientes:registro' %}"
                                         class="inline-flex h-11 items-center justify-center gap-2 border border-white/20 px-4 text-xs font-black uppercase tracking-[0.14em] text-white transition hover:border-secondary hover:bg-secondary hover:text-black">
                                         <span>Agregar</span>
                                         <span class="material-symbols-outlined text-base">add</span>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </article>
@@ -158,28 +143,7 @@
     </section>
 </div>
 
-<!-- Barra flotante para ir al carrito -->
-<div x-show="itemCount > 0" x-transition.opacity
-    class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-bg via-bg/95 to-transparent p-4 md:p-6">
-    <div
-        class="mx-auto flex max-w-2xl items-center justify-between border border-secondary/25 bg-[#11131b]/95 p-3 pl-5 shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-md">
-        <div class="flex items-center gap-4">
-            <div
-                class="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-sm font-black text-bg">
-                <span x-text="itemCount"></span>
-            </div>
-            <div>
-                <p class="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant">Total</p>
-                <p class="text-xl font-black leading-none text-white">S/ <span x-text="cartTotal"></span></p>
-            </div>
-        </div>
-        <a href="{% url 'clientes:carrito' %}"
-            class="btn-primary inline-flex min-h-11 items-center justify-center gap-2 px-5 text-xs font-black uppercase tracking-[0.12em]">
-            Ver carrito
-            <span class="material-symbols-outlined text-base">arrow_forward</span>
-        </a>
-    </div>
-</div>
+
 
 <style>
     .hide-scroll::-webkit-scrollbar {

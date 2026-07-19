@@ -4,325 +4,480 @@
 
 {% block extra_css %}
 <style>
-/* ── Inventario: Rediseño Oscuro (Mockup) ── */
-:root {
-    --inv-bg: #141722;
-    --inv-surface: #1E2230;
-    --inv-surface-alt: #161A26;
-    --inv-border: #2B3041;
-    --inv-text: #F1F5F9;
-    --inv-text-muted: #94A3B8;
-    
-    --inv-green: #34D399;
-    --inv-orange: #FBBF24;
-    --inv-red: #F87171;
-    --inv-pink: #F472B6;
-    --inv-gray: #94A3B8;
-}
+    /* ── Inventario: Rediseño Oscuro (Mockup) ── */
+    :root {
+        --inv-bg: #141722;
+        --inv-surface: #1E2230;
+        --inv-surface-alt: #161A26;
+        --inv-border: #2B3041;
+        --inv-text: #F1F5F9;
+        --inv-text-muted: #94A3B8;
 
-html.light {
-    --inv-bg: #F8FAFC;
-    --inv-surface: #FFFFFF;
-    --inv-surface-alt: #F1F5F9;
-    --inv-border: #E2E8F0;
-    --inv-text: #0F172A;
-    --inv-text-muted: #64748B;
-    
-    --inv-green: #10B981;
-    --inv-orange: #F59E0B;
-    --inv-red: #EF4444;
-    --inv-pink: #EC4899;
-    --inv-gray: #64748B;
-}
+        --inv-green: #34D399;
+        --inv-orange: #FBBF24;
+        --inv-red: #F87171;
+        --inv-pink: #F472B6;
+        --inv-gray: #94A3B8;
+    }
 
-.inv-page { 
-    background: var(--inv-bg); 
-    padding: 1.5rem; 
-    min-height: 80vh; 
-    color: var(--inv-text);
-    font-family: 'Inter', sans-serif;
-}
+    html.light {
+        --inv-bg: #F8FAFC;
+        --inv-surface: #FFFFFF;
+        --inv-surface-alt: #F1F5F9;
+        --inv-border: #E2E8F0;
+        --inv-text: #0F172A;
+        --inv-text-muted: #64748B;
 
-.inv-page h2, .inv-page h5 { font-weight: 600; color: var(--inv-text); }
-.inv-text-muted { color: var(--inv-text-muted); }
-.inv-text-main { color: var(--inv-text); }
-.inv-num { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+        --inv-green: #10B981;
+        --inv-orange: #F59E0B;
+        --inv-red: #EF4444;
+        --inv-pink: #EC4899;
+        --inv-gray: #64748B;
+    }
 
-/* Tarjetas KPI */
-.inv-card { 
-    background: var(--inv-surface); 
-    border-radius: 0.5rem; 
-    border: none;
-    position: relative;
-    overflow: hidden;
-    padding: 1.25rem;
-}
+    .inv-page {
+        background: var(--inv-bg);
+        padding: 1.5rem;
+        min-height: 80vh;
+        color: var(--inv-text);
+        font-family: 'Inter', sans-serif;
+    }
 
-.inv-metric-card { border-left: 4px solid var(--inv-gray); }
-.inv-metric-ok { border-left-color: var(--inv-green); }
-.inv-metric-warn { border-left-color: var(--inv-orange); }
-.inv-metric-danger { border-left-color: var(--inv-red); }
-.inv-metric-value { border-left-color: var(--inv-pink); }
+    .inv-page h2,
+    .inv-page h5 {
+        font-weight: 600;
+        color: var(--inv-text);
+    }
 
-.inv-metric-title {
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--inv-text);
-    margin-bottom: 0.75rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .inv-text-muted {
+        color: var(--inv-text-muted);
+    }
 
-.inv-metric-number {
-    font-size: 1.75rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 0.25rem;
-}
-.inv-metric-ok .inv-metric-number { color: var(--inv-green); }
-.inv-metric-warn .inv-metric-number { color: var(--inv-orange); }
-.inv-metric-danger .inv-metric-number { color: var(--inv-red); }
-.inv-metric-value .inv-metric-number { color: var(--inv-pink); }
+    .inv-text-main {
+        color: var(--inv-text);
+    }
 
-.inv-metric-sub {
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: var(--inv-text-muted);
-}
+    .inv-num {
+        font-family: 'JetBrains Mono', monospace;
+        font-variant-numeric: tabular-nums;
+    }
 
-/* Buscador y Filtros */
-.inv-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
+    /* Tarjetas KPI */
+    .inv-card {
+        background: var(--inv-surface);
+        border-radius: 0.5rem;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        padding: 1.25rem;
+    }
 
-.inv-search-wrap { position: relative; min-width: 250px; flex-grow: 1; max-width: 400px;}
-.inv-search-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--inv-text-muted);
-    font-size: 20px;
-    pointer-events: none;
-}
-.inv-search-input {
-    background: var(--inv-surface-alt) !important;
-    border: 1px solid var(--inv-border) !important;
-    color: var(--inv-text) !important;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem 0.5rem 2.5rem !important;
-    width: 100%;
-}
-.inv-search-input:focus { outline: none !important; border-color: var(--inv-green) !important; box-shadow: 0 0 0 1px var(--inv-green) !important; }
+    .inv-metric-card {
+        border-left: 4px solid var(--inv-gray);
+    }
 
-.inv-filters { display: flex; gap: 0.5rem; background: var(--inv-surface); padding: 0.25rem; border-radius: 0.5rem; }
+    .inv-metric-ok {
+        border-left-color: var(--inv-green);
+    }
 
-.inv-filter-btn {
-    background: transparent;
-    border: none;
-    color: var(--inv-text-muted);
-    padding: 0.4rem 1rem;
-    border-radius: 0.35rem;
-    font-weight: 600;
-    font-size: 0.85rem;
-    transition: all 0.2s;
-}
-.inv-filter-btn:hover { color: var(--inv-text); }
-.inv-filter-btn.active { background: var(--inv-green); color: #000; }
+    .inv-metric-warn {
+        border-left-color: var(--inv-orange);
+    }
 
-.inv-modal-content {
-    background: var(--inv-surface);
-    border: 1px solid var(--inv-border);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    border-radius: 0.75rem;
-}
-.inv-modal-header {
-    border-bottom: 1px solid var(--inv-border);
-}
-.inv-modal-footer {
-    border-top: 1px solid var(--inv-border);
-}
-.inv-input-mockup {
-    background: var(--inv-bg) !important;
-    border: 1px solid var(--inv-border) !important;
-    color: var(--inv-text) !important;
-    border-radius: 0.375rem;
-    padding: 0.6rem 0.75rem;
-}
-.inv-input-mockup:focus {
-    border-color: var(--inv-green) !important;
-    box-shadow: 0 0 0 1px var(--inv-green) !important;
-}
-.inv-label-mockup {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--inv-text);
-    margin-bottom: 0.5rem;
-}
-.inv-label-asterisk {
-    color: var(--inv-green);
-}
-.inv-vista-previa-box {
-    background: var(--inv-bg);
-    border: 1px solid var(--inv-border);
-    border-radius: 0.5rem;
-    padding: 1.25rem;
-}
+    .inv-metric-danger {
+        border-left-color: var(--inv-red);
+    }
 
-.inv-btn-outline {
-    background: transparent;
-    border: 1px solid var(--inv-border);
-    color: var(--inv-text-muted);
-    padding: 0.4rem 1rem;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    font-size: 0.85rem;
-}
-.inv-btn-outline:hover { background: var(--inv-surface-alt); color: var(--inv-text); }
+    .inv-metric-value {
+        border-left-color: var(--inv-pink);
+    }
 
-.inv-btn-primary {
-    background: var(--inv-green);
-    color: #000;
-    border: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-.inv-btn-primary:hover:not(:disabled) {
-    background: #059669;
-}
-.inv-btn-primary:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-    background: var(--inv-green);
-}
+    .inv-metric-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--inv-text);
+        margin-bottom: 0.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-/* Tabla */
-.inv-table-card { background: var(--inv-surface); border-radius: 0.5rem; padding: 1rem; }
+    .inv-metric-number {
+        font-size: 1.75rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 0.25rem;
+    }
 
-.inv-table { width: 100%; border-collapse: separate; border-spacing: 0; }
-.inv-table th {
-    color: var(--inv-text-muted);
-    font-weight: 600;
-    font-size: 0.85rem;
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid var(--inv-border);
-}
-.inv-table td {
-    padding: 1rem;
-    vertical-align: middle;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-    color: var(--inv-text);
-    font-size: 0.9rem;
-}
-.inv-table tr:hover td { background: rgba(255,255,255,0.02); }
-.inv-table tr:last-child td { border-bottom: none; }
+    .inv-metric-ok .inv-metric-number {
+        color: var(--inv-green);
+    }
 
-/* Checkbox */
-.inv-checkbox {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border: 2px solid var(--inv-border);
-    border-radius: 3px;
-    background: transparent;
-    cursor: pointer;
-    position: relative;
-    vertical-align: middle;
-}
-.inv-checkbox:checked { background: var(--inv-green); border-color: var(--inv-green); }
-.inv-checkbox:checked::after {
-    content: '';
-    position: absolute;
-    left: 4px; top: 1px;
-    width: 4px; height: 8px;
-    border: solid black;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
+    .inv-metric-warn .inv-metric-number {
+        color: var(--inv-orange);
+    }
 
-/* Barra de progreso */
-.inv-progress-wrapper { width: 140px; }
-.inv-progress-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.65rem;
-    font-weight: 700;
-    margin-bottom: 0.3rem;
-}
-.inv-progress-meta span:first-child { color: var(--inv-text); }
-.inv-progress-meta span:last-child { color: var(--inv-text-muted); }
-.inv-progress-bar-bg {
-    background: var(--inv-surface-alt);
-    height: 4px;
-    border-radius: 2px;
-    overflow: hidden;
-}
-.inv-progress-fill { height: 100%; border-radius: 2px; }
+    .inv-metric-danger .inv-metric-number {
+        color: var(--inv-red);
+    }
 
-/* Badges */
-.inv-status-badge {
-    padding: 0.25rem 0.6rem;
-    border-radius: 0.25rem;
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: 1px solid transparent;
-    display: inline-block;
-    text-align: center;
-    min-width: 80px;
-}
-.inv-status-ok { background: rgba(52, 211, 153, 0.1); color: var(--inv-green); border-color: rgba(52, 211, 153, 0.2); }
-.inv-status-warn { background: rgba(251, 191, 36, 0.1); color: var(--inv-orange); border-color: rgba(251, 191, 36, 0.2); }
-.inv-status-danger { background: rgba(248, 113, 113, 0.1); color: var(--inv-red); border-color: rgba(248, 113, 113, 0.2); }
+    .inv-metric-value .inv-metric-number {
+        color: var(--inv-pink);
+    }
 
-/* Acciones */
-.inv-action-btn {
-    background: transparent;
-    border: none;
-    color: var(--inv-text-muted);
-    padding: 0.25rem;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-.inv-action-btn:hover { color: var(--inv-text); }
+    .inv-metric-sub {
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--inv-text-muted);
+    }
 
-/* Modales heredados - overrides */
-.modal-content.inv-card { background: var(--inv-surface) !important; border: 1px solid var(--inv-border); }
-.modal-header, .modal-footer, .modal-body { border-color: var(--inv-border) !important; }
-.inv-input.form-control, .inv-input.form-select { background: var(--inv-surface-alt) !important; border-color: var(--inv-border) !important; color: var(--inv-text) !important; }
-.btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
-.text-dark { color: var(--inv-text) !important; }
+    /* Buscador y Filtros */
+    .inv-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 
-/* Dropdown custom */
-.dropdown-menu-dark-custom {
-    background-color: var(--inv-surface) !important;
-    border: 1px solid var(--inv-border) !important;
-}
-.dropdown-menu-dark-custom .dropdown-item {
-    color: var(--inv-text-muted) !important;
-}
-.dropdown-menu-dark-custom .dropdown-item:hover {
-    background-color: var(--inv-surface-alt) !important;
-    color: var(--inv-text) !important;
-}
+    .inv-search-wrap {
+        position: relative;
+        min-width: 250px;
+        flex-grow: 1;
+        max-width: 400px;
+    }
+
+    .inv-search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--inv-text-muted);
+        font-size: 20px;
+        pointer-events: none;
+    }
+
+    .inv-search-input {
+        background: var(--inv-surface-alt) !important;
+        border: 1px solid var(--inv-border) !important;
+        color: var(--inv-text) !important;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem 0.5rem 2.5rem !important;
+        width: 100%;
+    }
+
+    .inv-search-input:focus {
+        outline: none !important;
+        border-color: var(--inv-green) !important;
+        box-shadow: 0 0 0 1px var(--inv-green) !important;
+    }
+
+    .inv-filters {
+        display: flex;
+        gap: 0.5rem;
+        background: var(--inv-surface);
+        padding: 0.25rem;
+        border-radius: 0.5rem;
+    }
+
+    .inv-filter-btn {
+        background: transparent;
+        border: none;
+        color: var(--inv-text-muted);
+        padding: 0.4rem 1rem;
+        border-radius: 0.35rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+    }
+
+    .inv-filter-btn:hover {
+        color: var(--inv-text);
+    }
+
+    .inv-filter-btn.active {
+        background: var(--inv-green);
+        color: #000;
+    }
+
+    .inv-modal-content {
+        background: var(--inv-surface);
+        border: 1px solid var(--inv-border);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        border-radius: 0.75rem;
+    }
+
+    .inv-modal-header {
+        border-bottom: 1px solid var(--inv-border);
+    }
+
+    .inv-modal-footer {
+        border-top: 1px solid var(--inv-border);
+    }
+
+    .inv-input-mockup {
+        background: var(--inv-bg) !important;
+        border: 1px solid var(--inv-border) !important;
+        color: var(--inv-text) !important;
+        border-radius: 0.375rem;
+        padding: 0.6rem 0.75rem;
+    }
+
+    .inv-input-mockup:focus {
+        border-color: var(--inv-green) !important;
+        box-shadow: 0 0 0 1px var(--inv-green) !important;
+    }
+
+    .inv-label-mockup {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--inv-text);
+        margin-bottom: 0.5rem;
+    }
+
+    .inv-label-asterisk {
+        color: var(--inv-green);
+    }
+
+    .inv-vista-previa-box {
+        background: var(--inv-bg);
+        border: 1px solid var(--inv-border);
+        border-radius: 0.5rem;
+        padding: 1.25rem;
+    }
+
+    .inv-btn-outline {
+        background: transparent;
+        border: 1px solid var(--inv-border);
+        color: var(--inv-text-muted);
+        padding: 0.4rem 1rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .inv-btn-outline:hover {
+        background: var(--inv-surface-alt);
+        color: var(--inv-text);
+    }
+
+    .inv-btn-primary {
+        background: var(--inv-green);
+        color: #000;
+        border: none;
+        padding: 0.5rem 1.25rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .inv-btn-primary:hover:not(:disabled) {
+        background: #059669;
+    }
+
+    .inv-btn-primary:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+        background: var(--inv-green);
+    }
+
+    /* Tabla */
+    .inv-table-card {
+        background: var(--inv-surface);
+        border-radius: 0.5rem;
+        padding: 1rem;
+    }
+
+    .inv-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .inv-table th {
+        color: var(--inv-text-muted);
+        font-weight: 600;
+        font-size: 0.85rem;
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--inv-border);
+    }
+
+    .inv-table td {
+        padding: 1rem;
+        vertical-align: middle;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        color: var(--inv-text);
+        font-size: 0.9rem;
+    }
+
+    .inv-table tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .inv-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Checkbox */
+    .inv-checkbox {
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid var(--inv-border);
+        border-radius: 3px;
+        background: transparent;
+        cursor: pointer;
+        position: relative;
+        vertical-align: middle;
+    }
+
+    .inv-checkbox:checked {
+        background: var(--inv-green);
+        border-color: var(--inv-green);
+    }
+
+    .inv-checkbox:checked::after {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 1px;
+        width: 4px;
+        height: 8px;
+        border: solid black;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+    /* Barra de progreso */
+    .inv-progress-wrapper {
+        width: 140px;
+    }
+
+    .inv-progress-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.65rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+    }
+
+    .inv-progress-meta span:first-child {
+        color: var(--inv-text);
+    }
+
+    .inv-progress-meta span:last-child {
+        color: var(--inv-text-muted);
+    }
+
+    .inv-progress-bar-bg {
+        background: var(--inv-surface-alt);
+        height: 4px;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    .inv-progress-fill {
+        height: 100%;
+        border-radius: 2px;
+    }
+
+    /* Badges */
+    .inv-status-badge {
+        padding: 0.25rem 0.6rem;
+        border-radius: 0.25rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border: 1px solid transparent;
+        display: inline-block;
+        text-align: center;
+        min-width: 80px;
+    }
+
+    .inv-status-ok {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--inv-green);
+        border-color: rgba(52, 211, 153, 0.2);
+    }
+
+    .inv-status-warn {
+        background: rgba(251, 191, 36, 0.1);
+        color: var(--inv-orange);
+        border-color: rgba(251, 191, 36, 0.2);
+    }
+
+    .inv-status-danger {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--inv-red);
+        border-color: rgba(248, 113, 113, 0.2);
+    }
+
+    /* Acciones */
+    .inv-action-btn {
+        background: transparent;
+        border: none;
+        color: var(--inv-text-muted);
+        padding: 0.25rem;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .inv-action-btn:hover {
+        color: var(--inv-text);
+    }
+
+    /* Modales heredados - overrides */
+    .modal-content.inv-card {
+        background: var(--inv-surface) !important;
+        border: 1px solid var(--inv-border);
+    }
+
+    .modal-header,
+    .modal-footer,
+    .modal-body {
+        border-color: var(--inv-border) !important;
+    }
+
+    .inv-input.form-control,
+    .inv-input.form-select {
+        background: var(--inv-surface-alt) !important;
+        border-color: var(--inv-border) !important;
+        color: var(--inv-text) !important;
+    }
+
+    .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+
+    .text-dark {
+        color: var(--inv-text) !important;
+    }
+
+    /* Dropdown custom */
+    .dropdown-menu-dark-custom {
+        background-color: var(--inv-surface) !important;
+        border: 1px solid var(--inv-border) !important;
+    }
+
+    .dropdown-menu-dark-custom .dropdown-item {
+        color: var(--inv-text-muted) !important;
+    }
+
+    .dropdown-menu-dark-custom .dropdown-item:hover {
+        background-color: var(--inv-surface-alt) !important;
+        color: var(--inv-text) !important;
+    }
 </style>
 {% endblock %}
 
@@ -337,7 +492,8 @@ html.light {
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
             <h2 class="mb-0">Gestión de Inventario</h2>
-            <p class="mb-0 small inv-text-muted">Control total de insumos, niveles de stock y movimientos de almacén en tiempo real.</p>
+            <p class="mb-0 small inv-text-muted">Control total de insumos, niveles de stock y movimientos de almacén en
+                tiempo real.</p>
         </div>
         <div class="d-flex align-items-center gap-2">
             <button class="inv-btn-outline" @click="fetchInsumos()" title="Recargar datos (F5)">
@@ -353,10 +509,18 @@ html.light {
                     <span class="material-symbols-outlined">more_vert</span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark-custom">
-                    <li><button class="dropdown-item d-flex align-items-center gap-2" @click="exportarCSV()"><span class="material-symbols-outlined" style="font-size:18px">download</span>Exportar CSV</button></li>
-                    <li><button class="dropdown-item d-flex align-items-center gap-2" @click="generarOrdenCompra()"><span class="material-symbols-outlined" style="font-size:18px">shopping_cart</span>Orden de compra</button></li>
-                    <li><button class="dropdown-item d-flex align-items-center gap-2" @click="verMovimientosGlobales()"><span class="material-symbols-outlined" style="font-size:18px">history</span>Movimientos globales</button></li>
-                    <li><button class="dropdown-item d-flex align-items-center gap-2" @click="mostrarAtajos()"><span class="material-symbols-outlined" style="font-size:18px">keyboard</span>Atajos teclado</button></li>
+                    <li><button class="dropdown-item d-flex align-items-center gap-2" @click="exportarCSV()"><span
+                                class="material-symbols-outlined" style="font-size:18px">download</span>Exportar
+                            CSV</button></li>
+                    <li><button class="dropdown-item d-flex align-items-center gap-2"
+                            @click="generarOrdenCompra()"><span class="material-symbols-outlined"
+                                style="font-size:18px">shopping_cart</span>Orden de compra</button></li>
+                    <li><button class="dropdown-item d-flex align-items-center gap-2"
+                            @click="verMovimientosGlobales()"><span class="material-symbols-outlined"
+                                style="font-size:18px">history</span>Movimientos globales</button></li>
+                    <li><button class="dropdown-item d-flex align-items-center gap-2" @click="mostrarAtajos()"><span
+                                class="material-symbols-outlined" style="font-size:18px">keyboard</span>Atajos
+                            teclado</button></li>
                 </ul>
             </div>
         </div>
@@ -380,9 +544,11 @@ html.light {
             <div class="inv-card inv-metric-card inv-metric-ok">
                 <div class="inv-metric-title">
                     <span>STOCK OK</span>
-                    <span class="material-symbols-outlined" style="font-size:20px; color:var(--inv-green)">check_circle</span>
+                    <span class="material-symbols-outlined"
+                        style="font-size:20px; color:var(--inv-green)">check_circle</span>
                 </div>
-                <div class="inv-metric-number inv-num" x-text="insumos.filter(i=>pf(i.stock_real)>pf(i.stock_minimo)).length">—</div>
+                <div class="inv-metric-number inv-num"
+                    x-text="insumos.filter(i=>pf(i.stock_real)>pf(i.stock_minimo)).length">—</div>
                 <div class="inv-metric-sub">EN NIVEL CORRECTO</div>
             </div>
         </div>
@@ -391,7 +557,8 @@ html.light {
             <div class="inv-card inv-metric-card inv-metric-warn">
                 <div class="inv-metric-title">
                     <span>BAJO STOCK</span>
-                    <span class="material-symbols-outlined" style="font-size:20px; color:var(--inv-orange)">warning_amber</span>
+                    <span class="material-symbols-outlined"
+                        style="font-size:20px; color:var(--inv-orange)">warning_amber</span>
                 </div>
                 <div class="inv-metric-number inv-num" x-text="insumosBajos">—</div>
                 <div class="inv-metric-sub">REQUIERE ATENCIÓN</div>
@@ -402,7 +569,8 @@ html.light {
             <div class="inv-card inv-metric-card inv-metric-danger">
                 <div class="inv-metric-title">
                     <span>SIN STOCK</span>
-                    <span class="material-symbols-outlined" style="font-size:20px; color:var(--inv-red)">error_outline</span>
+                    <span class="material-symbols-outlined"
+                        style="font-size:20px; color:var(--inv-red)">error_outline</span>
                 </div>
                 <div class="inv-metric-number inv-num" x-text="insumosAgotados">—</div>
                 <div class="inv-metric-sub">AGOTADOS</div>
@@ -413,9 +581,12 @@ html.light {
             <div class="inv-card inv-metric-card inv-metric-value">
                 <div class="inv-metric-title">
                     <span>VALOR STOCK</span>
-                    <span class="material-symbols-outlined" style="font-size:20px; color:var(--inv-pink)">payments</span>
+                    <span class="material-symbols-outlined"
+                        style="font-size:20px; color:var(--inv-pink)">payments</span>
                 </div>
-                <div class="inv-metric-number inv-num" x-text="'S/. ' + insumosFiltrados.reduce((s,i)=>s+pf(i.stock_real)*pf(i.costo_unitario),0).toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2})">—</div>
+                <div class="inv-metric-number inv-num"
+                    x-text="'S/. ' + insumosFiltrados.reduce((s,i)=>s+pf(i.stock_real)*pf(i.costo_unitario),0).toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2})">
+                    —</div>
                 <div class="inv-metric-sub">COSTO ACUMULADO</div>
             </div>
         </div>
@@ -427,15 +598,20 @@ html.light {
             <span class="material-symbols-outlined inv-search-icon">search</span>
             <input type="text" class="inv-search-input" placeholder="Buscar insumo..." x-model="busqueda">
         </div>
-        
+
         <div class="d-flex align-items-center gap-3">
             <div class="inv-filters">
-                <button class="inv-filter-btn" :class="{ 'active': filtroEstado === 'todos' }" @click="filtroEstado='todos'">Todos</button>
-                <button class="inv-filter-btn" :class="{ 'active': filtroEstado === 'ok' }" @click="filtroEstado='ok'">Stock OK</button>
-                <button class="inv-filter-btn" :class="{ 'active': filtroEstado === 'bajo' }" @click="filtroEstado='bajo'">Bajo Stock</button>
-                <button class="inv-filter-btn" :class="{ 'active': filtroEstado === 'agotado' }" @click="filtroEstado='agotado'">Agotado</button>
+                <button class="inv-filter-btn" :class="{ 'active': filtroEstado === 'todos' }"
+                    @click="filtroEstado='todos'">Todos</button>
+                <button class="inv-filter-btn" :class="{ 'active': filtroEstado === 'ok' }"
+                    @click="filtroEstado='ok'">Stock OK</button>
+                <button class="inv-filter-btn" :class="{ 'active': filtroEstado === 'bajo' }"
+                    @click="filtroEstado='bajo'">Bajo Stock</button>
+                <button class="inv-filter-btn" :class="{ 'active': filtroEstado === 'agotado' }"
+                    @click="filtroEstado='agotado'">Agotado</button>
             </div>
-            <select class="inv-search-input py-1 px-3" style="max-width: 160px; cursor: pointer; height: 36px; border-radius: 8px;" x-model="filtroCategoria">
+            <select class="inv-search-input py-1 px-3"
+                style="max-width: 160px; cursor: pointer; height: 36px; border-radius: 8px;" x-model="filtroCategoria">
                 <option value="todas">Todas las categorías</option>
                 <option value="PROTEINA">Proteínas</option>
                 <option value="VEGETAL">Vegetales</option>
@@ -449,21 +625,19 @@ html.light {
     </div>
 
     <!-- Barra selección múltiple -->
-    <div x-show="seleccionados.length > 0"
-         class="d-flex align-items-center gap-3 px-4 py-2 mb-2 rounded-3"
-         style="background:rgba(198,191,255,0.08); border:1px solid rgba(198,191,255,0.2);">
+    <div x-show="seleccionados.length > 0" class="d-flex align-items-center gap-3 px-4 py-2 mb-2 rounded-3"
+        style="background:rgba(198,191,255,0.08); border:1px solid rgba(198,191,255,0.2);">
         <span class="small fw-semibold" style="color:var(--inv-text);">
             <span x-text="seleccionados.length"></span> seleccionado<span x-show="seleccionados.length > 1">s</span>
         </span>
         <button class="inv-btn-outline d-flex align-items-center gap-1"
-                style="font-size:0.8rem; padding:0.3rem 0.8rem; color:var(--inv-red); border-color:var(--inv-red);"
-                @click="desactivarSeleccionados()">
+            style="font-size:0.8rem; padding:0.3rem 0.8rem; color:var(--inv-red); border-color:var(--inv-red);"
+            @click="desactivarSeleccionados()">
             <span class="material-symbols-outlined" style="font-size:16px">delete</span>
             Desactivar seleccionados
         </button>
-        <button class="inv-btn-outline d-flex align-items-center gap-1"
-                style="font-size:0.8rem; padding:0.3rem 0.8rem;"
-                @click="seleccionados = []">
+        <button class="inv-btn-outline d-flex align-items-center gap-1" style="font-size:0.8rem; padding:0.3rem 0.8rem;"
+            @click="seleccionados = []">
             <span class="material-symbols-outlined" style="font-size:16px">close</span>
             Deseleccionar
         </button>
@@ -477,8 +651,8 @@ html.light {
                     <tr>
                         <th style="width: 40px;" class="text-center">
                             <input type="checkbox" class="inv-checkbox"
-                                   :checked="seleccionados.length > 0 && seleccionados.length === insumosFiltrados.length"
-                                   @change="toggleSeleccionarTodos($event.target.checked)">
+                                :checked="seleccionados.length > 0 && seleccionados.length === insumosFiltrados.length"
+                                @change="toggleSeleccionarTodos($event.target.checked)">
                         </th>
                         <th>Insumo</th>
                         <th>Unidad</th>
@@ -501,9 +675,8 @@ html.light {
                     <template x-for="insumo in insumosFiltrados" :key="insumo.id">
                         <tr>
                             <td class="text-center">
-                                <input type="checkbox" class="inv-checkbox"
-                                       :checked="seleccionados.includes(insumo.id)"
-                                       @change="toggleSeleccion(insumo.id)">
+                                <input type="checkbox" class="inv-checkbox" :checked="seleccionados.includes(insumo.id)"
+                                    @change="toggleSeleccion(insumo.id)">
                             </td>
                             <td>
                                 <span class="fw-semibold inv-text-main" x-text="insumo.nombre"></span>
@@ -512,18 +685,20 @@ html.light {
                                 <span class="inv-text-muted" x-text="insumo.unidad_abreviatura"></span>
                             </td>
                             <td>
-                                <span class="inv-num fw-bold text-white" x-text="pf(insumo.stock_real).toFixed(2)"></span>
+                                <span class="inv-num fw-bold text-white"
+                                    x-text="pf(insumo.stock_real).toFixed(2)"></span>
                             </td>
                             <td>
                                 <div class="inv-progress-wrapper">
                                     <div class="inv-progress-meta">
                                         <span x-text="Math.min(100, nivelStock(insumo)).toFixed(0) + '%'"></span>
-                                        <span x-text="'META: ' + pf(insumo.stock_minimo).toFixed(0) + insumo.unidad_abreviatura"></span>
+                                        <span
+                                            x-text="'META: ' + pf(insumo.stock_minimo).toFixed(0) + insumo.unidad_abreviatura"></span>
                                     </div>
                                     <div class="inv-progress-bar-bg">
                                         <div class="inv-progress-fill"
-                                             :class="pf(insumo.stock_real)<=0?'bg-danger':(pf(insumo.stock_real)<=pf(insumo.stock_minimo)?'bg-warning':'bg-success')"
-                                             :style="'width:'+Math.min(100, nivelStock(insumo))+'%'">
+                                            :class="pf(insumo.stock_real)<=0?'bg-danger':(pf(insumo.stock_real)<=pf(insumo.stock_minimo)?'bg-warning':'bg-success')"
+                                            :style="'width:'+Math.min(100, nivelStock(insumo))+'%'">
                                         </div>
                                     </div>
                                 </div>
@@ -532,12 +707,13 @@ html.light {
                                 <span class="inv-num inv-text-main" x-text="pf(insumo.stock_minimo).toFixed(2)"></span>
                             </td>
                             <td>
-                                <span class="inv-num inv-text-main" x-text="'S/. ' + pf(insumo.costo_unitario).toFixed(2)"></span>
+                                <span class="inv-num inv-text-main"
+                                    x-text="'S/. ' + pf(insumo.costo_unitario).toFixed(2)"></span>
                             </td>
                             <td>
                                 <span class="inv-status-badge"
-                                      :class="pf(insumo.stock_real)<=0?'inv-status-danger':(pf(insumo.stock_real)<=pf(insumo.stock_minimo)?'inv-status-warn':'inv-status-ok')"
-                                      x-text="pf(insumo.stock_real)<=0?'AGOTADO':(pf(insumo.stock_real)<=pf(insumo.stock_minimo)?'BAJO STOCK':'ÓPTIMO')">
+                                    :class="pf(insumo.stock_real)<=0?'inv-status-danger':(pf(insumo.stock_real)<=pf(insumo.stock_minimo)?'inv-status-warn':'inv-status-ok')"
+                                    x-text="pf(insumo.stock_real)<=0?'AGOTADO':(pf(insumo.stock_real)<=pf(insumo.stock_minimo)?'BAJO STOCK':'ÓPTIMO')">
                                 </span>
                             </td>
                             <td class="text-end">
@@ -552,8 +728,8 @@ html.light {
                                         <span class="material-symbols-outlined" style="font-size:18px">edit</span>
                                     </button>
                                     <button class="inv-action-btn" title="Desactivar insumo"
-                                            style="color:var(--inv-red)!important; opacity:0.75;"
-                                            @click="desactivarInsumo(insumo)">
+                                        style="color:var(--inv-red)!important; opacity:0.75;"
+                                        @click="desactivarInsumo(insumo)">
                                         <span class="material-symbols-outlined" style="font-size:18px">delete</span>
                                     </button>
                                 </div>
@@ -563,1189 +739,1227 @@ html.light {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- Paginación -->
-        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top" style="border-color:var(--inv-border)!important">
+        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top"
+            style="border-color:var(--inv-border)!important">
             <span class="small inv-text-muted">
-                Mostrando <span x-text="insumosFiltrados.length"></span> de <span x-text="insumos.length"></span> insumos
+                Mostrando <span x-text="insumosFiltrados.length"></span> de <span x-text="insumos.length"></span>
+                insumos
             </span>
         </div>
     </div>
     <!-- /inv-table-card — x-data="inventarioApp" sigue abierto, cubre todos los modales -->
 
-<!-- ── Modal Atajos de teclado ── -->
-<div class="modal fade" id="modalAtajos" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content inv-card">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title fw-bold inv-text-main d-flex align-items-center gap-2">
-                    <span class="material-symbols-outlined" style="font-size:22px">keyboard</span>
-                    Atajos de teclado
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="d-flex flex-column gap-2">
-                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom" style="border-color:rgb(var(--on-surface)/0.1)!important">
-                        <span class="inv-text-main">Nuevo insumo</span>
-                        <div><kbd class="inv-kbd">Ctrl</kbd> + <kbd class="inv-kbd">N</kbd></div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom" style="border-color:rgb(var(--on-surface)/0.1)!important">
-                        <span class="inv-text-main">Enfocar búsqueda</span>
-                        <div>
-                            <kbd class="inv-kbd">/</kbd>
-                            <span class="inv-text-muted mx-1">o</span>
-                            <kbd class="inv-kbd">Ctrl</kbd> + <kbd class="inv-kbd">K</kbd>
+    <!-- ── Modal Atajos de teclado ── -->
+    <div class="modal fade" id="modalAtajos" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content inv-card">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold inv-text-main d-flex align-items-center gap-2">
+                        <span class="material-symbols-outlined" style="font-size:22px">keyboard</span>
+                        Atajos de teclado
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-column gap-2">
+                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom"
+                            style="border-color:rgb(var(--on-surface)/0.1)!important">
+                            <span class="inv-text-main">Nuevo insumo</span>
+                            <div><kbd class="inv-kbd">Ctrl</kbd> + <kbd class="inv-kbd">N</kbd></div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom"
+                            style="border-color:rgb(var(--on-surface)/0.1)!important">
+                            <span class="inv-text-main">Enfocar búsqueda</span>
+                            <div>
+                                <kbd class="inv-kbd">/</kbd>
+                                <span class="inv-text-muted mx-1">o</span>
+                                <kbd class="inv-kbd">Ctrl</kbd> + <kbd class="inv-kbd">K</kbd>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom"
+                            style="border-color:rgb(var(--on-surface)/0.1)!important">
+                            <span class="inv-text-main">Limpiar selección</span>
+                            <div><kbd class="inv-kbd">Esc</kbd></div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center py-2">
+                            <span class="inv-text-main">Mostrar esta ayuda</span>
+                            <div><kbd class="inv-kbd">?</kbd></div>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom" style="border-color:rgb(var(--on-surface)/0.1)!important">
-                        <span class="inv-text-main">Limpiar selección</span>
-                        <div><kbd class="inv-kbd">Esc</kbd></div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center py-2">
-                        <span class="inv-text-main">Mostrar esta ayuda</span>
-                        <div><kbd class="inv-kbd">?</kbd></div>
-                    </div>
+                    <p class="small inv-text-muted mt-3 mb-0">
+                        En macOS usa <kbd class="inv-kbd">⌘</kbd> en lugar de <kbd class="inv-kbd">Ctrl</kbd>.
+                    </p>
                 </div>
-                <p class="small inv-text-muted mt-3 mb-0">
-                    En macOS usa <kbd class="inv-kbd">⌘</kbd> en lugar de <kbd class="inv-kbd">Ctrl</kbd>.
-                </p>
             </div>
         </div>
     </div>
-</div>
 
-<!-- ── Modal Movimientos Globales ── -->
-<div class="modal fade" id="modalMovimientosGlobales" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content inv-card">
-            <div class="modal-header border-0 pb-0">
-                <div>
-                    <h5 class="modal-title fw-bold inv-text-main d-flex align-items-center gap-2">
-                        <span class="material-symbols-outlined" style="font-size:22px">history</span>
-                        Movimientos del Inventario
-                    </h5>
-                    <p class="small mb-0 mt-1 inv-text-muted">Últimos 100 movimientos de todos los insumos</p>
+    <!-- ── Modal Movimientos Globales ── -->
+    <div class="modal fade" id="modalMovimientosGlobales" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content inv-card">
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <h5 class="modal-title fw-bold inv-text-main d-flex align-items-center gap-2">
+                            <span class="material-symbols-outlined" style="font-size:22px">history</span>
+                            Movimientos del Inventario
+                        </h5>
+                        <p class="small mb-0 mt-1 inv-text-muted">Últimos 100 movimientos de todos los insumos</p>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div x-show="cargandoHistorial" class="text-center py-4 inv-text-muted">
-                    <div class="spinner-border spinner-border-sm" role="status"></div>
-                    Cargando movimientos…
-                </div>
-                <div x-show="!cargandoHistorial && movimientosGlobales.length === 0" class="text-center py-4 inv-empty">
-                    <span class="material-symbols-outlined d-block mb-2" style="font-size:40px;opacity:.3">inbox</span>
-                    No hay movimientos registrados
-                </div>
-                <div x-show="!cargandoHistorial && movimientosGlobales.length > 0" class="table-responsive" style="max-height:60vh">
-                    <table class="table table-sm inv-table mb-0" style="--bs-table-bg:transparent;font-size:.85rem">
-                        <thead class="inv-thead">
-                            <tr>
-                                <th class="ps-3">Fecha</th>
-                                <th>Insumo</th>
-                                <th>Tipo</th>
-                                <th class="text-end">Cantidad</th>
-                                <th class="text-end">Antes</th>
-                                <th class="text-end">Después</th>
-                                <th>Usuario</th>
-                                <th class="pe-3">Observación</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template x-for="m in movimientosGlobales" :key="m.id">
+                <div class="modal-body">
+                    <div x-show="cargandoHistorial" class="text-center py-4 inv-text-muted">
+                        <div class="spinner-border spinner-border-sm" role="status"></div>
+                        Cargando movimientos…
+                    </div>
+                    <div x-show="!cargandoHistorial && movimientosGlobales.length === 0"
+                        class="text-center py-4 inv-empty">
+                        <span class="material-symbols-outlined d-block mb-2"
+                            style="font-size:40px;opacity:.3">inbox</span>
+                        No hay movimientos registrados
+                    </div>
+                    <div x-show="!cargandoHistorial && movimientosGlobales.length > 0" class="table-responsive"
+                        style="max-height:60vh">
+                        <table class="table table-sm inv-table mb-0" style="--bs-table-bg:transparent;font-size:.85rem">
+                            <thead class="inv-thead">
                                 <tr>
-                                    <td class="ps-3 inv-text-muted" style="white-space:nowrap" x-text="m.fecha"></td>
-                                    <td class="fw-semibold inv-text-main" x-text="m.insumo_nombre"></td>
-                                    <td>
-                                        <span class="badge"
-                                              :class="m.tipo === 'CONSUMO' ? 'bg-info' :
-                                                      (m.tipo === 'ENTRADA' || m.tipo === 'AJUSTE_POSITIVO' ? 'bg-success' : 'bg-warning text-dark')"
-                                              x-text="m.tipo_label"></span>
-                                    </td>
-                                    <td class="text-end fw-semibold" x-text="m.cantidad.toFixed(2)"></td>
-                                    <td class="text-end inv-text-muted" x-text="m.stock_anterior.toFixed(2)"></td>
-                                    <td class="text-end fw-bold inv-text-main" x-text="m.stock_nuevo.toFixed(2)"></td>
-                                    <td class="inv-text-muted" x-text="m.usuario"></td>
-                                    <td class="pe-3 inv-text-muted" style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
-                                        :title="m.observacion" x-text="m.observacion"></td>
+                                    <th class="ps-3">Fecha</th>
+                                    <th>Insumo</th>
+                                    <th>Tipo</th>
+                                    <th class="text-end">Cantidad</th>
+                                    <th class="text-end">Antes</th>
+                                    <th class="text-end">Después</th>
+                                    <th>Usuario</th>
+                                    <th class="pe-3">Observación</th>
                                 </tr>
-                            </template>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <template x-for="m in movimientosGlobales" :key="m.id">
+                                    <tr>
+                                        <td class="ps-3 inv-text-muted" style="white-space:nowrap" x-text="m.fecha">
+                                        </td>
+                                        <td class="fw-semibold inv-text-main" x-text="m.insumo_nombre"></td>
+                                        <td>
+                                            <span class="badge"
+                                                :class="m.tipo === 'CONSUMO' ? 'bg-info' :
+                                                      (m.tipo === 'ENTRADA' || m.tipo === 'AJUSTE_POSITIVO' ? 'bg-success' : 'bg-warning text-dark')"
+                                                x-text="m.tipo_label"></span>
+                                        </td>
+                                        <td class="text-end fw-semibold" x-text="m.cantidad.toFixed(2)"></td>
+                                        <td class="text-end inv-text-muted" x-text="m.stock_anterior.toFixed(2)"></td>
+                                        <td class="text-end fw-bold inv-text-main" x-text="m.stock_nuevo.toFixed(2)">
+                                        </td>
+                                        <td class="inv-text-muted" x-text="m.usuario"></td>
+                                        <td class="pe-3 inv-text-muted"
+                                            style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                                            :title="m.observacion" x-text="m.observacion"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- /modalMovimientosGlobales -->
+    <!-- /modalMovimientosGlobales -->
 
-<!-- ── Modal Historial ── -->
-<div class="modal fade" id="modalHistorial" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content inv-card">
-            <div class="modal-header border-0 pb-0">
-                <div>
-                    <h5 class="modal-title fw-bold inv-text-main mb-0">Historial de Movimientos</h5>
-                    <p class="small mb-0 mt-1 inv-text-muted" x-text="selectedInsumo?.nombre"></p>
+    <!-- ── Modal Historial ── -->
+    <div class="modal fade" id="modalHistorial" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content inv-card">
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <h5 class="modal-title fw-bold inv-text-main mb-0">Historial de Movimientos</h5>
+                        <p class="small mb-0 mt-1 inv-text-muted" x-text="selectedInsumo?.nombre"></p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body pt-3">
-                <div x-show="cargandoHistorial" class="text-center py-4 inv-text-muted">
-                    <div class="spinner-border spinner-border-sm me-2"></div>Cargando movimientos…
-                </div>
-                <div x-show="!cargandoHistorial && historial.length === 0" class="text-center py-4 inv-empty">
-                    <span class="material-symbols-outlined d-block mb-2" style="font-size:36px;opacity:.3">history</span>
-                    Sin movimientos registrados
-                </div>
-                <div x-show="!cargandoHistorial && historial.length > 0" class="table-responsive">
-                    <table class="table mb-0 inv-thead" style="--bs-table-bg:transparent;font-size:.82rem">
-                        <thead class="inv-thead">
-                            <tr>
-                                <th class="fw-semibold">Fecha</th>
-                                <th class="fw-semibold">Tipo</th>
-                                <th class="text-center fw-semibold">Cantidad</th>
-                                <th class="text-center fw-semibold">Antes</th>
-                                <th class="text-center fw-semibold">Después</th>
-                                <th class="fw-semibold">Usuario</th>
-                                <th class="fw-semibold">Observación</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template x-for="m in historial" :key="m.id">
+                <div class="modal-body pt-3">
+                    <div x-show="cargandoHistorial" class="text-center py-4 inv-text-muted">
+                        <div class="spinner-border spinner-border-sm me-2"></div>Cargando movimientos…
+                    </div>
+                    <div x-show="!cargandoHistorial && historial.length === 0" class="text-center py-4 inv-empty">
+                        <span class="material-symbols-outlined d-block mb-2"
+                            style="font-size:36px;opacity:.3">history</span>
+                        Sin movimientos registrados
+                    </div>
+                    <div x-show="!cargandoHistorial && historial.length > 0" class="table-responsive">
+                        <table class="table mb-0 inv-thead" style="--bs-table-bg:transparent;font-size:.82rem">
+                            <thead class="inv-thead">
                                 <tr>
-                                    <td class="inv-text-muted" style="white-space:nowrap" x-text="m.fecha"></td>
-                                    <td>
-                                        <span class="badge"
-                                            :class="{
+                                    <th class="fw-semibold">Fecha</th>
+                                    <th class="fw-semibold">Tipo</th>
+                                    <th class="text-center fw-semibold">Cantidad</th>
+                                    <th class="text-center fw-semibold">Antes</th>
+                                    <th class="text-center fw-semibold">Después</th>
+                                    <th class="fw-semibold">Usuario</th>
+                                    <th class="fw-semibold">Observación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template x-for="m in historial" :key="m.id">
+                                    <tr>
+                                        <td class="inv-text-muted" style="white-space:nowrap" x-text="m.fecha"></td>
+                                        <td>
+                                            <span class="badge" :class="{
                                                 'bg-success':  m.tipo==='AJUSTE_POSITIVO'||m.tipo==='ENTRADA',
                                                 'bg-danger':   m.tipo==='AJUSTE_NEGATIVO'||m.tipo==='SALIDA',
                                                 'bg-secondary':m.tipo==='CONSUMO'
-                                            }"
-                                            x-text="m.tipo_label"></span>
-                                    </td>
-                                    <td class="text-center fw-semibold"
-                                        :class="m.tipo==='AJUSTE_POSITIVO'||m.tipo==='ENTRADA'?'text-success':'text-danger'"
-                                        x-text="(m.tipo==='AJUSTE_POSITIVO'||m.tipo==='ENTRADA'?'+':'-') + m.cantidad.toFixed(3)">
-                                    </td>
-                                    <td class="text-center inv-text-muted" x-text="m.stock_anterior.toFixed(2)"></td>
-                                    <td class="text-center text-info fw-semibold" x-text="m.stock_nuevo.toFixed(2)"></td>
-                                    <td class="inv-text-muted" x-text="m.usuario"></td>
-                                    <td class="inv-text-muted" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
-                                        :title="m.observacion" x-text="m.observacion || '—'"></td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer border-0 pt-0">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-outline-info d-flex align-items-center gap-2" @click="ajustarStock(selectedInsumo); modalHistorial.hide()">
-                    <span class="material-symbols-outlined" style="font-size:16px">swap_vert</span> Ajustar Stock
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ── Modal Ajuste de Stock ── -->
-<div class="modal fade" id="modalAjuste" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content inv-card">
-            <div class="modal-header border-0 pb-0">
-                <div>
-                    <h5 class="modal-title fw-bold inv-text-main mb-0">Ajuste de Stock</h5>
-                    <p class="small mb-0 mt-1 inv-text-muted" x-text="selectedInsumo?.nombre"></p>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body pt-3">
-                <!-- Resumen actual -->
-                <div class="d-flex gap-3 mb-4 p-3 rounded-3 inv-bg-subtle">
-                    <div class="text-center" style="flex:1">
-                        <div class="small mb-1 inv-text-muted">Stock actual</div>
-                        <div class="fw-bold text-info" style="font-size:1.2rem" x-text="pf(selectedInsumo?.stock_real??0).toFixed(2)">—</div>
-                    </div>
-                    <div class="text-center" style="flex:1">
-                        <div class="small mb-1 inv-text-muted">Mínimo</div>
-                        <div class="fw-bold text-warning" style="font-size:1.2rem" x-text="pf(selectedInsumo?.stock_minimo??0).toFixed(2)">—</div>
-                    </div>
-                    <div class="text-center" style="flex:1">
-                        <div class="small mb-1 inv-text-muted">Unidad</div>
-                        <div class="fw-bold inv-text-main" style="font-size:1.2rem" x-text="selectedInsumo?.unidad_abreviatura">—</div>
+                                            }" x-text="m.tipo_label"></span>
+                                        </td>
+                                        <td class="text-center fw-semibold"
+                                            :class="m.tipo==='AJUSTE_POSITIVO'||m.tipo==='ENTRADA'?'text-success':'text-danger'"
+                                            x-text="(m.tipo==='AJUSTE_POSITIVO'||m.tipo==='ENTRADA'?'+':'-') + m.cantidad.toFixed(3)">
+                                        </td>
+                                        <td class="text-center inv-text-muted" x-text="m.stock_anterior.toFixed(2)">
+                                        </td>
+                                        <td class="text-center text-info fw-semibold" x-text="m.stock_nuevo.toFixed(2)">
+                                        </td>
+                                        <td class="inv-text-muted" x-text="m.usuario"></td>
+                                        <td class="inv-text-muted"
+                                            style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                                            :title="m.observacion" x-text="m.observacion || '—'"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <!-- Tipo -->
-                <div class="mb-3">
-                    <label class="form-label small fw-semibold inv-text-muted">Tipo de Ajuste</label>
-                    <div class="d-flex gap-2">
-                        <button class="btn flex-fill d-flex align-items-center justify-content-center gap-2"
-                            :class="ajuste.tipo==='AJUSTE_POSITIVO'?'btn-success':'btn-outline-secondary'"
-                            @click="ajuste.tipo='AJUSTE_POSITIVO'">
-                            <span class="material-symbols-outlined" style="font-size:17px">add_circle</span> Entrada
-                        </button>
-                        <button class="btn flex-fill d-flex align-items-center justify-content-center gap-2"
-                            :class="ajuste.tipo==='AJUSTE_NEGATIVO'?'btn-danger':'btn-outline-secondary'"
-                            @click="ajuste.tipo='AJUSTE_NEGATIVO'">
-                            <span class="material-symbols-outlined" style="font-size:17px">remove_circle</span> Salida
-                        </button>
-                    </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button class="btn btn-outline-info d-flex align-items-center gap-2"
+                        @click="ajustarStock(selectedInsumo); modalHistorial.hide()">
+                        <span class="material-symbols-outlined" style="font-size:16px">swap_vert</span> Ajustar Stock
+                    </button>
                 </div>
-                <!-- Cantidad -->
-                <div class="mb-3">
-                    <label class="form-label small fw-semibold inv-text-muted">
-                        Cantidad (<span x-text="selectedInsumo?.unidad_abreviatura"></span>)
-                    </label>
-                    <input type="number" step="0.001" min="0.001" class="form-control inv-input" x-model="ajuste.cantidad">
-                    <div class="small mt-2 px-2 py-1 rounded inv-bg-subtle" x-show="pf(ajuste.cantidad)>0"
-                        :class="ajuste.tipo==='AJUSTE_POSITIVO'?'text-success':'text-danger'">
-                        Nuevo stock estimado:
-                        <strong x-text="(pf(selectedInsumo?.stock_real??0)+(ajuste.tipo==='AJUSTE_POSITIVO'?1:-1)*pf(ajuste.cantidad||0)).toFixed(2)+' '+(selectedInsumo?.unidad_abreviatura??'')"></strong>
-                    </div>
-                </div>
-                <!-- Motivo -->
-                <div class="mb-1">
-                    <label class="form-label small fw-semibold inv-text-muted">Motivo / Observación</label>
-                    <textarea class="form-control inv-input" rows="2" x-model="ajuste.motivo"
-                        placeholder="Ej: Compra de mercadería, merma, inventario físico…"
-                        style="resize:none"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer border-0 pt-2">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button class="btn btn-accent flex-fill d-flex align-items-center justify-content-center gap-2"
-                    @click="confirmarAjuste()" :disabled="guardando">
-                    <span class="spinner-border spinner-border-sm" x-show="guardando"></span>
-                    <span class="material-symbols-outlined" x-show="!guardando" style="font-size:17px">save</span>
-                    <span x-text="guardando?'Guardando…':'Guardar Ajuste'"></span>
-                </button>
             </div>
         </div>
     </div>
-</div>
 
-<!-- MODAL CREAR / EDITAR INSUMO -->
-<div class="modal fade" id="modalInsumo" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered border-0">
-        <div class="modal-content inv-modal-content">
-            <div class="modal-header inv-modal-header d-flex align-items-center gap-3 py-3 px-4">
-                <div class="d-flex align-items-center gap-2">
-                    <h5 class="modal-title fw-bold inv-text-main mb-0"
-                        x-text="formInsumo.id ? 'Editar Insumo' : 'Nuevo Insumo'"></h5>
-                </div>
-                <button type="button" class="btn-close btn-close-white ms-auto" @click="modalInsumoForm.hide()"></button>
-            </div>
-            <div class="modal-body p-4">
-
-                <!-- Error general del servidor (permisos, validación global, etc.) -->
-                <div x-show="formInsumoErrorGeneral"
-                     class="alert d-flex align-items-start gap-2 mb-3 p-3 rounded-3"
-                     style="background:rgba(248,113,113,0.12); border:1px solid #F87171; color:#F87171; font-size:0.875rem;">
-                    <span class="material-symbols-outlined" style="font-size:18px; flex-shrink:0; margin-top:1px">error</span>
-                    <span x-text="formInsumoErrorGeneral"></span>
-                </div>
-
-                <div class="mb-4">
-                    <label class="inv-label-mockup">Nombre del insumo <span class="inv-label-asterisk">*</span></label>
-                    <input type="text" class="form-control inv-input-mockup"
-                           id="insumo_nombre_input"
-                           x-model="formInsumo.nombre"
-                           @input="validarFormInsumo()"
-                           :style="formInsumoErrors.nombre ? 'border-color:#F87171!important;' : ''"
-                           placeholder="Ej: Lomo Fino" autocomplete="off">
-                    <div class="invalid-feedback d-block" x-show="formInsumoErrors.nombre" x-text="formInsumoErrors.nombre"></div>
-                    <div class="inv-warning-feedback" x-show="!formInsumoErrors.nombre && formInsumoWarnings.nombre" x-text="formInsumoWarnings.nombre"></div>
-                    <div class="form-text inv-text-muted mt-1" style="font-size:0.8rem;">Nombre único, máx 120 caracteres</div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="inv-label-mockup">Unidad de Medida <span class="inv-label-asterisk">*</span></label>
-                    <select class="form-select inv-input-mockup" x-model="formInsumo.unidad_medida" @change="validarFormInsumo()"
-                            :style="formInsumoErrors.unidad_medida ? 'border-color:#F87171!important;' : ''">
-                        <option value="" disabled selected hidden>Seleccione una unidad...</option>
-                        {% for u in unidades %}
-                        <option value="{{ u.id }}">{{ u.nombre }} ({{ u.abreviatura }})</option>
-                        {% endfor %}
-                    </select>
-                    <div class="invalid-feedback d-block" x-show="formInsumoErrors.unidad_medida" x-text="formInsumoErrors.unidad_medida"></div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="inv-label-mockup">Categoría <span class="inv-label-asterisk">*</span></label>
-                    <select class="form-select inv-input-mockup" x-model="formInsumo.categoria" @change="validarFormInsumo()"
-                            :style="formInsumoErrors.categoria ? 'border-color:#F87171!important;' : ''">
-                        <option value="" disabled selected hidden>Seleccione una categoría...</option>
-                        <option value="PROTEINA">🥩 Proteínas</option>
-                        <option value="VEGETAL">🥦 Vegetales</option>
-                        <option value="BEBIDA">🥤 Bebidas</option>
-                        <option value="SECO">🌾 Secos / Abarrotes</option>
-                        <option value="LACTEO">🧀 Lácteos</option>
-                        <option value="CONDIMENTO">🧂 Condimentos</option>
-                        <option value="OTRO">📦 Otros</option>
-                    </select>
-                    <div class="invalid-feedback d-block" x-show="formInsumoErrors.categoria" x-text="formInsumoErrors.categoria"></div>
-                </div>
-
-                <div class="row gx-3 mb-4">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                        <label class="inv-label-mockup">Stock Mínimo <span class="inv-label-asterisk">*</span></label>
-                        <input type="number" step="0.001" min="0" class="form-control inv-input-mockup"
-                               x-model.number="formInsumo.stock_minimo"
-                               @input="validarFormInsumo()"
-                               placeholder="0">
-                        <div class="form-text inv-text-muted mt-1" style="font-size:0.8rem;">Umbral para alertar reposición.</div>
-                        <div class="invalid-feedback d-block" x-show="formInsumoErrors.stock_minimo" x-text="formInsumoErrors.stock_minimo"></div>
+    <!-- ── Modal Ajuste de Stock ── -->
+    <div class="modal fade" id="modalAjuste" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content inv-card">
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <h5 class="modal-title fw-bold inv-text-main mb-0">Ajuste de Stock</h5>
+                        <p class="small mb-0 mt-1 inv-text-muted" x-text="selectedInsumo?.nombre"></p>
                     </div>
-                    <div class="col-sm-6">
-                        <label class="inv-label-mockup">Costo Unitario <span class="inv-label-asterisk">*</span></label>
-                        <div class="input-group">
-                            <span class="input-group-text inv-input-addon inv-input-mockup border-end-0" style="background:var(--inv-bg)">S/.</span>
-                            <input type="number" step="0.01" min="0" class="form-control inv-input-mockup border-start-0"
-                                   x-model.number="formInsumo.costo_unitario"
-                                   @input="validarFormInsumo()"
-                                   placeholder="0.00">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body pt-3">
+                    <!-- Resumen actual -->
+                    <div class="d-flex gap-3 mb-4 p-3 rounded-3 inv-bg-subtle">
+                        <div class="text-center" style="flex:1">
+                            <div class="small mb-1 inv-text-muted">Stock actual</div>
+                            <div class="fw-bold text-info" style="font-size:1.2rem"
+                                x-text="pf(selectedInsumo?.stock_real??0).toFixed(2)">—</div>
                         </div>
-                        <div class="form-text inv-text-muted mt-1" style="font-size:0.8rem;">Costo de adquisición por unidad.</div>
-                        <div class="invalid-feedback d-block" x-show="formInsumoErrors.costo_unitario" x-text="formInsumoErrors.costo_unitario"></div>
+                        <div class="text-center" style="flex:1">
+                            <div class="small mb-1 inv-text-muted">Mínimo</div>
+                            <div class="fw-bold text-warning" style="font-size:1.2rem"
+                                x-text="pf(selectedInsumo?.stock_minimo??0).toFixed(2)">—</div>
+                        </div>
+                        <div class="text-center" style="flex:1">
+                            <div class="small mb-1 inv-text-muted">Unidad</div>
+                            <div class="fw-bold inv-text-main" style="font-size:1.2rem"
+                                x-text="selectedInsumo?.unidad_abreviatura">—</div>
+                        </div>
+                    </div>
+                    <!-- Tipo -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold inv-text-muted">Tipo de Ajuste</label>
+                        <div class="d-flex gap-2">
+                            <button class="btn flex-fill d-flex align-items-center justify-content-center gap-2"
+                                :class="ajuste.tipo==='AJUSTE_POSITIVO'?'btn-success':'btn-outline-secondary'"
+                                @click="ajuste.tipo='AJUSTE_POSITIVO'">
+                                <span class="material-symbols-outlined" style="font-size:17px">add_circle</span> Entrada
+                            </button>
+                            <button class="btn flex-fill d-flex align-items-center justify-content-center gap-2"
+                                :class="ajuste.tipo==='AJUSTE_NEGATIVO'?'btn-danger':'btn-outline-secondary'"
+                                @click="ajuste.tipo='AJUSTE_NEGATIVO'">
+                                <span class="material-symbols-outlined" style="font-size:17px">remove_circle</span>
+                                Salida
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Cantidad -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold inv-text-muted">
+                            Cantidad (<span x-text="selectedInsumo?.unidad_abreviatura"></span>)
+                        </label>
+                        <input type="number" step="0.001" min="0.001" class="form-control inv-input"
+                            x-model="ajuste.cantidad">
+                        <div class="small mt-2 px-2 py-1 rounded inv-bg-subtle" x-show="pf(ajuste.cantidad)>0"
+                            :class="ajuste.tipo==='AJUSTE_POSITIVO'?'text-success':'text-danger'">
+                            Nuevo stock estimado:
+                            <strong
+                                x-text="(pf(selectedInsumo?.stock_real??0)+(ajuste.tipo==='AJUSTE_POSITIVO'?1:-1)*pf(ajuste.cantidad||0)).toFixed(2)+' '+(selectedInsumo?.unidad_abreviatura??'')"></strong>
+                        </div>
+                    </div>
+                    <!-- Motivo -->
+                    <div class="mb-1">
+                        <label class="form-label small fw-semibold inv-text-muted">Motivo / Observación</label>
+                        <textarea class="form-control inv-input" rows="2" x-model="ajuste.motivo"
+                            placeholder="Ej: Compra de mercadería, merma, inventario físico…"
+                            style="resize:none"></textarea>
                     </div>
                 </div>
-
-                <div class="mb-4" x-show="!formInsumo.id">
-                    <label class="inv-label-mockup">Stock Inicial</label>
-                    <input type="number" step="0.001" min="0" class="form-control inv-input-mockup"
-                           x-model.number="formInsumo.stock_inicial"
-                           @input="validarFormInsumo()"
-                           placeholder="0">
-                    <div class="form-text inv-text-muted mt-1" style="font-size:0.8rem;">Cantidad disponible al momento de crearlo (opcional).</div>
-                    <div class="invalid-feedback d-block" x-show="formInsumoErrors.stock_inicial" x-text="formInsumoErrors.stock_inicial"></div>
-                    <div class="inv-warning-feedback d-block" x-show="!formInsumoErrors.stock_inicial && formInsumoWarnings.stock_inicial" x-text="formInsumoWarnings.stock_inicial"></div>
+                <div class="modal-footer border-0 pt-2">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-accent flex-fill d-flex align-items-center justify-content-center gap-2"
+                        @click="confirmarAjuste()" :disabled="guardando">
+                        <span class="spinner-border spinner-border-sm" x-show="guardando"></span>
+                        <span class="material-symbols-outlined" x-show="!guardando" style="font-size:17px">save</span>
+                        <span x-text="guardando?'Guardando…':'Guardar Ajuste'"></span>
+                    </button>
                 </div>
-
-                <!-- Resumen VISTA PREVIA al crear -->
-                <div class="inv-vista-previa-box" x-show="!formInsumo.id">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="inv-text-muted fw-medium">Vista previa</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="inv-text-main" style="font-size:0.9rem;">Valor inicial en stock</span>
-                        <span class="inv-text-main fw-bold" style="color:var(--inv-green);" x-text="previewValor"></span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="inv-text-main" style="font-size:0.9rem;">Estado al crear</span>
-                        <span class="badge" :class="previewBadgeClass" x-text="previewEstado"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer inv-modal-footer pt-3 pb-3 px-4 d-flex justify-content-between">
-                <button type="button" class="btn text-white px-0 text-decoration-none" style="opacity: 0.7;"
-                        @click="guardando = false; formInsumoErrorGeneral = ''; modalInsumoForm.hide()">
-                    Cancelar
-                </button>
-                <button type="button"
-                        class="btn inv-btn-primary d-flex align-items-center gap-2 px-4"
-                        @click="guardarInsumo()"
-                        :disabled="guardando">
-                    <span class="spinner-border spinner-border-sm" role="status" x-show="guardando"></span>
-                    <span class="fw-semibold" x-show="!guardando" x-text="formInsumo.id ? 'Guardar cambios' : 'Guardar'">
-                    </span>
-                    <span class="fw-semibold" x-show="guardando">Guardando…</span>
-                </button>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Toasts -->
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
-    <template x-for="(t,i) in toasts" :key="t.id">
-        <div class="toast show d-flex align-items-center border-0 mb-2 rounded-3"
-            :class="t.tipo==='error'?'bg-danger text-white':'bg-success text-white'"
-            style="min-width:280px;box-shadow:0 8px 24px rgba(0,0,0,.4)">
-            <div class="d-flex align-items-center gap-2 px-3 py-2 w-100">
-                <span class="material-symbols-outlined" style="font-size:20px"
-                    x-text="t.tipo==='error'?'error':'check_circle'"></span>
-                <span class="small fw-semibold flex-grow-1" x-text="t.mensaje"></span>
-                <button type="button" class="btn-close btn-close-white flex-shrink-0" @click="toasts.splice(i,1)"></button>
+    <!-- MODAL CREAR / EDITAR INSUMO -->
+    <div class="modal fade" id="modalInsumo" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered border-0">
+            <div class="modal-content inv-modal-content">
+                <div class="modal-header inv-modal-header d-flex align-items-center gap-3 py-3 px-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <h5 class="modal-title fw-bold inv-text-main mb-0"
+                            x-text="formInsumo.id ? 'Editar Insumo' : 'Nuevo Insumo'"></h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white ms-auto"
+                        @click="modalInsumoForm.hide()"></button>
+                </div>
+                <div class="modal-body p-4">
+
+                    <!-- Error general del servidor (permisos, validación global, etc.) -->
+                    <template x-if="formInsumoErrorGeneral">
+                        <div class="alert d-flex align-items-start gap-2 mb-3 p-3 rounded-3"
+                            style="background:rgba(248,113,113,0.12); border:1px solid #F87171; color:#F87171; font-size:0.875rem;">
+                            <span class="material-symbols-outlined"
+                                style="font-size:18px; flex-shrink:0; margin-top:1px">error</span>
+                            <span x-text="formInsumoErrorGeneral"></span>
+                        </div>
+                    </template>
+
+                    <div class="mb-4">
+                        <label class="inv-label-mockup">Nombre del insumo <span
+                                class="inv-label-asterisk">*</span></label>
+                        <input type="text" class="form-control inv-input-mockup" id="insumo_nombre_input"
+                            x-model="formInsumo.nombre" @input="validarFormInsumo()"
+                            :style="formInsumoErrors.nombre ? 'border-color:#F87171!important;' : ''"
+                            placeholder="Ej: Lomo Fino" autocomplete="off">
+                        <div class="invalid-feedback d-block" x-show="formInsumoErrors.nombre"
+                            x-text="formInsumoErrors.nombre"></div>
+                        <div class="inv-warning-feedback" x-show="!formInsumoErrors.nombre && formInsumoWarnings.nombre"
+                            x-text="formInsumoWarnings.nombre"></div>
+                        <div class="form-text inv-text-muted mt-1" style="font-size:0.8rem;">Nombre único, máx 120
+                            caracteres</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="inv-label-mockup">Unidad de Medida <span
+                                class="inv-label-asterisk">*</span></label>
+                        <select class="form-select inv-input-mockup" x-model="formInsumo.unidad_medida"
+                            @change="validarFormInsumo()"
+                            :style="formInsumoErrors.unidad_medida ? 'border-color:#F87171!important;' : ''">
+                            <option value="" disabled selected hidden>Seleccione una unidad...</option>
+                            {% for u in unidades %}
+                            <option value="{{ u.id }}">{{ u.nombre }} ({{ u.abreviatura }})</option>
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback d-block" x-show="formInsumoErrors.unidad_medida"
+                            x-text="formInsumoErrors.unidad_medida"></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="inv-label-mockup">Categoría <span class="inv-label-asterisk">*</span></label>
+                        <select class="form-select inv-input-mockup" x-model="formInsumo.categoria"
+                            @change="validarFormInsumo()"
+                            :style="formInsumoErrors.categoria ? 'border-color:#F87171!important;' : ''">
+                            <option value="" disabled selected hidden>Seleccione una categoría...</option>
+                            <option value="PROTEINA">🥩 Proteínas</option>
+                            <option value="VEGETAL">🥦 Vegetales</option>
+                            <option value="BEBIDA">🥤 Bebidas</option>
+                            <option value="SECO">🌾 Secos / Abarrotes</option>
+                            <option value="LACTEO">🧀 Lácteos</option>
+                            <option value="CONDIMENTO">🧂 Condimentos</option>
+                            <option value="OTRO">📦 Otros</option>
+                        </select>
+                        <div class="invalid-feedback d-block" x-show="formInsumoErrors.categoria"
+                            x-text="formInsumoErrors.categoria"></div>
+                    </div>
+
+                    <div class="row gx-3 mb-4">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label class="inv-label-mockup">Stock Mínimo <span
+                                    class="inv-label-asterisk">*</span></label>
+                            <input type="number" step="0.001" min="0" class="form-control inv-input-mockup"
+                                x-model.number="formInsumo.stock_minimo" @input="validarFormInsumo()" placeholder="0">
+                            <div class="form-text inv-text-muted mt-1" style="font-size:0.8rem;">Umbral para alertar
+                                reposición.</div>
+                            <div class="invalid-feedback d-block" x-show="formInsumoErrors.stock_minimo"
+                                x-text="formInsumoErrors.stock_minimo"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="inv-label-mockup">Costo Unitario <span
+                                    class="inv-label-asterisk">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text inv-input-addon inv-input-mockup border-end-0"
+                                    style="background:var(--inv-bg)">S/.</span>
+                                <input type="number" step="0.01" min="0"
+                                    class="form-control inv-input-mockup border-start-0"
+                                    x-model.number="formInsumo.costo_unitario" @input="validarFormInsumo()"
+                                    placeholder="0.00">
+                            </div>
+                            <div class="form-text inv-text-muted mt-1" style="font-size:0.8rem;">Costo de adquisición
+                                por unidad.</div>
+                            <div class="invalid-feedback d-block" x-show="formInsumoErrors.costo_unitario"
+                                x-text="formInsumoErrors.costo_unitario"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4" x-show="!formInsumo.id">
+                        <label class="inv-label-mockup">Stock Inicial</label>
+                        <input type="number" step="0.001" min="0" class="form-control inv-input-mockup"
+                            x-model.number="formInsumo.stock_inicial" @input="validarFormInsumo()" placeholder="0">
+                        <div class="form-text inv-text-muted mt-1" style="font-size:0.8rem;">Cantidad disponible al
+                            momento de crearlo (opcional).</div>
+                        <div class="invalid-feedback d-block" x-show="formInsumoErrors.stock_inicial"
+                            x-text="formInsumoErrors.stock_inicial"></div>
+                        <div class="inv-warning-feedback d-block"
+                            x-show="!formInsumoErrors.stock_inicial && formInsumoWarnings.stock_inicial"
+                            x-text="formInsumoWarnings.stock_inicial"></div>
+                    </div>
+
+                    <!-- Resumen VISTA PREVIA al crear -->
+                    <div class="inv-vista-previa-box" x-show="!formInsumo.id">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="inv-text-muted fw-medium">Vista previa</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="inv-text-main" style="font-size:0.9rem;">Valor inicial en stock</span>
+                            <span class="inv-text-main fw-bold" style="color:var(--inv-green);"
+                                x-text="previewValor"></span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="inv-text-main" style="font-size:0.9rem;">Estado al crear</span>
+                            <span class="badge" :class="previewBadgeClass" x-text="previewEstado"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer inv-modal-footer pt-3 pb-3 px-4 d-flex justify-content-between">
+                    <button type="button" class="btn text-white px-0 text-decoration-none" style="opacity: 0.7;"
+                        @click="guardando = false; formInsumoErrorGeneral = ''; modalInsumoForm.hide()">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn inv-btn-primary d-flex align-items-center gap-2 px-4"
+                        @click="guardarInsumo()" :disabled="guardando">
+                        <span class="spinner-border spinner-border-sm" role="status" x-show="guardando"></span>
+                        <span class="fw-semibold" x-show="!guardando"
+                            x-text="formInsumo.id ? 'Guardar cambios' : 'Guardar'">
+                        </span>
+                        <span class="fw-semibold" x-show="guardando">Guardando…</span>
+                    </button>
+                </div>
             </div>
         </div>
-    </template>
-</div>
-<!-- /Toasts -->
+    </div>
+
+    <!-- Toasts -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+        <template x-for="(t,i) in toasts" :key="t.id">
+            <div class="toast show d-flex align-items-center border-0 mb-2 rounded-3"
+                :class="t.tipo==='error'?'bg-danger text-white':'bg-success text-white'"
+                style="min-width:280px;box-shadow:0 8px 24px rgba(0,0,0,.4)">
+                <div class="d-flex align-items-center gap-2 px-3 py-2 w-100">
+                    <span class="material-symbols-outlined" style="font-size:20px"
+                        x-text="t.tipo==='error'?'error':'check_circle'"></span>
+                    <span class="small fw-semibold flex-grow-1" x-text="t.mensaje"></span>
+                    <button type="button" class="btn-close btn-close-white flex-shrink-0"
+                        @click="toasts.splice(i,1)"></button>
+                </div>
+            </div>
+        </template>
+    </div>
+    <!-- /Toasts -->
 </div>
 <!-- /x-data="inventarioApp" — todos los modales y toasts ya están dentro del scope Alpine -->
 
 <script>
-function inventarioApp() {
-    return {
-        insumos: [],
-        unidades: [],
-        historial: [],
-        cargandoHistorial: false,
-        selectedInsumo: null,
-        busqueda: '',
-        filtroEstado: 'todos',
-        filtroCategoria: 'todas',
-        sortCol: 'nombre',
-        sortDir: 'asc',
-        guardando: false,
-        toasts: [],
-        ajuste: { tipo: 'AJUSTE_POSITIVO', cantidad: 0, motivo: '' },
-        formInsumo: { id: null, nombre: '', unidad_medida: '', categoria: '', stock_minimo: 0, costo_unitario: 0, stock_inicial: 0 },
-        formInsumoErrors: {},
-        formInsumoWarnings: {},
-        formInsumoErrorGeneral: '',
-        modalAjuste: null,
-        modalInsumoForm: null,
-        modalHistorial: null,
-        modalMovimientosGlobales: null,
-        modalAtajos: null,
-        movimientosGlobales: [],
-        seleccionados: [],
-        paginaActual: 1,
-        totalItems: 0,
-        totalPaginas: 1,
-        itemsPorPagina: 20,
+    function inventarioApp() {
+        return {
+            insumos: [],
+            unidades: [],
+            historial: [],
+            cargandoHistorial: false,
+            selectedInsumo: null,
+            busqueda: '',
+            filtroEstado: 'todos',
+            filtroCategoria: 'todas',
+            sortCol: 'nombre',
+            sortDir: 'asc',
+            guardando: false,
+            toasts: [],
+            ajuste: { tipo: 'AJUSTE_POSITIVO', cantidad: 0, motivo: '' },
+            formInsumo: { id: null, nombre: '', unidad_medida: '', categoria: '', stock_minimo: 0, costo_unitario: 0, stock_inicial: 0 },
+            formInsumoErrors: {},
+            formInsumoWarnings: {},
+            formInsumoErrorGeneral: '',
+            modalAjuste: null,
+            modalInsumoForm: null,
+            modalHistorial: null,
+            modalMovimientosGlobales: null,
+            modalAtajos: null,
+            movimientosGlobales: [],
+            seleccionados: [],
+            paginaActual: 1,
+            totalItems: 0,
+            totalPaginas: 1,
+            itemsPorPagina: 20,
 
-        // Vista previa: valores reactivos actualizados explícitamente en validarFormInsumo()
-        previewValor: 'S/. 0.00',
-        previewEstado: 'Agotado',
-        previewBadgeClass: 'bg-danger',
+            // Vista previa: valores reactivos actualizados explícitamente en validarFormInsumo()
+            previewValor: 'S/. 0.00',
+            previewEstado: 'Agotado',
+            previewBadgeClass: 'bg-danger',
 
-        // helper: parsea cualquier valor numérico de forma segura
-        pf: v => parseFloat(v) || 0,
-        
-        // helper: elimina tildes y acentos para búsquedas
-        removeAccents: str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+            // helper: parsea cualquier valor numérico de forma segura
+            pf: v => parseFloat(v) || 0,
 
-        nivelStock(insumo) {
-            const real = parseFloat(insumo.stock_real) || 0;
-            const min  = parseFloat(insumo.stock_minimo) || 0;
-            if (min === 0) return real > 0 ? 100 : 0;
-            // La barra llega al 100% cuando el stock duplica el mínimo
-            return Math.min(100, Math.round((real / (min * 2)) * 100));
-        },
+            // helper: elimina tildes y acentos para búsquedas
+            removeAccents: str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
 
-        etiquetaNivel(insumo) {
-            const real = parseFloat(insumo.stock_real) || 0;
-            const min  = parseFloat(insumo.stock_minimo) || 0;
-            if (real <= 0)  return 'Agotado';
-            if (min === 0)  return `${real.toFixed(1)} uds`;
-            const ratio = real / min;
-            // Muestra cuántas veces cubre el mínimo, capeado en "10x+"
-            if (ratio >= 10) return '10x+';
-            if (ratio >= 2)  return `${ratio.toFixed(1)}x mín`;
-            // Cerca o por debajo del mínimo → muestra el déficit
-            const deficit = min - real;
-            if (deficit > 0) return `-${deficit.toFixed(1)}`;
-            return `${ratio.toFixed(1)}x mín`;
-        },
+            nivelStock(insumo) {
+                const real = parseFloat(insumo.stock_real) || 0;
+                const min = parseFloat(insumo.stock_minimo) || 0;
+                if (min === 0) return real > 0 ? 100 : 0;
+                // La barra llega al 100% cuando el stock duplica el mínimo
+                return Math.min(100, Math.round((real / (min * 2)) * 100));
+            },
 
-        get insumosBajos() {
-            return this.insumos.filter(i => {
-                const r = parseFloat(i.stock_real) || 0;
-                const m = parseFloat(i.stock_minimo) || 0;
-                return r > 0 && r <= m;
-            }).length;
-        },
+            etiquetaNivel(insumo) {
+                const real = parseFloat(insumo.stock_real) || 0;
+                const min = parseFloat(insumo.stock_minimo) || 0;
+                if (real <= 0) return 'Agotado';
+                if (min === 0) return `${real.toFixed(1)} uds`;
+                const ratio = real / min;
+                // Muestra cuántas veces cubre el mínimo, capeado en "10x+"
+                if (ratio >= 10) return '10x+';
+                if (ratio >= 2) return `${ratio.toFixed(1)}x mín`;
+                // Cerca o por debajo del mínimo → muestra el déficit
+                const deficit = min - real;
+                if (deficit > 0) return `-${deficit.toFixed(1)}`;
+                return `${ratio.toFixed(1)}x mín`;
+            },
 
-        get insumosAgotados() {
-            return this.insumos.filter(i => (parseFloat(i.stock_real) || 0) <= 0).length;
-        },
+            get insumosBajos() {
+                return this.insumos.filter(i => {
+                    const r = parseFloat(i.stock_real) || 0;
+                    const m = parseFloat(i.stock_minimo) || 0;
+                    return r > 0 && r <= m;
+                }).length;
+            },
 
-        // ─── Selección múltiple ──────────────────────────────────────
-        toggleSeleccion(id) {
-            const idx = this.seleccionados.indexOf(id);
-            if (idx === -1) this.seleccionados.push(id);
-            else this.seleccionados.splice(idx, 1);
-        },
+            get insumosAgotados() {
+                return this.insumos.filter(i => (parseFloat(i.stock_real) || 0) <= 0).length;
+            },
 
-        toggleSeleccionarTodos(checked) {
-            if (checked) {
-                this.seleccionados = this.insumosFiltrados.map(i => i.id);
-            } else {
+            // ─── Selección múltiple ──────────────────────────────────────
+            toggleSeleccion(id) {
+                const idx = this.seleccionados.indexOf(id);
+                if (idx === -1) this.seleccionados.push(id);
+                else this.seleccionados.splice(idx, 1);
+            },
+
+            toggleSeleccionarTodos(checked) {
+                if (checked) {
+                    this.seleccionados = this.insumosFiltrados.map(i => i.id);
+                } else {
+                    this.seleccionados = [];
+                }
+            },
+
+            exportarSeleccionados() {
+                const lista = this.insumos.filter(i => this.seleccionados.includes(i.id));
+                if (lista.length === 0) { this.toast('Nada seleccionado', 'error'); return; }
+                const headers = ['ID', 'Insumo', 'Unidad', 'Stock Real', 'Stock Minimo', 'Costo Unitario', 'Valor en Stock', 'Estado'];
+                const rows = lista.map(i => {
+                    const r = parseFloat(i.stock_real) || 0;
+                    const m = parseFloat(i.stock_minimo) || 0;
+                    const c = parseFloat(i.costo_unitario) || 0;
+                    const estado = r <= 0 ? 'Agotado' : (r <= m ? 'Bajo' : 'OK');
+                    return [
+                        i.id,
+                        `"${(i.nombre || '').replace(/"/g, '""')}"`,
+                        i.unidad_abreviatura || '',
+                        r.toFixed(3),
+                        m.toFixed(3),
+                        c.toFixed(4),
+                        (r * c).toFixed(2),
+                        estado,
+                    ].join(',');
+                });
+                const csv = '﻿' + [headers.join(','), ...rows].join('\n');
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                const ts = new Date().toISOString().slice(0, 10);
+                a.href = url;
+                a.download = `inventario_seleccion_${ts}.csv`;
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                this.toast(`${lista.length} insumo${lista.length === 1 ? '' : 's'} exportado${lista.length === 1 ? '' : 's'}`);
+            },
+
+            async desactivarSeleccionados() {
+                const n = this.seleccionados.length;
+                if (n === 0) return;
+                if (!confirm(`¿Desactivar ${n} insumo${n === 1 ? '' : 's'}?\n\nSe ocultarán del catálogo y sus recetas quedarán inactivas. El historial de movimientos se conserva.`)) return;
+                let exitosos = 0, fallidos = 0;
+                for (const id of [...this.seleccionados]) {
+                    try {
+                        const resp = await fetch(`/api/inventario/insumos/${id}/`, {
+                            method: 'DELETE', credentials: 'same-origin',
+                            headers: { 'X-CSRFToken': this._csrf(), Accept: 'application/json' },
+                        });
+                        if (resp.ok || resp.status === 204) exitosos++; else fallidos++;
+                    } catch { fallidos++; }
+                }
+                await this.fetchInsumos();
                 this.seleccionados = [];
-            }
-        },
+                if (fallidos === 0) this.toast(`${exitosos} insumo${exitosos === 1 ? '' : 's'} desactivado${exitosos === 1 ? '' : 's'}`);
+                else this.toast(`${exitosos} OK · ${fallidos} con error`, 'error');
+            },
 
-        exportarSeleccionados() {
-            const lista = this.insumos.filter(i => this.seleccionados.includes(i.id));
-            if (lista.length === 0) { this.toast('Nada seleccionado', 'error'); return; }
-            const headers = ['ID', 'Insumo', 'Unidad', 'Stock Real', 'Stock Minimo', 'Costo Unitario', 'Valor en Stock', 'Estado'];
-            const rows = lista.map(i => {
-                const r = parseFloat(i.stock_real) || 0;
-                const m = parseFloat(i.stock_minimo) || 0;
-                const c = parseFloat(i.costo_unitario) || 0;
-                const estado = r <= 0 ? 'Agotado' : (r <= m ? 'Bajo' : 'OK');
-                return [
-                    i.id,
-                    `"${(i.nombre || '').replace(/"/g, '""')}"`,
-                    i.unidad_abreviatura || '',
-                    r.toFixed(3),
-                    m.toFixed(3),
-                    c.toFixed(4),
-                    (r * c).toFixed(2),
-                    estado,
-                ].join(',');
-            });
-            const csv = '﻿' + [headers.join(','), ...rows].join('\n');
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            const ts = new Date().toISOString().slice(0, 10);
-            a.href = url;
-            a.download = `inventario_seleccion_${ts}.csv`;
-            document.body.appendChild(a); a.click(); document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            this.toast(`${lista.length} insumo${lista.length===1?'':'s'} exportado${lista.length===1?'':'s'}`);
-        },
+            // ─── Atajos de teclado ───────────────────────────────────────
+            _onKeyDown(e) {
+                // Ignorar si el foco está en un input/textarea/select
+                const tag = (e.target.tagName || '').toLowerCase();
+                const enInput = ['input', 'textarea', 'select'].includes(tag) || e.target.isContentEditable;
 
-        async desactivarSeleccionados() {
-            const n = this.seleccionados.length;
-            if (n === 0) return;
-            if (!confirm(`¿Desactivar ${n} insumo${n===1?'':'s'}?\n\nSe ocultarán del catálogo y sus recetas quedarán inactivas. El historial de movimientos se conserva.`)) return;
-            let exitosos = 0, fallidos = 0;
-            for (const id of [...this.seleccionados]) {
-                try {
-                    const resp = await fetch(`/api/inventario/insumos/${id}/`, {
-                        method: 'DELETE', credentials: 'same-origin',
-                        headers: { 'X-CSRFToken': this._csrf(), Accept: 'application/json' },
-                    });
-                    if (resp.ok || resp.status === 204) exitosos++; else fallidos++;
-                } catch { fallidos++; }
-            }
-            await this.fetchInsumos();
-            this.seleccionados = [];
-            if (fallidos === 0) this.toast(`${exitosos} insumo${exitosos===1?'':'s'} desactivado${exitosos===1?'':'s'}`);
-            else this.toast(`${exitosos} OK · ${fallidos} con error`, 'error');
-        },
-
-        // ─── Atajos de teclado ───────────────────────────────────────
-        _onKeyDown(e) {
-            // Ignorar si el foco está en un input/textarea/select
-            const tag = (e.target.tagName || '').toLowerCase();
-            const enInput = ['input', 'textarea', 'select'].includes(tag) || e.target.isContentEditable;
-
-            // "/" enfoca búsqueda (incluso si está en un input distinto al de búsqueda)
-            if (e.key === '/' && !enInput) {
-                e.preventDefault();
-                const el = document.querySelector('input[placeholder^="Buscar"]');
-                if (el) el.focus();
-                return;
-            }
-            // Cmd/Ctrl + N → nuevo insumo
-            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'n') {
-                e.preventDefault();
-                this.nuevoInsumo();
-                return;
-            }
-            // Cmd/Ctrl + K → enfoca búsqueda
-            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-                e.preventDefault();
-                const el = document.querySelector('input[placeholder^="Buscar"]');
-                if (el) el.focus();
-                return;
-            }
-            // "?" abre ayuda de atajos
-            if (e.key === '?' && !enInput) {
-                e.preventDefault();
-                this.mostrarAtajos();
-                return;
-            }
-            // Esc limpia selección
-            if (e.key === 'Escape' && this.seleccionados.length > 0 && !enInput) {
-                this.seleccionados = [];
-            }
-        },
-
-        mostrarAtajos() {
-            if (!this.modalAtajos) {
-                this.modalAtajos = new bootstrap.Modal(document.getElementById('modalAtajos'));
-            }
-            this.modalAtajos.show();
-        },
-
-        generarOrdenCompra() {
-            const aReponer = this.insumos.filter(i => {
-                const r = parseFloat(i.stock_real) || 0;
-                const m = parseFloat(i.stock_minimo) || 0;
-                return r <= m;
-            });
-            if (aReponer.length === 0) {
-                this.toast('No hay insumos por reponer', 'error');
-                return;
-            }
-            // Sugerencia: pedir hasta llegar al doble del stock_minimo (buffer de seguridad)
-            const headers = ['Insumo', 'Unidad', 'Stock Actual', 'Stock Minimo', 'Cantidad Sugerida', 'Costo Unitario', 'Subtotal Estimado', 'Estado'];
-            let totalEstimado = 0;
-            const rows = aReponer.map(i => {
-                const r = parseFloat(i.stock_real) || 0;
-                const m = parseFloat(i.stock_minimo) || 0;
-                const c = parseFloat(i.costo_unitario) || 0;
-                const objetivo = m * 2;
-                const sugerida = Math.max(objetivo - r, m);
-                const subtotal = sugerida * c;
-                totalEstimado += subtotal;
-                const estado = r <= 0 ? 'Agotado' : 'Bajo';
-                return [
-                    `"${(i.nombre || '').replace(/"/g, '""')}"`,
-                    i.unidad_abreviatura || '',
-                    r.toFixed(3),
-                    m.toFixed(3),
-                    sugerida.toFixed(3),
-                    c.toFixed(4),
-                    subtotal.toFixed(2),
-                    estado,
-                ].join(',');
-            });
-            rows.push(['', '', '', '', '', 'TOTAL', totalEstimado.toFixed(2), ''].join(','));
-            const csv = '﻿' + [headers.join(','), ...rows].join('\n');
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            const ts = new Date().toISOString().slice(0, 10);
-            a.href = url;
-            a.download = `orden_compra_${ts}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            this.toast(`Orden generada: ${aReponer.length} ítem${aReponer.length===1?'':'s'} — Total estimado S/. ${totalEstimado.toFixed(2)}`);
-        },
-
-        async verMovimientosGlobales() {
-            // Usa this.insumos (ya cargados) para obtener historial de cada uno en paralelo
-            this.cargandoHistorial = true;
-            this.movimientosGlobales = [];
-            try {
-                if (this.insumos.length === 0) {
-                    this.toast('No hay insumos cargados. Refresca la página.', 'error');
+                // "/" enfoca búsqueda (incluso si está en un input distinto al de búsqueda)
+                if (e.key === '/' && !enInput) {
+                    e.preventDefault();
+                    const el = document.querySelector('input[placeholder^="Buscar"]');
+                    if (el) el.focus();
                     return;
                 }
-                const lista = this.insumos.slice(0, 50);
-                const movs = await Promise.all(lista.map(i =>
-                    fetch(`/api/inventario/insumos/${i.id}/historial/`, { credentials: 'same-origin', headers: { Accept: 'application/json' } })
-                        .then(r => r.ok ? r.json() : [])
-                        .then(arr => arr.map(m => ({ ...m, insumo_nombre: i.nombre })))
-                        .catch(() => [])
-                ));
-                this.movimientosGlobales = movs.flat()
-                    .sort((a, b) => (b.id || 0) - (a.id || 0))
-                    .slice(0, 100);
-                if (!this.modalMovimientosGlobales) {
-                    this.modalMovimientosGlobales = new bootstrap.Modal(document.getElementById('modalMovimientosGlobales'));
+                // Cmd/Ctrl + N → nuevo insumo
+                if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'n') {
+                    e.preventDefault();
+                    this.nuevoInsumo();
+                    return;
                 }
-                this.modalMovimientosGlobales.show();
-            } catch (e) {
-                this.toast('Error al cargar movimientos', 'error');
-            } finally {
-                this.cargandoHistorial = false;
-            }
-        },
+                // Cmd/Ctrl + K → enfoca búsqueda
+                if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+                    e.preventDefault();
+                    const el = document.querySelector('input[placeholder^="Buscar"]');
+                    if (el) el.focus();
+                    return;
+                }
+                // "?" abre ayuda de atajos
+                if (e.key === '?' && !enInput) {
+                    e.preventDefault();
+                    this.mostrarAtajos();
+                    return;
+                }
+                // Esc limpia selección
+                if (e.key === 'Escape' && this.seleccionados.length > 0 && !enInput) {
+                    this.seleccionados = [];
+                }
+            },
 
-        exportarCSV() {
-            const headers = ['ID', 'Insumo', 'Unidad', 'Stock Real', 'Stock Minimo', 'Costo Unitario', 'Valor en Stock', 'Estado'];
-            const rows = this.insumos.map(i => {
-                const r = parseFloat(i.stock_real) || 0;
-                const m = parseFloat(i.stock_minimo) || 0;
-                const c = parseFloat(i.costo_unitario) || 0;
-                const estado = r <= 0 ? 'Agotado' : (r <= m ? 'Bajo' : 'OK');
-                return [
-                    i.id,
-                    `"${(i.nombre || '').replace(/"/g, '""')}"`,
-                    i.unidad_abreviatura || '',
-                    r.toFixed(3),
-                    m.toFixed(3),
-                    c.toFixed(4),
-                    (r * c).toFixed(2),
-                    estado,
-                ].join(',');
-            });
-            const csv = '﻿' + [headers.join(','), ...rows].join('\n');
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            const ts = new Date().toISOString().slice(0, 10);
-            a.href = url;
-            a.download = `inventario_${ts}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            this.toast(`Inventario exportado (${this.insumos.length} insumos)`);
-        },
+            mostrarAtajos() {
+                if (!this.modalAtajos) {
+                    this.modalAtajos = new bootstrap.Modal(document.getElementById('modalAtajos'));
+                }
+                this.modalAtajos.show();
+            },
 
-        get insumosFiltrados() {
-            const b = this.removeAccents((this.busqueda || '').toLowerCase());
-            let lista = this.insumos.filter(i => {
-                const r = parseFloat(i.stock_real)   || 0;
-                const m = parseFloat(i.stock_minimo) || 0;
-                const ok     = r > m;
-                const bajo   = r <= m && r > 0;
-                const agot   = r <= 0;
-                
-                const n = this.removeAccents((i.nombre || '').toLowerCase());
-                const c = this.removeAccents((i.categoria || '').toLowerCase());
-                const u = this.removeAccents((i.unidad_abreviatura || '').toLowerCase());
-                
-                const matchN = n.includes(b) || c.includes(b) || u.includes(b);
-                const matchC = this.filtroCategoria === 'todas' || i.categoria === this.filtroCategoria;
-                
-                const matchE = this.filtroEstado === 'todos'
-                    || (this.filtroEstado === 'ok'      && ok)
-                    || (this.filtroEstado === 'bajo'    && bajo)
-                    || (this.filtroEstado === 'agotado' && agot);
-                return matchN && matchE && matchC;
-            });
-            // ordenar
-            lista.sort((a, b) => {
-                let va = parseFloat(a[this.sortCol]) || a[this.sortCol] || '';
-                let vb = parseFloat(b[this.sortCol]) || b[this.sortCol] || '';
-                if (typeof va === 'string') va = va.toLowerCase();
-                if (typeof vb === 'string') vb = vb.toLowerCase();
-                if (va < vb) return this.sortDir === 'asc' ? -1 : 1;
-                if (va > vb) return this.sortDir === 'asc' ? 1 : -1;
-                return 0;
-            });
-            return lista;
-        },
+            generarOrdenCompra() {
+                const aReponer = this.insumos.filter(i => {
+                    const r = parseFloat(i.stock_real) || 0;
+                    const m = parseFloat(i.stock_minimo) || 0;
+                    return r <= m;
+                });
+                if (aReponer.length === 0) {
+                    this.toast('No hay insumos por reponer', 'error');
+                    return;
+                }
+                // Sugerencia: pedir hasta llegar al doble del stock_minimo (buffer de seguridad)
+                const headers = ['Insumo', 'Unidad', 'Stock Actual', 'Stock Minimo', 'Cantidad Sugerida', 'Costo Unitario', 'Subtotal Estimado', 'Estado'];
+                let totalEstimado = 0;
+                const rows = aReponer.map(i => {
+                    const r = parseFloat(i.stock_real) || 0;
+                    const m = parseFloat(i.stock_minimo) || 0;
+                    const c = parseFloat(i.costo_unitario) || 0;
+                    const objetivo = m * 2;
+                    const sugerida = Math.max(objetivo - r, m);
+                    const subtotal = sugerida * c;
+                    totalEstimado += subtotal;
+                    const estado = r <= 0 ? 'Agotado' : 'Bajo';
+                    return [
+                        `"${(i.nombre || '').replace(/"/g, '""')}"`,
+                        i.unidad_abreviatura || '',
+                        r.toFixed(3),
+                        m.toFixed(3),
+                        sugerida.toFixed(3),
+                        c.toFixed(4),
+                        subtotal.toFixed(2),
+                        estado,
+                    ].join(',');
+                });
+                rows.push(['', '', '', '', '', 'TOTAL', totalEstimado.toFixed(2), ''].join(','));
+                const csv = '﻿' + [headers.join(','), ...rows].join('\n');
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                const ts = new Date().toISOString().slice(0, 10);
+                a.href = url;
+                a.download = `orden_compra_${ts}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                this.toast(`Orden generada: ${aReponer.length} ítem${aReponer.length === 1 ? '' : 's'} — Total estimado S/. ${totalEstimado.toFixed(2)}`);
+            },
 
-        ordenar(col) {
-            if (this.sortCol === col) {
-                this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
-            } else {
-                this.sortCol = col;
-                this.sortDir = 'asc';
-            }
-        },
+            async verMovimientosGlobales() {
+                // Usa this.insumos (ya cargados) para obtener historial de cada uno en paralelo
+                this.cargandoHistorial = true;
+                this.movimientosGlobales = [];
+                try {
+                    if (this.insumos.length === 0) {
+                        this.toast('No hay insumos cargados. Refresca la página.', 'error');
+                        return;
+                    }
+                    const lista = this.insumos.slice(0, 50);
+                    const movs = await Promise.all(lista.map(i =>
+                        fetch(`/api/inventario/insumos/${i.id}/historial/`, { credentials: 'same-origin', headers: { Accept: 'application/json' } })
+                            .then(r => r.ok ? r.json() : [])
+                            .then(arr => arr.map(m => ({ ...m, insumo_nombre: i.nombre })))
+                            .catch(() => [])
+                    ));
+                    this.movimientosGlobales = movs.flat()
+                        .sort((a, b) => (b.id || 0) - (a.id || 0))
+                        .slice(0, 100);
+                    if (!this.modalMovimientosGlobales) {
+                        this.modalMovimientosGlobales = new bootstrap.Modal(document.getElementById('modalMovimientosGlobales'));
+                    }
+                    this.modalMovimientosGlobales.show();
+                } catch (e) {
+                    this.toast('Error al cargar movimientos', 'error');
+                } finally {
+                    this.cargandoHistorial = false;
+                }
+            },
 
-        async init() {
-            console.log('[INV] v2026-05-21d — Inventario App iniciando (botones acción + selección múltiple)');
+            exportarCSV() {
+                const headers = ['ID', 'Insumo', 'Unidad', 'Stock Real', 'Stock Minimo', 'Costo Unitario', 'Valor en Stock', 'Estado'];
+                const rows = this.insumos.map(i => {
+                    const r = parseFloat(i.stock_real) || 0;
+                    const m = parseFloat(i.stock_minimo) || 0;
+                    const c = parseFloat(i.costo_unitario) || 0;
+                    const estado = r <= 0 ? 'Agotado' : (r <= m ? 'Bajo' : 'OK');
+                    return [
+                        i.id,
+                        `"${(i.nombre || '').replace(/"/g, '""')}"`,
+                        i.unidad_abreviatura || '',
+                        r.toFixed(3),
+                        m.toFixed(3),
+                        c.toFixed(4),
+                        (r * c).toFixed(2),
+                        estado,
+                    ].join(',');
+                });
+                const csv = '﻿' + [headers.join(','), ...rows].join('\n');
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                const ts = new Date().toISOString().slice(0, 10);
+                a.href = url;
+                a.download = `inventario_${ts}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                this.toast(`Inventario exportado (${this.insumos.length} insumos)`);
+            },
 
-            // Cargar datos SSR desde los elementos <script type="application/json">
-            try {
-                const elI = document.getElementById('inv-insumos-ssr');
-                const elU = document.getElementById('inv-unidades-ssr');
-                if (elI && elI.textContent.trim()) this.insumos  = JSON.parse(elI.textContent);
-                if (elU && elU.textContent.trim()) this.unidades = JSON.parse(elU.textContent);
-            } catch(e) { console.error('[INV] Error SSR:', e); }
+            get insumosFiltrados() {
+                const b = this.removeAccents((this.busqueda || '').toLowerCase());
+                let lista = this.insumos.filter(i => {
+                    const r = parseFloat(i.stock_real) || 0;
+                    const m = parseFloat(i.stock_minimo) || 0;
+                    const ok = r > m;
+                    const bajo = r <= m && r > 0;
+                    const agot = r <= 0;
 
-            // Modales Bootstrap
-            try { this.modalAjuste     = new bootstrap.Modal(document.getElementById('modalAjuste')); } catch(e) {}
-            try { this.modalInsumoForm = new bootstrap.Modal(document.getElementById('modalInsumo')); } catch(e) {}
-            try { this.modalHistorial  = new bootstrap.Modal(document.getElementById('modalHistorial')); } catch(e) {}
-            this._keyHandler = (e) => this._onKeyDown(e);
-            window.addEventListener('keydown', this._keyHandler);
+                    const n = this.removeAccents((i.nombre || '').toLowerCase());
+                    const c = this.removeAccents((i.categoria || '').toLowerCase());
+                    const u = this.removeAccents((i.unidad_abreviatura || '').toLowerCase());
 
-            // Watchdog de seguridad: si guardando queda pegado > 20s, lo resetea automáticamente
-            this._watchdog = setInterval(() => {
-                if (this.guardando) {
-                    console.warn('[INV] Watchdog: guardando lleva >20s pegado — reseteando');
+                    const matchN = n.includes(b) || c.includes(b) || u.includes(b);
+                    const matchC = this.filtroCategoria === 'todas' || i.categoria === this.filtroCategoria;
+
+                    const matchE = this.filtroEstado === 'todos'
+                        || (this.filtroEstado === 'ok' && ok)
+                        || (this.filtroEstado === 'bajo' && bajo)
+                        || (this.filtroEstado === 'agotado' && agot);
+                    return matchN && matchE && matchC;
+                });
+                // ordenar
+                lista.sort((a, b) => {
+                    let va = parseFloat(a[this.sortCol]) || a[this.sortCol] || '';
+                    let vb = parseFloat(b[this.sortCol]) || b[this.sortCol] || '';
+                    if (typeof va === 'string') va = va.toLowerCase();
+                    if (typeof vb === 'string') vb = vb.toLowerCase();
+                    if (va < vb) return this.sortDir === 'asc' ? -1 : 1;
+                    if (va > vb) return this.sortDir === 'asc' ? 1 : -1;
+                    return 0;
+                });
+                return lista;
+            },
+
+            ordenar(col) {
+                if (this.sortCol === col) {
+                    this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+                } else {
+                    this.sortCol = col;
+                    this.sortDir = 'asc';
+                }
+            },
+
+            async init() {
+                console.log('[INV] v2026-05-21d — Inventario App iniciando (botones acción + selección múltiple)');
+
+                // Cargar datos SSR desde los elementos <script type="application/json">
+                try {
+                    const elI = document.getElementById('inv-insumos-ssr');
+                    const elU = document.getElementById('inv-unidades-ssr');
+                    if (elI && elI.textContent.trim()) this.insumos = JSON.parse(elI.textContent);
+                    if (elU && elU.textContent.trim()) this.unidades = JSON.parse(elU.textContent);
+                } catch (e) { console.error('[INV] Error SSR:', e); }
+
+                // Modales Bootstrap
+                try { this.modalAjuste = new bootstrap.Modal(document.getElementById('modalAjuste')); } catch (e) { }
+                try { this.modalInsumoForm = new bootstrap.Modal(document.getElementById('modalInsumo')); } catch (e) { }
+                try { this.modalHistorial = new bootstrap.Modal(document.getElementById('modalHistorial')); } catch (e) { }
+                this._keyHandler = (e) => this._onKeyDown(e);
+                window.addEventListener('keydown', this._keyHandler);
+
+                // Watchdog de seguridad: si guardando queda pegado > 20s, lo resetea automáticamente
+                this._watchdog = setInterval(() => {
+                    if (this.guardando) {
+                        console.warn('[INV] Watchdog: guardando lleva >20s pegado — reseteando');
+                        this.guardando = false;
+                        this.formInsumoErrorGeneral = 'La operación tardó demasiado. Intenta de nuevo.';
+                    }
+                }, 20000);
+
+                // Funciones de diagnóstico y rescate desde la consola del navegador
+                window._invTest = () => {
+                    const csrf = this._csrf();
+                    const um = (this.unidades[0] || {}).id || 1;
+                    console.log('[INV] Test directo a la API...');
+                    fetch('/api/inventario/insumos/', {
+                        method: 'POST', credentials: 'same-origin',
+                        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf, 'Accept': 'application/json' },
+                        body: JSON.stringify({ nombre: '_test_' + Date.now(), unidad_medida: um, categoria: 'OTRO', stock_minimo: 0, costo_unitario: 0, stock_actual: 0, stock_real: 0 })
+                    }).then(r => r.json().then(d => console.log('[INV] Test HTTP ' + r.status + ':', d))).catch(e => console.error('[INV] Test ERROR:', e));
+                };
+                // Resetea el estado si el botón queda pegado
+                window._invReset = () => {
                     this.guardando = false;
-                    this.formInsumoErrorGeneral = 'La operación tardó demasiado. Intenta de nuevo.';
-                }
-            }, 20000);
+                    this.formInsumoErrorGeneral = '';
+                    console.log('[INV] Estado reseteado: guardando=false');
+                };
+                // Muestra el estado actual del formulario
+                window._invState = () => {
+                    console.log('[INV] guardando:', this.guardando);
+                    console.log('[INV] formInsumoValido:', this.formInsumoValido);
+                    console.log('[INV] formInsumo:', JSON.stringify(this.formInsumo));
+                    console.log('[INV] errors:', JSON.stringify(this.formInsumoErrors));
+                };
+                // Fuerza el guardado desde la consola (útil para diagnóstico)
+                window._invGuardar = () => this.guardarInsumo();
+                console.log('[INV] Consola: _invReset() | _invState() | _invGuardar() | _invTest()');
 
-            // Funciones de diagnóstico y rescate desde la consola del navegador
-            window._invTest = () => {
-                const csrf = this._csrf();
-                const um = (this.unidades[0] || {}).id || 1;
-                console.log('[INV] Test directo a la API...');
-                fetch('/api/inventario/insumos/', {
-                    method: 'POST', credentials: 'same-origin',
-                    headers: {'Content-Type':'application/json','X-CSRFToken': csrf,'Accept':'application/json'},
-                    body: JSON.stringify({nombre:'_test_'+Date.now(),unidad_medida:um,categoria:'OTRO',stock_minimo:0,costo_unitario:0,stock_actual:0,stock_real:0})
-                }).then(r => r.json().then(d => console.log('[INV] Test HTTP '+r.status+':', d))).catch(e => console.error('[INV] Test ERROR:', e));
-            };
-            // Resetea el estado si el botón queda pegado
-            window._invReset = () => {
-                this.guardando = false;
-                this.formInsumoErrorGeneral = '';
-                console.log('[INV] Estado reseteado: guardando=false');
-            };
-            // Muestra el estado actual del formulario
-            window._invState = () => {
-                console.log('[INV] guardando:', this.guardando);
-                console.log('[INV] formInsumoValido:', this.formInsumoValido);
-                console.log('[INV] formInsumo:', JSON.stringify(this.formInsumo));
-                console.log('[INV] errors:', JSON.stringify(this.formInsumoErrors));
-            };
-            // Fuerza el guardado desde la consola (útil para diagnóstico)
-            window._invGuardar = () => this.guardarInsumo();
-            console.log('[INV] Consola: _invReset() | _invState() | _invGuardar() | _invTest()');
+                // Fallback API si SSR no entregó datos
+                if (this.insumos.length === 0) await this.fetchInsumos();
+                if (this.unidades.length === 0) await this.fetchUnidades();
+            },
 
-            // Fallback API si SSR no entregó datos
-            if (this.insumos.length === 0)  await this.fetchInsumos();
-            if (this.unidades.length === 0) await this.fetchUnidades();
-        },
+            destroy() {
+                if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler);
+                if (this._watchdog) clearInterval(this._watchdog);
+            },
 
-        destroy() {
-            if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler);
-            if (this._watchdog) clearInterval(this._watchdog);
-        },
+            async fetchInsumos() {
+                try {
+                    const url = new URL('/api/inventario/insumos/', window.location.origin);
+                    // Solo agregar page si es un número válido >= 1
+                    if (this.paginaActual && Number.isInteger(this.paginaActual) && this.paginaActual >= 1) {
+                        url.searchParams.append('page', this.paginaActual);
+                    }
+                    // Traer todos los insumos activos (sin filtros de server, el filtrado es client-side)
+                    url.searchParams.append('page_size', 200);
 
-        async fetchInsumos() {
-            try {
-                const url = new URL('/api/inventario/insumos/', window.location.origin);
-                // Solo agregar page si es un número válido >= 1
-                if (this.paginaActual && Number.isInteger(this.paginaActual) && this.paginaActual >= 1) {
-                    url.searchParams.append('page', this.paginaActual);
-                }
-                // Traer todos los insumos activos (sin filtros de server, el filtrado es client-side)
-                url.searchParams.append('page_size', 200);
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 8000);
+                    const resp = await fetch(url, {
+                        credentials: 'same-origin',
+                        headers: { Accept: 'application/json' },
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId);
 
-                const resp = await fetch(url, {
-                    credentials: 'same-origin',
-                    headers: { Accept: 'application/json' },
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId);
+                    if (!resp.ok) {
+                        console.error('[INV] fetchInsumos error HTTP:', resp.status);
+                        return;  // No corromper this.insumos si el servidor falla
+                    }
 
-                if (!resp.ok) {
-                    console.error('[INV] fetchInsumos error HTTP:', resp.status);
-                    return;  // No corromper this.insumos si el servidor falla
-                }
-
-                const data = await resp.json();
-                const lista = data.results ?? data;
-                if (Array.isArray(lista)) {
-                    this.insumos = lista;
-                    this.totalItems = data.count ?? lista.length;
-                    this.totalPaginas = Math.ceil(this.totalItems / this.itemsPorPagina) || 1;
-                } else {
-                    console.error('[INV] fetchInsumos: respuesta inesperada del servidor', data);
-                }
-            } catch (e) {
-                if (e.name !== 'AbortError') console.error('[INV] Error fetching insumos:', e);
-            }
-        },
-
-        toast(mensaje, tipo = 'ok') {
-            const id = Date.now();
-            this.toasts.push({ id, mensaje, tipo });
-            setTimeout(() => { this.toasts = this.toasts.filter(t => t.id !== id); }, 4000);
-        },
-
-        async fetchUnidades() {
-            try {
-                const resp = await fetch('/api/inventario/unidades-medida/', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
-                if (resp.ok) {
                     const data = await resp.json();
-                    this.unidades = Array.isArray(data) ? data : (data.results || []);
-                } else {
-                    this.toast(`Error al cargar unidades (HTTP ${resp.status})`, 'error');
+                    const lista = data.results ?? data;
+                    if (Array.isArray(lista)) {
+                        this.insumos = lista;
+                        this.totalItems = data.count ?? lista.length;
+                        this.totalPaginas = Math.ceil(this.totalItems / this.itemsPorPagina) || 1;
+                    } else {
+                        console.error('[INV] fetchInsumos: respuesta inesperada del servidor', data);
+                    }
+                } catch (e) {
+                    if (e.name !== 'AbortError') console.error('[INV] Error fetching insumos:', e);
                 }
-            } catch (e) { this.toast('Error de conexión al cargar unidades', 'error'); }
-        },
+            },
 
-        ajustarStock(insumo) {
-            this.selectedInsumo = insumo;
-            this.ajuste = { tipo: 'AJUSTE_POSITIVO', cantidad: 0, motivo: '' };
-            this.modalAjuste.show();
-        },
+            toast(mensaje, tipo = 'ok') {
+                const id = Date.now();
+                this.toasts.push({ id, mensaje, tipo });
+                setTimeout(() => { this.toasts = this.toasts.filter(t => t.id !== id); }, 4000);
+            },
 
-        async verHistorial(insumo) {
-            this.selectedInsumo = insumo;
-            this.historial = [];
-            this.cargandoHistorial = true;
-            this.modalHistorial.show();
-            try {
-                const resp = await fetch(`/api/inventario/insumos/${insumo.id}/historial/`, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
-                if (resp.ok) this.historial = await resp.json();
-                else this.toast('No se pudo cargar el historial', 'error');
-            } catch { this.toast('Error de conexión', 'error'); }
-            finally { this.cargandoHistorial = false; }
-        },
+            async fetchUnidades() {
+                try {
+                    const resp = await fetch('/api/inventario/unidades-medida/', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        this.unidades = Array.isArray(data) ? data : (data.results || []);
+                    } else {
+                        this.toast(`Error al cargar unidades (HTTP ${resp.status})`, 'error');
+                    }
+                } catch (e) { this.toast('Error de conexión al cargar unidades', 'error'); }
+            },
 
-        async confirmarAjuste() {
-            if (!this.ajuste.cantidad || parseFloat(this.ajuste.cantidad) <= 0) { this.toast('Ingresa una cantidad mayor a 0', 'error'); return; }
-            if (!this.ajuste.motivo.trim()) { this.toast('El motivo es obligatorio', 'error'); return; }
-            this.guardando = true;
-            try {
-                const resp = await fetch(`/api/inventario/insumos/${this.selectedInsumo.id}/ajuste/`, {
-                    method: 'POST', credentials: 'same-origin',
-                    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': this._csrf(), Accept: 'application/json' },
-                    body: JSON.stringify(this.ajuste)
-                });
-                if (resp.ok) {
-                    this.modalAjuste.hide();
-                    await this.fetchInsumos();
-                    this.toast(`Stock de "${this.selectedInsumo.nombre}" actualizado`);
-                } else {
-                    const err = await resp.json().catch(() => ({}));
-                    this.toast(err.detail || err.error || 'Error al ajustar stock', 'error');
-                }
-            } catch { this.toast('Error de conexión', 'error'); }
-            finally { this.guardando = false; }
-        },
+            ajustarStock(insumo) {
+                this.selectedInsumo = insumo;
+                this.ajuste = { tipo: 'AJUSTE_POSITIVO', cantidad: 0, motivo: '' };
+                this.modalAjuste.show();
+            },
 
-        nuevoInsumo() {
-            this.formInsumo = { id: null, nombre: '', unidad_medida: '', categoria: '', stock_minimo: 0, costo_unitario: 0, stock_inicial: 0 };
-            this.formInsumoErrors = {};
-            this.formInsumoWarnings = {};
-            this.formInsumoErrorGeneral = '';
-            this.guardando = false;
-            this.previewValor = 'S/. 0.00';
-            this.previewEstado = 'Agotado';
-            this.previewBadgeClass = 'bg-danger';
-            this.modalInsumoForm.show();
-            this.$nextTick(() => {
-                setTimeout(() => {
-                    document.getElementById('insumo_nombre_input')?.focus();
-                }, 150);
-            });
-        },
+            async verHistorial(insumo) {
+                this.selectedInsumo = insumo;
+                this.historial = [];
+                this.cargandoHistorial = true;
+                this.modalHistorial.show();
+                try {
+                    const resp = await fetch(`/api/inventario/insumos/${insumo.id}/historial/`, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+                    if (resp.ok) this.historial = await resp.json();
+                    else this.toast('No se pudo cargar el historial', 'error');
+                } catch { this.toast('Error de conexión', 'error'); }
+                finally { this.cargandoHistorial = false; }
+            },
 
-        editarInsumo(i) {
-            this.formInsumo = { id: i.id, nombre: i.nombre, unidad_medida: i.unidad_medida, categoria: i.categoria || 'OTRO', stock_minimo: i.stock_minimo, costo_unitario: i.costo_unitario, stock_inicial: 0 };
-            this.formInsumoErrors = {};
-            this.formInsumoWarnings = {};
-            this.formInsumoErrorGeneral = '';
-            this.guardando = false;
-            this.modalInsumoForm.show();
-        },
+            async confirmarAjuste() {
+                if (!this.ajuste.cantidad || parseFloat(this.ajuste.cantidad) <= 0) { this.toast('Ingresa una cantidad mayor a 0', 'error'); return; }
+                if (!this.ajuste.motivo.trim()) { this.toast('El motivo es obligatorio', 'error'); return; }
+                this.guardando = true;
+                try {
+                    const resp = await fetch(`/api/inventario/insumos/${this.selectedInsumo.id}/ajuste/`, {
+                        method: 'POST', credentials: 'same-origin',
+                        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': this._csrf(), Accept: 'application/json' },
+                        body: JSON.stringify(this.ajuste)
+                    });
+                    if (resp.ok) {
+                        this.modalAjuste.hide();
+                        await this.fetchInsumos();
+                        this.toast(`Stock de "${this.selectedInsumo.nombre}" actualizado`);
+                    } else {
+                        const err = await resp.json().catch(() => ({}));
+                        this.toast(err.detail || err.error || 'Error al ajustar stock', 'error');
+                    }
+                } catch { this.toast('Error de conexión', 'error'); }
+                finally { this.guardando = false; }
+            },
 
-        validarFormInsumo() {
-            const errors = {};
-            const warnings = {};
-            const f = this.formInsumo;
-            const nombre = (f.nombre || '').trim();
-            // Errores DURO (bloquean guardar)
-            if (!f.nombre) errors.nombre = 'El nombre es obligatorio.';
-            else if (f.nombre.length > 120) errors.nombre = 'Máximo 120 caracteres.';
-            if (!f.unidad_medida) errors.unidad_medida = 'Selecciona una unidad de medida.';
-            if (!f.categoria) errors.categoria = 'Selecciona una categoría.';
-            
-            const sm = parseFloat(f.stock_minimo);
-            if (f.stock_minimo === '' || f.stock_minimo === null || isNaN(sm) || sm < 0)
-                errors.stock_minimo = 'Debe ser un número ≥ 0.';
-            const cu = parseFloat(f.costo_unitario);
-            if (f.costo_unitario === '' || f.costo_unitario === null || isNaN(cu) || cu < 0)
-                errors.costo_unitario = 'Debe ser un número ≥ 0.';
-            
-            const si = parseFloat(f.stock_inicial);
-            if (!f.id) {
-                if (!isNaN(si) && si < 0) {
-                    errors.stock_inicial = 'El stock inicial no puede ser negativo.';
-                }
-                if (!isNaN(si) && si > 0 && si <= sm) {
-                    warnings.stock_inicial = 'El stock inicial está por debajo o igual al mínimo. El insumo quedará en estado BAJO.';
-                }
-            }
-
-            // Advertencia: nombre potencialmente duplicado (NO bloquea — el backend tiene la verdad)
-            if (nombre && nombre.length <= 120) {
-                const dup = this.insumos.find(i =>
-                    i.id !== f.id &&
-                    (i.nombre || '').trim().toLowerCase() === nombre.toLowerCase()
-                );
-                if (dup) warnings.nombre = `Ya existe un insumo llamado "${dup.nombre}". El servidor lo rechazará si se repite exacto.`;
-            }
-            this.formInsumoErrors = errors;
-            this.formInsumoWarnings = warnings;
-
-            // Actualizar vista previa (solo aplica al crear, no editar)
-            if (!f.id) {
-                const siP = parseFloat(f.stock_inicial) || 0;
-                const cuP = parseFloat(f.costo_unitario) || 0;
-                const smP = parseFloat(f.stock_minimo) || 0;
-                this.previewValor = 'S/. ' + (siP * cuP).toFixed(2);
-                if (siP <= 0)       { this.previewEstado = 'Agotado'; this.previewBadgeClass = 'bg-danger'; }
-                else if (siP <= smP){ this.previewEstado = 'Bajo';    this.previewBadgeClass = 'bg-warning text-dark'; }
-                else                { this.previewEstado = 'OK';      this.previewBadgeClass = 'bg-success'; }
-            }
-
-            return Object.keys(errors).length === 0;
-        },
-
-        get formInsumoValido() {
-            try {
-                // Solo los campos del formulario bloquean el botón (no errores generales del servidor)
-                const camposFormulario = ['nombre','unidad_medida','categoria','stock_minimo','costo_unitario','stock_actual','stock_real','stock_inicial'];
-                const tieneErroresCampo = camposFormulario.some(c => !!(this.formInsumoErrors || {})[c]);
-                return !tieneErroresCampo
-                    && (this.formInsumo.nombre || '').trim() !== ''
-                    && !!this.formInsumo.unidad_medida
-                    && !!this.formInsumo.categoria;
-            } catch(e) { return false; }
-        },
-
-        get unidadAbrev() {
-            try {
-                const id = parseInt(this.formInsumo.unidad_medida);
-                if (!id || isNaN(id)) return '—';
-                const u = (this.unidades || []).find(x => x.id === id);
-                return u ? u.abreviatura : '—';
-            } catch(e) { return '—'; }
-        },
-
-        async guardarInsumo() {
-            console.log('[INV] guardarInsumo() llamado — guardando actual:', this.guardando, '| valido:', this.formInsumoValido);
-            // Todo dentro de try-catch-finally para garantizar que guardando vuelva a false
-            try {
+            nuevoInsumo() {
+                this.formInsumo = { id: null, nombre: '', unidad_medida: '', categoria: '', stock_minimo: 0, costo_unitario: 0, stock_inicial: 0 };
+                this.formInsumoErrors = {};
+                this.formInsumoWarnings = {};
                 this.formInsumoErrorGeneral = '';
-                if (!this.validarFormInsumo()) {
-                    // Construir mensaje con los campos faltantes
-                    const faltantes = [];
-                    if (this.formInsumoErrors.nombre) faltantes.push('Nombre');
-                    if (this.formInsumoErrors.unidad_medida) faltantes.push('Unidad de medida');
-                    if (this.formInsumoErrors.categoria) faltantes.push('Categoría');
-                    if (this.formInsumoErrors.stock_minimo) faltantes.push('Stock mínimo');
-                    if (this.formInsumoErrors.costo_unitario) faltantes.push('Costo unitario');
-                    const msg = faltantes.length
-                        ? `Completa los campos requeridos: ${faltantes.join(', ')}`
-                        : 'Revisa los campos marcados en rojo';
+                this.guardando = false;
+                this.previewValor = 'S/. 0.00';
+                this.previewEstado = 'Agotado';
+                this.previewBadgeClass = 'bg-danger';
+                this.modalInsumoForm.show();
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        document.getElementById('insumo_nombre_input')?.focus();
+                    }, 150);
+                });
+            },
+
+            editarInsumo(i) {
+                this.formInsumo = { id: i.id, nombre: i.nombre, unidad_medida: i.unidad_medida, categoria: i.categoria || 'OTRO', stock_minimo: i.stock_minimo, costo_unitario: i.costo_unitario, stock_inicial: 0 };
+                this.formInsumoErrors = {};
+                this.formInsumoWarnings = {};
+                this.formInsumoErrorGeneral = '';
+                this.guardando = false;
+                this.modalInsumoForm.show();
+            },
+
+            validarFormInsumo() {
+                const errors = {};
+                const warnings = {};
+                const f = this.formInsumo;
+                const nombre = (f.nombre || '').trim();
+                // Errores DURO (bloquean guardar)
+                if (!f.nombre) errors.nombre = 'El nombre es obligatorio.';
+                else if (f.nombre.length > 120) errors.nombre = 'Máximo 120 caracteres.';
+                if (!f.unidad_medida) errors.unidad_medida = 'Selecciona una unidad de medida.';
+                if (!f.categoria) errors.categoria = 'Selecciona una categoría.';
+
+                const sm = parseFloat(f.stock_minimo);
+                if (f.stock_minimo === '' || f.stock_minimo === null || isNaN(sm) || sm < 0)
+                    errors.stock_minimo = 'Debe ser un número ≥ 0.';
+                const cu = parseFloat(f.costo_unitario);
+                if (f.costo_unitario === '' || f.costo_unitario === null || isNaN(cu) || cu < 0)
+                    errors.costo_unitario = 'Debe ser un número ≥ 0.';
+
+                const si = parseFloat(f.stock_inicial);
+                if (!f.id) {
+                    if (!isNaN(si) && si < 0) {
+                        errors.stock_inicial = 'El stock inicial no puede ser negativo.';
+                    }
+                    if (!isNaN(si) && si > 0 && si <= sm) {
+                        warnings.stock_inicial = 'El stock inicial está por debajo o igual al mínimo. El insumo quedará en estado BAJO.';
+                    }
+                }
+
+                // Advertencia: nombre potencialmente duplicado (NO bloquea — el backend tiene la verdad)
+                if (nombre && nombre.length <= 120) {
+                    const dup = this.insumos.find(i =>
+                        i.id !== f.id &&
+                        (i.nombre || '').trim().toLowerCase() === nombre.toLowerCase()
+                    );
+                    if (dup) warnings.nombre = `Ya existe un insumo llamado "${dup.nombre}". El servidor lo rechazará si se repite exacto.`;
+                }
+                this.formInsumoErrors = errors;
+                this.formInsumoWarnings = warnings;
+
+                // Actualizar vista previa (solo aplica al crear, no editar)
+                if (!f.id) {
+                    const siP = parseFloat(f.stock_inicial) || 0;
+                    const cuP = parseFloat(f.costo_unitario) || 0;
+                    const smP = parseFloat(f.stock_minimo) || 0;
+                    this.previewValor = 'S/. ' + (siP * cuP).toFixed(2);
+                    if (siP <= 0) { this.previewEstado = 'Agotado'; this.previewBadgeClass = 'bg-danger'; }
+                    else if (siP <= smP) { this.previewEstado = 'Bajo'; this.previewBadgeClass = 'bg-warning text-dark'; }
+                    else { this.previewEstado = 'OK'; this.previewBadgeClass = 'bg-success'; }
+                }
+
+                return Object.keys(errors).length === 0;
+            },
+
+            get formInsumoValido() {
+                try {
+                    // Solo los campos del formulario bloquean el botón (no errores generales del servidor)
+                    const camposFormulario = ['nombre', 'unidad_medida', 'categoria', 'stock_minimo', 'costo_unitario', 'stock_actual', 'stock_real', 'stock_inicial'];
+                    const tieneErroresCampo = camposFormulario.some(c => !!(this.formInsumoErrors || {})[c]);
+                    return !tieneErroresCampo
+                        && (this.formInsumo.nombre || '').trim() !== ''
+                        && !!this.formInsumo.unidad_medida
+                        && !!this.formInsumo.categoria;
+                } catch (e) { return false; }
+            },
+
+            get unidadAbrev() {
+                try {
+                    const id = parseInt(this.formInsumo.unidad_medida);
+                    if (!id || isNaN(id)) return '—';
+                    const u = (this.unidades || []).find(x => x.id === id);
+                    return u ? u.abreviatura : '—';
+                } catch (e) { return '—'; }
+            },
+
+            async guardarInsumo() {
+                console.log('[INV] guardarInsumo() llamado — guardando actual:', this.guardando, '| valido:', this.formInsumoValido);
+                // Todo dentro de try-catch-finally para garantizar que guardando vuelva a false
+                try {
+                    this.formInsumoErrorGeneral = '';
+                    if (!this.validarFormInsumo()) {
+                        // Construir mensaje con los campos faltantes
+                        const faltantes = [];
+                        if (this.formInsumoErrors.nombre) faltantes.push('Nombre');
+                        if (this.formInsumoErrors.unidad_medida) faltantes.push('Unidad de medida');
+                        if (this.formInsumoErrors.categoria) faltantes.push('Categoría');
+                        if (this.formInsumoErrors.stock_minimo) faltantes.push('Stock mínimo');
+                        if (this.formInsumoErrors.costo_unitario) faltantes.push('Costo unitario');
+                        const msg = faltantes.length
+                            ? `Completa los campos requeridos: ${faltantes.join(', ')}`
+                            : 'Revisa los campos marcados en rojo';
+                        this.formInsumoErrorGeneral = msg;
+                        this.toast(msg, 'error');
+                        return;
+                    }
+                    this.formInsumoErrorGeneral = '';
+                    this.guardando = true;
+
+                    const isEdit = !!this.formInsumo.id;
+                    const url = isEdit ? `/api/inventario/insumos/${this.formInsumo.id}/` : '/api/inventario/insumos/';
+                    const body = {
+                        nombre: (this.formInsumo.nombre || '').trim(),
+                        unidad_medida: parseInt(this.formInsumo.unidad_medida) || null,
+                        categoria: this.formInsumo.categoria || 'OTRO',
+                        stock_minimo: parseFloat(this.formInsumo.stock_minimo) || 0,
+                        costo_unitario: parseFloat(this.formInsumo.costo_unitario) || 0
+                    };
+                    if (!isEdit) {
+                        const inicial = parseFloat(this.formInsumo.stock_inicial) || 0;
+                        body.stock_actual = inicial;
+                        body.stock_real = inicial;
+                    }
+
+                    const csrfToken = this._csrf();
+                    if (!csrfToken) {
+                        throw new Error('No se pudo obtener el token CSRF. Recarga la página (Ctrl+Shift+R).');
+                    }
+                    console.log('[INV] Guardando →', url, JSON.stringify(body), 'csrf:', csrfToken.substring(0, 8) + '...');
+
+                    // Timeout de 12 segundos para evitar que el botón se quede pegado
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 12000);
+
+                    const resp = await fetch(url, {
+                        method: isEdit ? 'PUT' : 'POST',
+                        credentials: 'same-origin',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(body),
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeoutId);
+                    console.log('[INV] Respuesta HTTP:', resp.status);
+
+                    if (resp.ok) {
+                        // Actualizar el array local directamente desde la respuesta (evita refetch con paginación)
+                        const insumoGuardado = await resp.json().catch(() => null);
+                        if (insumoGuardado && insumoGuardado.id) {
+                            if (isEdit) {
+                                const idx = this.insumos.findIndex(i => i.id === insumoGuardado.id);
+                                if (idx >= 0) this.insumos.splice(idx, 1, insumoGuardado);
+                                else this.insumos.push(insumoGuardado);
+                            } else {
+                                this.insumos.push(insumoGuardado);
+                            }
+                        } else {
+                            // Fallback: refrescar lista si la respuesta no tiene datos
+                            await this.fetchInsumos();
+                        }
+                        if (this.modalInsumoForm) this.modalInsumoForm.hide();
+                        this.toast(isEdit ? `"${body.nombre}" actualizado ✓` : `"${body.nombre}" creado ✓`);
+                    } else {
+                        let err = {};
+                        try { err = await resp.json(); } catch (e) { }
+                        console.error('[INV] Error al guardar, HTTP', resp.status, err);
+
+                        // Campos del formulario que tienen un <div> de error visible
+                        const camposFormulario = new Set(['nombre', 'unidad_medida', 'categoria', 'stock_minimo', 'costo_unitario', 'stock_actual', 'stock_real', 'stock_inicial']);
+
+                        const erroresCampo = {};
+                        const erroresGenerales = [];
+
+                        for (const [campo, val] of Object.entries(err)) {
+                            const msgs = Array.isArray(val) ? val : [String(val)];
+                            const texto = msgs.join(' ');
+                            if (camposFormulario.has(campo)) {
+                                erroresCampo[campo] = texto;
+                            } else {
+                                // detail, non_field_errors, permission errors, etc.
+                                erroresGenerales.push(texto);
+                            }
+                        }
+
+                        if (Object.keys(erroresCampo).length > 0) {
+                            this.formInsumoErrors = { ...this.formInsumoErrors, ...erroresCampo };
+                        }
+
+                        if (erroresGenerales.length > 0) {
+                            // Mostrar en el banner rojo del modal (visible y persistente)
+                            this.formInsumoErrorGeneral = erroresGenerales.join(' | ');
+                            this.toast(erroresGenerales[0], 'error');
+                        } else if (Object.keys(erroresCampo).length > 0) {
+                            this.toast('Corrige los campos marcados en rojo', 'error');
+                        } else {
+                            // Respuesta vacía o formato inesperado
+                            this.formInsumoErrorGeneral = `Error del servidor (HTTP ${resp.status}). Verifica los logs.`;
+                            this.toast(`Error HTTP ${resp.status} al guardar`, 'error');
+                        }
+                    }
+                } catch (e) {
+                    console.error('[INV] Error en guardarInsumo:', e.name, e.message, e);
+                    const msg = e.name === 'AbortError'
+                        ? 'Timeout: el servidor tardó demasiado. Intenta de nuevo.'
+                        : `Error: ${e.message || 'Error de conexión'}`;
                     this.formInsumoErrorGeneral = msg;
                     this.toast(msg, 'error');
-                    return;
+                } finally {
+                    this.guardando = false;
+                    console.log('[INV] guardando = false (finally)');
                 }
-                this.formInsumoErrorGeneral = '';
-                this.guardando = true;
+            },
 
-                const isEdit = !!this.formInsumo.id;
-                const url = isEdit ? `/api/inventario/insumos/${this.formInsumo.id}/` : '/api/inventario/insumos/';
-                const body = {
-                    nombre: (this.formInsumo.nombre || '').trim(),
-                    unidad_medida: parseInt(this.formInsumo.unidad_medida) || null,
-                    categoria: this.formInsumo.categoria || 'OTRO',
-                    stock_minimo: parseFloat(this.formInsumo.stock_minimo) || 0,
-                    costo_unitario: parseFloat(this.formInsumo.costo_unitario) || 0
-                };
-                if (!isEdit) {
-                    const inicial = parseFloat(this.formInsumo.stock_inicial) || 0;
-                    body.stock_actual = inicial;
-                    body.stock_real = inicial;
-                }
-
-                const csrfToken = this._csrf();
-                if (!csrfToken) {
-                    throw new Error('No se pudo obtener el token CSRF. Recarga la página (Ctrl+Shift+R).');
-                }
-                console.log('[INV] Guardando →', url, JSON.stringify(body), 'csrf:', csrfToken.substring(0, 8) + '...');
-
-                // Timeout de 12 segundos para evitar que el botón se quede pegado
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 12000);
-
-                const resp = await fetch(url, {
-                    method: isEdit ? 'PUT' : 'POST',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrfToken,
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(body),
-                    signal: controller.signal
-                });
-
-                clearTimeout(timeoutId);
-                console.log('[INV] Respuesta HTTP:', resp.status);
-
-                if (resp.ok) {
-                    // Actualizar el array local directamente desde la respuesta (evita refetch con paginación)
-                    const insumoGuardado = await resp.json().catch(() => null);
-                    if (insumoGuardado && insumoGuardado.id) {
-                        if (isEdit) {
-                            const idx = this.insumos.findIndex(i => i.id === insumoGuardado.id);
-                            if (idx >= 0) this.insumos.splice(idx, 1, insumoGuardado);
-                            else this.insumos.push(insumoGuardado);
-                        } else {
-                            this.insumos.push(insumoGuardado);
-                        }
-                    } else {
-                        // Fallback: refrescar lista si la respuesta no tiene datos
+            async desactivarInsumo(insumo) {
+                if (!confirm(`¿Desactivar "${insumo.nombre}"?\n\nEl insumo se ocultará del catálogo y todas sus recetas quedarán inactivas. El historial de movimientos se conserva.`)) return;
+                try {
+                    const resp = await fetch(`/api/inventario/insumos/${insumo.id}/`, {
+                        method: 'DELETE',
+                        credentials: 'same-origin',
+                        headers: { 'X-CSRFToken': this._csrf(), Accept: 'application/json' },
+                    });
+                    if (resp.ok || resp.status === 204) {
                         await this.fetchInsumos();
-                    }
-                    if (this.modalInsumoForm) this.modalInsumoForm.hide();
-                    this.toast(isEdit ? `"${body.nombre}" actualizado ✓` : `"${body.nombre}" creado ✓`);
-                } else {
-                    let err = {};
-                    try { err = await resp.json(); } catch(e) {}
-                    console.error('[INV] Error al guardar, HTTP', resp.status, err);
-
-                    // Campos del formulario que tienen un <div> de error visible
-                    const camposFormulario = new Set(['nombre','unidad_medida','categoria','stock_minimo','costo_unitario','stock_actual','stock_real','stock_inicial']);
-
-                    const erroresCampo = {};
-                    const erroresGenerales = [];
-
-                    for (const [campo, val] of Object.entries(err)) {
-                        const msgs = Array.isArray(val) ? val : [String(val)];
-                        const texto = msgs.join(' ');
-                        if (camposFormulario.has(campo)) {
-                            erroresCampo[campo] = texto;
-                        } else {
-                            // detail, non_field_errors, permission errors, etc.
-                            erroresGenerales.push(texto);
-                        }
-                    }
-
-                    if (Object.keys(erroresCampo).length > 0) {
-                        this.formInsumoErrors = { ...this.formInsumoErrors, ...erroresCampo };
-                    }
-
-                    if (erroresGenerales.length > 0) {
-                        // Mostrar en el banner rojo del modal (visible y persistente)
-                        this.formInsumoErrorGeneral = erroresGenerales.join(' | ');
-                        this.toast(erroresGenerales[0], 'error');
-                    } else if (Object.keys(erroresCampo).length > 0) {
-                        this.toast('Corrige los campos marcados en rojo', 'error');
+                        this.toast(`"${insumo.nombre}" desactivado`);
                     } else {
-                        // Respuesta vacía o formato inesperado
-                        this.formInsumoErrorGeneral = `Error del servidor (HTTP ${resp.status}). Verifica los logs.`;
-                        this.toast(`Error HTTP ${resp.status} al guardar`, 'error');
+                        const err = await resp.json().catch(() => ({}));
+                        this.toast(err.error || err.detail || 'No se pudo desactivar', 'error');
                     }
-                }
-            } catch (e) {
-                console.error('[INV] Error en guardarInsumo:', e.name, e.message, e);
-                const msg = e.name === 'AbortError'
-                    ? 'Timeout: el servidor tardó demasiado. Intenta de nuevo.'
-                    : `Error: ${e.message || 'Error de conexión'}`;
-                this.formInsumoErrorGeneral = msg;
-                this.toast(msg, 'error');
-            } finally {
-                this.guardando = false;
-                console.log('[INV] guardando = false (finally)');
+                } catch { this.toast('Error de conexión', 'error'); }
+            },
+
+            _csrf() {
+                // Preferir el token renderizado por Django; fallback a cookie con regex robusta.
+                const el = document.querySelector('input[name="csrfmiddlewaretoken"]');
+                if (el && el.value) return el.value;
+                const m = document.cookie.match(/(?:^|;\s*)csrftoken=([^;]+)/);
+                return m ? decodeURIComponent(m[1]) : '';
             }
-        },
-
-        async desactivarInsumo(insumo) {
-            if (!confirm(`¿Desactivar "${insumo.nombre}"?\n\nEl insumo se ocultará del catálogo y todas sus recetas quedarán inactivas. El historial de movimientos se conserva.`)) return;
-            try {
-                const resp = await fetch(`/api/inventario/insumos/${insumo.id}/`, {
-                    method: 'DELETE',
-                    credentials: 'same-origin',
-                    headers: { 'X-CSRFToken': this._csrf(), Accept: 'application/json' },
-                });
-                if (resp.ok || resp.status === 204) {
-                    await this.fetchInsumos();
-                    this.toast(`"${insumo.nombre}" desactivado`);
-                } else {
-                    const err = await resp.json().catch(() => ({}));
-                    this.toast(err.error || err.detail || 'No se pudo desactivar', 'error');
-                }
-            } catch { this.toast('Error de conexión', 'error'); }
-        },
-
-        _csrf() {
-            // Preferir el token renderizado por Django; fallback a cookie con regex robusta.
-            const el = document.querySelector('input[name="csrfmiddlewaretoken"]');
-            if (el && el.value) return el.value;
-            const m = document.cookie.match(/(?:^|;\s*)csrftoken=([^;]+)/);
-            return m ? decodeURIComponent(m[1]) : '';
         }
     }
-}
-// Registrar con Alpine.data en el mismo script donde se define la función
-document.addEventListener('alpine:init', function () {
-    Alpine.data('inventarioApp', inventarioApp);
-});
+    // Registrar con Alpine.data en el mismo script donde se define la función
+    document.addEventListener('alpine:init', function () {
+        Alpine.data('inventarioApp', inventarioApp);
+    });
 </script>
 {% endblock %}
 

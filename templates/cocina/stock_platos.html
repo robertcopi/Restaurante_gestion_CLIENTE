@@ -1,0 +1,804 @@
+{% extends 'base.html' %}
+
+{% block title %}Stock de Platos — RestaurantOS{% endblock %}
+{% block nav_stock_platos %}active{% endblock %}
+
+{% block content %}
+<div x-data="stockPlatosApp()" x-init="init()" class="max-w-6xl mx-auto flex flex-col gap-6">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <h1 class="text-3xl font-bold tracking-tight text-white m-0">Stock de Platos</h1>
+            <p class="text-on-surface-variant font-medium mt-1">
+                Gestión de producción y disponibilidad de platillos.
+            </p>
+        </div>
+        <div class="flex gap-3">
+            <button @click="openCrearModal()" class="btn btn-primary rounded-xl font-bold flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">add_circle</span> Nuevo Plato
+            </button>
+            <button @click="fetchPlatos()"
+                class="btn btn-outline-secondary rounded-xl font-bold flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">refresh</span> Actualizar
+            </button>
+        </div>
+    </div>
+
+    <!-- Barra de Búsqueda y Filtros -->
+    <div class="glass-card rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center">
+        <div class="relative flex-1 w-full">
+            <span
+                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+            <input type="text" x-model="search" placeholder="Buscar por nombre o categoría..."
+                class="form-control w-full pl-11 rounded-xl h-11 border-white/10 bg-black/20 focus:bg-white/5 transition-all outline-none text-white placeholder-on-surface-variant/60">
+        </div>
+        <select x-model="filtroStock"
+            class="form-select rounded-xl h-11 border-white/10 bg-black/20 text-white w-full md:w-auto">
+            <option value="todos">Todos los platos</option>
+            <option value="controlados">Solo control de stock activo</option>
+            <option value="bajostock">Stock bajo / Cero</option>
+        </select>
+    </div>
+
+    <!-- Tabla Agrupada por Categoría -->
+    <div class="glass-card rounded-2xl overflow-hidden border border-white/5">
+        <div class="overflow-x-auto">
+            <table class="table table-dark mb-0 w-full whitespace-nowrap">
+                <thead class="bg-black/40 border-b border-white/10">
+                    <tr>
+                        <th class="px-5 py-3 text-xs font-black uppercase tracking-wider text-on-surface-variant/80">
+                            Plato</th>
+                        <th
+                            class="px-5 py-3 text-xs font-black uppercase tracking-wider text-on-surface-variant/80 text-center">
+                            Control de Stock</th>
+                        <th
+                            class="px-5 py-3 text-xs font-black uppercase tracking-wider text-on-surface-variant/80 text-center">
+                            Stock Actual</th>
+                        <th
+                            class="px-5 py-3 text-xs font-black uppercase tracking-wider text-on-surface-variant/80 text-center">
+                            Mínimo</th>
+                        <th
+                            class="px-5 py-3 text-xs font-black uppercase tracking-wider text-on-surface-variant/80 text-right">
+                            Acciones</th>
+                    </tr>
+                </thead>
+
+                <!-- Estados de Carga / Sin Resultados -->
+                <tbody x-show="isLoading" class="border-t-0">
+                    <tr>
+                        <td colspan="5" class="py-12 text-center text-on-surface-variant border-0">
+                            <div class="spinner-border text-primary inline-block mb-3"></div>
+                            <p>Cargando platos...</p>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody x-show="!isLoading && platosAgrupados.length === 0" class="border-t-0">
+                    <tr>
+                        <td colspan="5" class="py-10 text-center text-on-surface-variant border-0">
+                            <span class="material-symbols-outlined text-4xl mb-2 opacity-50">search_off</span>
+                            <p>No se encontraron platos con los filtros actuales.</p>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <!-- Iteración por Categorías -->
+                <template x-for="grupo in platosAgrupados" :key="grupo.nombre">
+                    <tbody class="divide-y divide-white/5 text-sm font-medium border-t-0">
+                        <tr class="bg-black/60 sticky top-0 z-10">
+                            <td colspan="5" class="px-5 py-2 border-y border-white/10">
+                                <div
+                                    class="font-black text-secondary/90 tracking-wider uppercase text-[11px] flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-[16px]">restaurant_menu</span>
+                                    <span x-text="grupo.nombre"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <template x-for="plato in grupo.platos" :key="plato.id">
+                            <tr class="transition-colors hover:bg-white/5">
+                                <td class="px-5 py-3">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="h-10 w-10 shrink-0 rounded-lg overflow-hidden bg-white/10 border border-white/5">
+                                            <template x-if="plato.imagen_url">
+                                                <img :src="plato.imagen_url" alt="" class="h-full w-full object-cover">
+                                            </template>
+                                            <template x-if="!plato.imagen_url">
+                                                <div class="h-full w-full flex items-center justify-center">
+                                                    <span
+                                                        class="material-symbols-outlined text-on-surface-variant">restaurant</span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold text-white text-[15px]" x-text="plato.nombre"></div>
+                                        </div>
+                                        <template x-if="!plato.disponible">
+                                            <span
+                                                class="ml-2 inline-flex items-center rounded-full bg-red-400/10 px-2 py-0.5 text-xs font-bold text-red-500 border border-red-500/20">
+                                                Agotado
+                                            </span>
+                                        </template>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-3 text-center align-middle">
+                                    <button @click="toggleControlStock(plato)"
+                                        class="inline-flex items-center justify-center w-[46px] h-[26px] rounded-full transition-colors relative"
+                                        :class="plato.control_stock ? 'bg-primary/20 border border-primary/30' : 'bg-black/40 border border-white/10'">
+                                        <span class="w-4 h-4 rounded-full transition-all absolute"
+                                            :class="plato.control_stock ? 'bg-primary left-[24px]' : 'bg-on-surface-variant left-[4px]'"></span>
+                                    </button>
+                                </td>
+                                <td class="px-5 py-3 text-center align-middle">
+                                    <span x-show="!plato.control_stock" class="text-on-surface-variant/50">—</span>
+                                    <div x-show="plato.control_stock" class="flex flex-col items-center">
+                                        <span class="text-lg font-black"
+                                            :class="plato.stock_actual <= plato.stock_minimo ? 'text-red-400' : 'text-white'"
+                                            x-text="plato.stock_actual"></span>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-3 text-center align-middle">
+                                    <span x-show="!plato.control_stock" class="text-on-surface-variant/50">—</span>
+                                    <span x-show="plato.control_stock" class="text-on-surface-variant font-bold"
+                                        x-text="plato.stock_minimo"></span>
+                                </td>
+                                <td class="px-5 py-3 text-right align-middle">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button @click="openEditarModal(plato)"
+                                            class="w-8 h-8 rounded-lg bg-white/5 text-blue-400 hover:bg-white/10 hover:text-blue-300 flex items-center justify-center transition-colors"
+                                            title="Editar Plato">
+                                            <span class="material-symbols-outlined text-[19px]">edit</span>
+                                        </button>
+                                        <button @click="eliminarPlato(plato.id, plato.nombre)"
+                                            class="w-8 h-8 rounded-lg bg-red-400/10 text-red-500 hover:bg-red-400/20 flex items-center justify-center transition-colors"
+                                            title="Eliminar Plato">
+                                            <span class="material-symbols-outlined text-[20px]">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </template>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Crear Plato -->
+    <div class="modal fade" id="modalCrear" tabindex="-1" x-ref="modalCrear">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                <form @submit.prevent="submitCrearPlato">
+                    <div class="p-5 border-b border-white/5 flex justify-between items-center bg-black/20">
+                        <h5 class="modal-title font-bold text-white text-lg m-0">Crear Nuevo Plato</h5>
+                        <button type="button" class="btn-close btn-close-white opacity-50 hover:opacity-100"
+                            data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-4">
+                            <label
+                                class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Nombre
+                                del Plato</label>
+                            <input type="text" x-model="nuevoPlatoForm.nombre" required
+                                class="form-control rounded-xl h-11 border-white/10 bg-black/20 text-white focus:bg-white/5"
+                                placeholder="Ej: Lomo Saltado">
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Categoría</label>
+                            <select x-model="nuevoPlatoForm.categoria" required
+                                class="form-select rounded-xl h-11 border-white/10 bg-black/20 text-white">
+                                <option value="" disabled>Seleccione una categoría</option>
+                                <template x-for="cat in categorias" :key="cat.id">
+                                    <option :value="cat.id" x-text="cat.nombre"></option>
+                                </template>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Imagen
+                                del Plato (Opcional)</label>
+                            <input type="file" accept="image/*" @change="nuevoPlatoForm.imagen = $event.target.files[0]"
+                                class="form-control rounded-xl border-white/10 bg-black/20 text-white text-sm">
+                        </div>
+                        <div class="flex gap-4 mb-4">
+                            <div class="w-1/2">
+                                <label
+                                    class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Precio
+                                    Actual (S/)</label>
+                                <input type="number" step="0.01" min="0" x-model="nuevoPlatoForm.precio_actual" required
+                                    class="form-control rounded-xl h-11 border-white/10 bg-black/20 text-white focus:bg-white/5">
+                            </div>
+                            <div class="w-1/2">
+                                <label
+                                    class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">T.
+                                    Prep. (min)</label>
+                                <input type="number" step="1" min="0" x-model="nuevoPlatoForm.tiempo_preparacion_min"
+                                    class="form-control rounded-xl h-11 border-white/10 bg-black/20 text-white focus:bg-white/5"
+                                    placeholder="Opcional">
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-xl p-4 bg-primary/5 border border-primary/20 mb-2">
+                            <div class="flex items-center justify-between mb-3">
+                                <div>
+                                    <h6 class="text-white text-sm font-bold m-0">Control de Stock</h6>
+                                    <p class="text-[11px] text-on-surface-variant m-0 mt-0.5">Habilitar stock
+                                        automáticamente al crearlo</p>
+                                </div>
+                                <div class="form-check form-switch m-0 scale-125 mr-2">
+                                    <input class="form-check-input cursor-pointer" type="checkbox"
+                                        x-model="nuevoPlatoForm.control_stock">
+                                </div>
+                            </div>
+
+                            <div x-show="nuevoPlatoForm.control_stock">
+                                <label
+                                    class="form-label text-[10px] font-bold text-on-surface-variant uppercase tracking-wider m-0 mb-1">Stock
+                                    Mínimo (Alerta)</label>
+                                <input type="number" step="1" min="0" x-model="nuevoPlatoForm.stock_minimo"
+                                    class="form-control rounded-lg h-9 border-white/10 bg-black/20 text-white focus:bg-white/5 text-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 flex gap-3 justify-end bg-black/20">
+                        <button type="button" class="btn btn-dark rounded-xl font-bold px-4 hover:bg-white/10"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-xl font-bold px-6 flex items-center gap-2"
+                            :disabled="isSubmitting">
+                            <span class="material-symbols-outlined text-[18px]">add_circle</span>
+                            <span x-text="isSubmitting ? 'Creando...' : 'Crear Plato'"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ajuste Stock -->
+    <div class="modal fade" id="modalAjuste" tabindex="-1" aria-labelledby="modalAjusteLabel" aria-hidden="true"
+        x-ref="modalAjuste">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                <form @submit.prevent="submitAjuste">
+                    <div class="p-5 border-b border-white/5 flex justify-between items-center bg-black/20">
+                        <h5 class="modal-title font-bold text-white text-lg m-0" id="modalAjusteLabel">Ajustar Stock
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white opacity-50 hover:opacity-100"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-4 text-center">
+                            <h4 class="text-xl font-black text-white" x-text="platoEdit && platoEdit.nombre"></h4>
+                            <p class="text-on-surface-variant text-sm m-0">Stock actual: <span
+                                    class="font-bold text-white" x-text="platoEdit ? platoEdit.stock_actual : 0"></span>
+                            </p>
+                        </div>
+
+                        <div class="mb-4">
+                            <label
+                                class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Tipo
+                                de Ajuste</label>
+                            <select x-model="ajusteForm.tipo"
+                                class="form-select rounded-xl h-11 border-white/10 bg-black/20 text-white" required>
+                                <option value="INGRESO">Ingreso (Producción / Compra)</option>
+                                <option value="EGRESO">Egreso (Desecho / Merma)</option>
+                                <option value="AJUSTE">Ajuste de Corrección</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label
+                                class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Cantidad
+                                <span class="text-primary">(+ o -)</span></label>
+                            <input type="number" x-model="ajusteForm.cantidad" required step="1"
+                                class="form-control rounded-xl h-11 border-white/10 bg-black/20 text-white focus:bg-white/5"
+                                placeholder="Ej: 5 (ingreso) o -2 (egreso)">
+                        </div>
+
+                        <div class="mb-4">
+                            <label
+                                class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Motivo</label>
+                            <input type="text" x-model="ajusteForm.motivo" required
+                                class="form-control rounded-xl h-11 border-white/10 bg-black/20 text-white focus:bg-white/5"
+                                placeholder="Breve justificación">
+                        </div>
+
+                    </div>
+                    <div class="p-5 border-t border-white/5 flex gap-3 justify-end bg-black/20">
+                        <button type="button" class="btn btn-dark rounded-xl font-bold px-4 hover:bg-white/10"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-xl font-bold px-6 flex items-center gap-2"
+                            :disabled="isSubmitting">
+                            <span class="material-symbols-outlined text-[18px]">save</span>
+                            <span x-text="isSubmitting ? 'Guardando...' : 'Confirmar'"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Historial -->
+    <div class="modal fade" id="modalHistorial" tabindex="-1" x-ref="modalHistorial">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content glass-card rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                <div class="p-5 border-b border-white/5 flex justify-between items-center bg-black/20">
+                    <div>
+                        <h5 class="modal-title font-bold text-white text-lg m-0"
+                            x-text="'Historial: ' + (platoEdit ? platoEdit.nombre : '')"></h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white opacity-50 hover:opacity-100"
+                        data-bs-dismiss="modal"></button>
+                </div>
+                <div class="p-0 max-h-[60vh] overflow-y-auto">
+                    <template x-if="isLoadingHistorial">
+                        <div class="p-10 text-center">
+                            <div class="spinner-border text-primary inline-block mb-3"></div>
+                            <p class="text-on-surface-variant">Cargando movimientos...</p>
+                        </div>
+                    </template>
+                    <table class="table table-dark mb-0 w-full whitespace-nowrap"
+                        x-show="!isLoadingHistorial && historial.length > 0">
+                        <thead class="bg-black/60 sticky top-0 border-b border-white/10">
+                            <tr>
+                                <th class="px-4 py-3 text-xs font-bold uppercase text-on-surface-variant/80">Fecha</th>
+                                <th class="px-4 py-3 text-xs font-bold uppercase text-on-surface-variant/80">Tipo</th>
+                                <th
+                                    class="px-4 py-3 text-xs font-bold uppercase text-on-surface-variant/80 text-center">
+                                    Cant.</th>
+                                <th class="px-4 py-3 text-xs font-bold uppercase text-on-surface-variant/80">Usuario
+                                </th>
+                                <th class="px-4 py-3 text-xs font-bold uppercase text-on-surface-variant/80">Motivo</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5">
+                            <template x-for="mov in historial" :key="mov.id">
+                                <tr>
+                                    <td class="px-4 py-3 text-xs"
+                                        x-text="new Date(mov.fecha_movimiento).toLocaleString('es-PE')"></td>
+                                    <td class="px-4 py-3 text-[11px] font-bold">
+                                        <span class="px-2 py-1 rounded-md" :class="mov.tipo == 'VENTA' ? 'bg-orange-500/20 text-orange-400' : 
+                                                     (mov.tipo == 'INGRESO' ? 'bg-secondary/20 text-secondary' : 
+                                                     'bg-white/10 text-white')" x-text="mov.tipo"></span>
+                                    </td>
+                                    <td class="px-4 py-3 font-black text-center"
+                                        :class="mov.cantidad > 0 ? 'text-secondary' : 'text-orange-400'"
+                                        x-text="(mov.cantidad > 0 ? '+' : '') + mov.cantidad"></td>
+                                    <td class="px-4 py-3 text-xs font-medium text-white"
+                                        x-text="mov.usuario_nombre || 'Sistema'"></td>
+                                    <td class="px-4 py-3 text-xs text-on-surface-variant" x-text="mov.motivo"></td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    <div x-show="!isLoadingHistorial && historial.length === 0"
+                        class="p-10 text-center text-on-surface-variant">
+                        <span class="material-symbols-outlined text-4xl mb-2 opacity-50">history_toggle_off</span>
+                        <p>No hay registro de movimientos para este plato.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Plato -->
+    <div class="modal fade" id="modalEditar" tabindex="-1" x-ref="modalEditar">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content glass-card rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                <form @submit.prevent="submitEditarPlato">
+                    <div class="p-5 border-b border-white/5 flex justify-between items-center bg-black/20">
+                        <h5 class="modal-title font-bold text-white text-lg m-0">Configuración de Plato</h5>
+                        <button type="button" class="btn-close btn-close-white opacity-50 hover:opacity-100"
+                            data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="p-4 bg-primary/5 border-b border-white/5 flex justify-between items-center"
+                        x-show="platoEdit && platoEdit.control_stock">
+                        <div>
+                            <span class="text-xs text-primary uppercase font-black tracking-widest">Stock Actual</span>
+                            <div class="text-2xl font-black text-white leading-none mt-1"
+                                x-text="platoEdit ? platoEdit.stock_actual : 0"></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" @click="modalEditarInstance.hide(); openAjusteModal(platoEdit)"
+                                class="btn btn-sm bg-primary/20 hover:bg-primary/30 text-primary border-0 rounded-xl font-bold flex items-center gap-1 transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">add_box</span> Ajustar
+                            </button>
+                            <button type="button" @click="modalEditarInstance.hide(); openHistorialModal(platoEdit)"
+                                class="btn btn-sm bg-white/10 hover:bg-white/20 text-white border-0 rounded-xl font-bold flex items-center gap-1 transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">history</span> Ver Historial
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-6 max-h-[50vh] overflow-y-auto overflow-x-hidden">
+                        <div class="mb-4">
+                            <label
+                                class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Nombre
+                                del Plato</label>
+                            <input type="text" x-model="editarPlatoForm.nombre" required
+                                class="form-control rounded-xl h-11 border-white/10 bg-black/20 text-white focus:bg-white/5">
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Categoría</label>
+                            <select x-model="editarPlatoForm.categoria" required
+                                class="form-select rounded-xl h-11 border-white/10 bg-black/20 text-white">
+                                <template x-for="cat in categorias" :key="cat.id">
+                                    <option :value="cat.id" x-text="cat.nombre"></option>
+                                </template>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Imagen
+                                (Opcional)</label>
+                            <input type="file" accept="image/*"
+                                @change="editarPlatoForm.imagen = $event.target.files[0]"
+                                class="form-control rounded-xl border-white/10 bg-black/20 text-white text-sm">
+                            <template x-if="platoEdit && platoEdit.imagen_url">
+                                <div class="mt-2 flex items-center gap-2 text-xs text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-[14px]">image</span>
+                                    <span>Ver imagen actual en el menú público</span>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="flex gap-4 mb-4">
+                            <div class="w-1/2">
+                                <label
+                                    class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">Precio
+                                    (S/)</label>
+                                <input type="number" step="0.01" min="0" x-model="editarPlatoForm.precio_actual"
+                                    required
+                                    class="form-control rounded-xl h-11 border-white/10 bg-black/20 text-white focus:bg-white/5">
+                            </div>
+                            <div class="w-1/2">
+                                <label
+                                    class="form-label text-xs font-bold text-on-surface-variant uppercase tracking-wider">T.
+                                    Prep. (min)</label>
+                                <input type="number" step="1" min="0" x-model="editarPlatoForm.tiempo_preparacion_min"
+                                    class="form-control rounded-xl h-11 border-white/10 bg-black/20 text-white focus:bg-white/5">
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-xl p-4 bg-white/5 border border-white/10">
+                            <div class="flex items-center justify-between mb-3">
+                                <div>
+                                    <h6 class="text-white text-sm font-bold m-0">Control de Stock</h6>
+                                    <p class="text-[11px] text-on-surface-variant m-0 mt-0.5">Controlar disponibilidad e
+                                        inventario</p>
+                                </div>
+                                <div class="form-check form-switch m-0 scale-125 mr-2">
+                                    <input class="form-check-input cursor-pointer" type="checkbox"
+                                        x-model="editarPlatoForm.control_stock">
+                                </div>
+                            </div>
+                            <div x-show="editarPlatoForm.control_stock">
+                                <label
+                                    class="form-label text-[10px] font-bold text-on-surface-variant uppercase tracking-wider m-0 mb-1">
+                                    Aviso de Stock Mínimo
+                                </label>
+                                <input type="number" step="1" min="0" x-model="editarPlatoForm.stock_minimo"
+                                    class="form-control rounded-lg h-9 border-white/10 bg-black/20 text-white focus:bg-white/5 text-sm"
+                                    placeholder="Ej: 5">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 flex gap-3 justify-end bg-black/20">
+                        <button type="button" class="btn btn-dark rounded-xl font-bold px-4 hover:bg-white/10"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-xl font-bold px-6 flex items-center gap-2"
+                            :disabled="isSubmitting">
+                            <span class="material-symbols-outlined text-[18px]">save</span>
+                            <span x-text="isSubmitting ? 'Guardando...' : 'Guardar Cambios'"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function stockPlatosApp() {
+        return {
+            platos: [],
+            categorias: [], // Almacena categorías para el select
+            search: '',
+            filtroStock: 'todos',
+            isLoading: false,
+            isSubmitting: false,
+
+            platoEdit: null,
+            ajusteForm: { cantidad: '', tipo: 'INGRESO', motivo: '' },
+            modalAjusteInstance: null,
+
+            editarPlatoForm: {
+                id: null, nombre: '', categoria: '',
+                precio_actual: '', tiempo_preparacion_min: '',
+                control_stock: false, stock_minimo: 0, imagen: null
+            },
+            modalEditarInstance: null,
+
+            nuevoPlatoForm: {
+                nombre: '', categoria: '', precio_actual: '',
+                tiempo_preparacion_min: 15, control_stock: true, stock_minimo: 0,
+                imagen: null
+            },
+            modalCrearInstance: null,
+
+            historial: [],
+            isLoadingHistorial: false,
+            modalHistorialInstance: null,
+
+            init() {
+                this.modalAjusteInstance = new bootstrap.Modal(this.$refs.modalAjuste);
+                this.modalHistorialInstance = new bootstrap.Modal(this.$refs.modalHistorial);
+                this.modalCrearInstance = new bootstrap.Modal(this.$refs.modalCrear);
+                this.modalEditarInstance = new bootstrap.Modal(this.$refs.modalEditar);
+
+                this.fetchCategorias();
+                this.fetchPlatos();
+            },
+
+            get platosFiltrados() {
+                return this.platos.filter(p => {
+                    const term = this.search.toLowerCase();
+                    const matchSearch = p.nombre.toLowerCase().includes(term) || p.categoria_nombre.toLowerCase().includes(term);
+
+                    if (this.filtroStock === 'controlados') return matchSearch && p.control_stock;
+                    if (this.filtroStock === 'bajostock') return matchSearch && p.control_stock && p.stock_actual <= p.stock_minimo;
+                    return matchSearch;
+                });
+            },
+
+            // Computado para agrupar por categoría
+            get platosAgrupados() {
+                const groups = {};
+                this.platosFiltrados.forEach(p => {
+                    if (!groups[p.categoria_nombre]) groups[p.categoria_nombre] = [];
+                    groups[p.categoria_nombre].push(p);
+                });
+                return Object.keys(groups).sort().map(cat => ({
+                    nombre: cat,
+                    platos: groups[cat]
+                }));
+            },
+
+            async fetchCategorias() {
+                try {
+                    const res = await fetch('/api/menu/categorias/');
+                    if (res.ok) {
+                        this.categorias = await res.json();
+                    }
+                } catch (e) { console.error(e); }
+            },
+
+            async fetchPlatos() {
+                this.isLoading = true;
+                try {
+                    const res = await fetch('/api/menu/platos/', {
+                        headers: { 'X-CSRFToken': getCookie('csrftoken') }
+                    });
+                    if (res.ok) {
+                        this.platos = await res.json();
+                    }
+                } catch (e) { console.error(e); }
+                this.isLoading = false;
+            },
+
+            openCrearModal() {
+                this.nuevoPlatoForm = {
+                    nombre: '', categoria: '', precio_actual: '',
+                    tiempo_preparacion_min: 15, control_stock: true, stock_minimo: 0,
+                    imagen: null
+                };
+                if (this.categorias.length > 0) {
+                    this.nuevoPlatoForm.categoria = this.categorias[0].id;
+                }
+                this.modalCrearInstance.show();
+            },
+
+            async submitCrearPlato() {
+                this.isSubmitting = true;
+                try {
+                    const formData = new FormData();
+                    formData.append('nombre', this.nuevoPlatoForm.nombre);
+                    formData.append('categoria', this.nuevoPlatoForm.categoria);
+                    formData.append('precio_actual', this.nuevoPlatoForm.precio_actual);
+                    formData.append('tiempo_preparacion_min', this.nuevoPlatoForm.tiempo_preparacion_min);
+                    formData.append('control_stock', this.nuevoPlatoForm.control_stock);
+                    formData.append('stock_minimo', this.nuevoPlatoForm.stock_minimo);
+                    formData.append('disponible', 'true');
+                    formData.append('activo', 'true');
+
+                    if (this.nuevoPlatoForm.imagen) {
+                        formData.append('imagen', this.nuevoPlatoForm.imagen);
+                    }
+
+                    const res = await fetch('/api/menu/platos/', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: formData
+                    });
+
+                    if (res.ok || res.status === 201) {
+                        await this.fetchPlatos(); // Refrescar stock visual
+                        this.modalCrearInstance.hide();
+                    } else {
+                        const err = await res.json();
+                        alert(err.nombre ? `El plato "${this.nuevoPlatoForm.nombre}" ya existe en esta categoría.` : 'Error al crear plato.');
+                    }
+                } catch (e) { console.error(e); }
+                this.isSubmitting = false;
+            },
+
+            async toggleControlStock(plato) {
+                plato.control_stock = !plato.control_stock;
+                try {
+                    const res = await fetch(`/api/menu/platos/${plato.id}/`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({ control_stock: plato.control_stock })
+                    });
+                    if (!res.ok) { plato.control_stock = !plato.control_stock; }
+                } catch (e) {
+                    plato.control_stock = !plato.control_stock;
+                }
+            },
+
+
+
+            openAjusteModal(plato) {
+                this.platoEdit = plato;
+                this.ajusteForm = { cantidad: '', tipo: 'INGRESO', motivo: '' };
+                this.modalAjusteInstance.show();
+            },
+
+            async submitAjuste() {
+                if (!this.ajusteForm.cantidad) return;
+                this.isSubmitting = true;
+                try {
+                    const amt = parseInt(this.ajusteForm.cantidad, 10);
+                    const finalAmt = (this.ajusteForm.tipo === 'EGRESO' && amt > 0) ? -amt : amt;
+
+                    const res = await fetch(`/api/menu/platos/${this.platoEdit.id}/ajustar_stock/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({
+                            cantidad: finalAmt,
+                            tipo: this.ajusteForm.tipo,
+                            motivo: this.ajusteForm.motivo
+                        })
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        this.platoEdit.stock_actual = data.stock_actual;
+                        this.platoEdit.disponible = data.disponible;
+                        this.modalAjusteInstance.hide();
+                    } else {
+                        const err = await res.json();
+                        alert(err.error || 'Error al ajustar stock');
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+                this.isSubmitting = false;
+            },
+
+            openHistorialModal(plato) {
+                this.platoEdit = plato;
+                this.historial = [];
+                this.modalHistorialInstance.show();
+                this.fetchHistorial(plato.id);
+            },
+
+            async fetchHistorial(platoId) {
+                this.isLoadingHistorial = true;
+                try {
+                    const res = await fetch(`/api/menu/platos/${platoId}/historial_stock/`, {
+                        headers: { 'X-CSRFToken': getCookie('csrftoken') }
+                    });
+                    if (res.ok) {
+                        this.historial = await res.json();
+                    }
+                } catch (e) { console.error(e); }
+                this.isLoadingHistorial = false;
+            },
+
+            openEditarModal(plato) {
+                this.platoEdit = plato;
+                this.editarPlatoForm = {
+                    id: plato.id,
+                    nombre: plato.nombre,
+                    categoria: plato.categoria,
+                    precio_actual: plato.precio_actual,
+                    tiempo_preparacion_min: plato.tiempo_preparacion_min,
+                    control_stock: plato.control_stock,
+                    stock_minimo: plato.stock_minimo || 0,
+                    imagen: null
+                };
+                this.modalEditarInstance.show();
+            },
+
+            async submitEditarPlato() {
+                this.isSubmitting = true;
+                try {
+                    const formData = new FormData();
+                    formData.append('nombre', this.editarPlatoForm.nombre);
+                    formData.append('categoria', this.editarPlatoForm.categoria);
+                    formData.append('precio_actual', this.editarPlatoForm.precio_actual);
+                    formData.append('tiempo_preparacion_min', this.editarPlatoForm.tiempo_preparacion_min);
+                    formData.append('control_stock', this.editarPlatoForm.control_stock);
+                    formData.append('stock_minimo', this.editarPlatoForm.stock_minimo);
+
+                    if (this.editarPlatoForm.imagen instanceof File) {
+                        formData.append('imagen', this.editarPlatoForm.imagen);
+                    }
+
+                    const res = await fetch(`/api/menu/platos/${this.editarPlatoForm.id}/`, {
+                        method: 'PATCH',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: formData
+                    });
+                    if (res.ok) {
+                        await this.fetchPlatos();
+                        this.modalEditarInstance.hide();
+                    } else {
+                        alert('Error al editar plato.');
+                    }
+                } catch (e) { console.error(e); }
+                this.isSubmitting = false;
+            },
+
+            async eliminarPlato(platoId, platoNombre) {
+                if (confirm(`¿Estás seguro de que deseas eliminar el plato "${platoNombre}"?`)) {
+                    try {
+                        const res = await fetch(`/api/menu/platos/${platoId}/`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRFToken': getCookie('csrftoken')
+                            }
+                        });
+                        if (res.ok || res.status === 204) {
+                            await this.fetchPlatos();
+                        } else {
+                            const err = await res.json();
+                            alert(err.detail || 'Error al eliminar el plato. Es posible que esté asociado a otros registros.');
+                        }
+                    } catch (e) {
+                        console.error(e);
+                        alert('Error de conexión.');
+                    }
+                }
+            }
+        }
+    }
+</script>
+{% endblock %}

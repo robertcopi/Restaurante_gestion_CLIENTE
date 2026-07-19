@@ -559,7 +559,8 @@
       {% if user.rol.nombre == 'ADMIN' or user.rol.nombre == 'MOZO' %}
       <button onclick="toggleTemaGlobal()" class="hamburger" title="Cambiar tema"
         style="background:rgb(var(--primary)/0.12);color:rgb(var(--primary));">
-        <span class="material-symbols-outlined" style="font-size:1.1rem;">{% if config_global.tema_oscuro %}light_mode{% else %}dark_mode{% endif %}</span>
+        <span class="material-symbols-outlined" style="font-size:1.1rem;">{% if config_global.tema_oscuro %}light_mode{%
+          else %}dark_mode{% endif %}</span>
       </button>
       {% endif %}
     </div>
@@ -612,6 +613,9 @@
       <span class="nav-section-label">Cocina</span>
       <a href="/cocina/kds/" class="nav-item {% block nav_cocina %}{% endblock %}">
         <span class="material-symbols-outlined">oven_gen</span> Pantalla KDS
+      </a>
+      <a href="{% url 'stock_platos_view' %}" class="nav-item {% block nav_stock_platos %}{% endblock %}">
+        <span class="material-symbols-outlined">kitchen</span> Stock de Platos
       </a>
       {% endif %}
 

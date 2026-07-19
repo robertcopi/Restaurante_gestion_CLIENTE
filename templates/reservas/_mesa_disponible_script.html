@@ -1,54 +1,78 @@
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const fechaInput = document.querySelector('.reserva-fecha-input, #id_fecha');
-    const horaInput = document.querySelector('.reserva-hora-input, #id_hora');
-    const mesaSelect = document.querySelector('.reserva-mesa-input, #id_mesa');
-    if (!fechaInput || !horaInput || !mesaSelect) return;
+    document.addEventListener('DOMContentLoaded', function () {
+        const fechaInput = document.querySelector('.reserva-fecha-input, #id_fecha');
+        const horaInput = document.querySelector('.reserva-hora-input, #id_hora');
+        const mesaSelect = document.querySelector('.reserva-mesa-input, #id_mesa');
+        if (!fechaInput || !horaInput || !mesaSelect) return;
 
-    function actualizarMesasDisponibles() {
-        const fecha = fechaInput.value;
-        const hora = horaInput.value;
-        if (!fecha || !hora) {
-            mesaSelect.innerHTML = '<option value="">Seleccione fecha y hora primero</option>';
-            mesaSelect.disabled = true;
-            return;
+        // Configurar fecha mínima (hoy)
+        const now = new Date();
+        const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+        fechaInput.min = today;
+
+        function updateTimeConstraint() {
+            if (fechaInput.value === today) {
+                const currentNow = new Date();
+                const hours = String(currentNow.getHours()).padStart(2, '0');
+                const minutes = String(currentNow.getMinutes()).padStart(2, '0');
+                horaInput.min = `${hours}:${minutes}`;
+
+                if (horaInput.value && horaInput.value < horaInput.min) {
+                    horaInput.value = '';
+                }
+            } else {
+                horaInput.min = '';
+            }
         }
 
-        mesaSelect.disabled = true;
-        mesaSelect.innerHTML = '<option value="">Cargando mesas...</option>';
+        fechaInput.addEventListener('change', updateTimeConstraint);
+        fechaInput.addEventListener('input', updateTimeConstraint);
+        updateTimeConstraint();
 
-        const params = new URLSearchParams({ fecha: fecha, hora: hora });
-        fetch('/reservas/api/mesas-disponibles/?' + params.toString())
-            .then(function (response) { return response.json(); })
-            .then(function (data) {
-                const valorActual = mesaSelect.value;
-                mesaSelect.innerHTML = '<option value="">Seleccione una mesa (opcional)</option>';
-                data.mesas.forEach(function (mesa) {
-                    const option = document.createElement('option');
-                    option.value = mesa.id;
-                    option.textContent = mesa.label;
-                    mesaSelect.appendChild(option);
+        function actualizarMesasDisponibles() {
+            const fecha = fechaInput.value;
+            const hora = horaInput.value;
+            if (!fecha || !hora) {
+                mesaSelect.innerHTML = '<option value="">Seleccione fecha y hora primero</option>';
+                mesaSelect.disabled = true;
+                return;
+            }
+
+            mesaSelect.disabled = true;
+            mesaSelect.innerHTML = '<option value="">Cargando mesas...</option>';
+
+            const params = new URLSearchParams({ fecha: fecha, hora: hora });
+            fetch('/reservas/api/mesas-disponibles/?' + params.toString())
+                .then(function (response) { return response.json(); })
+                .then(function (data) {
+                    const valorActual = mesaSelect.value;
+                    mesaSelect.innerHTML = '<option value="">Seleccione una mesa (opcional)</option>';
+                    data.mesas.forEach(function (mesa) {
+                        const option = document.createElement('option');
+                        option.value = mesa.id;
+                        option.textContent = mesa.label;
+                        mesaSelect.appendChild(option);
+                    });
+                    if (valorActual && [...mesaSelect.options].some(function (o) { return o.value === valorActual; })) {
+                        mesaSelect.value = valorActual;
+                    }
+                    if (data.mesas.length === 0) {
+                        mesaSelect.innerHTML = '<option value="">No hay mesas disponibles en ese horario</option>';
+                    }
+                    mesaSelect.disabled = false;
+                })
+                .catch(function () {
+                    mesaSelect.innerHTML = '<option value="">Error al cargar mesas</option>';
+                    mesaSelect.disabled = false;
                 });
-                if (valorActual && [...mesaSelect.options].some(function (o) { return o.value === valorActual; })) {
-                    mesaSelect.value = valorActual;
-                }
-                if (data.mesas.length === 0) {
-                    mesaSelect.innerHTML = '<option value="">No hay mesas disponibles en ese horario</option>';
-                }
-                mesaSelect.disabled = false;
-            })
-            .catch(function () {
-                mesaSelect.innerHTML = '<option value="">Error al cargar mesas</option>';
-                mesaSelect.disabled = false;
-            });
-    }
+        }
 
-    fechaInput.addEventListener('change', actualizarMesasDisponibles);
-    horaInput.addEventListener('change', actualizarMesasDisponibles);
-    if (fechaInput.value && horaInput.value) {
-        actualizarMesasDisponibles();
-    } else {
-        mesaSelect.disabled = true;
-    }
-});
+        fechaInput.addEventListener('change', actualizarMesasDisponibles);
+        horaInput.addEventListener('change', actualizarMesasDisponibles);
+        if (fechaInput.value && horaInput.value) {
+            actualizarMesasDisponibles();
+        } else {
+            mesaSelect.disabled = true;
+        }
+    });
 </script>

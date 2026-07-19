@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Categoria(models.Model):
     """Categoría de platos (Entradas, Fondos, etc.) según el esquema SQL."""
@@ -29,6 +30,9 @@ class Plato(models.Model):
     precio_actual = models.DecimalField(max_digits=10, decimal_places=2)
     tiempo_preparacion_min = models.PositiveSmallIntegerField(default=0)
     disponible = models.BooleanField(default=True)
+    control_stock = models.BooleanField(default=False)
+    stock_actual = models.IntegerField(default=0)
+    stock_minimo = models.IntegerField(default=0)
     imagen = models.ImageField(upload_to='platos/', blank=True, null=True)
     activo = models.BooleanField(default=True)
     
@@ -58,3 +62,22 @@ class Plato(models.Model):
     @property
     def tiempo_prep(self):
         return self.tiempo_preparacion_min
+
+class MovimientoPlato(models.Model):
+    TIPO_CHOICES = (
+        ('INGRESO', 'Ingreso de Producción'),
+        ('EGRESO', 'Egreso por Merma/Pérdida'),
+        ('AJUSTE', 'Ajuste de Inventario'),
+        ('VENTA', 'Venta Automática (Comanda)'),
+    )
+    plato = models.ForeignKey(Plato, on_delete=models.CASCADE, related_name='movimientos_stock')
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
+    cantidad = models.IntegerField()
+    motivo = models.CharField(max_length=255, blank=True)
+    fecha_movimiento = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'movimiento_plato'
+        ordering = ['-fecha_movimiento']
+

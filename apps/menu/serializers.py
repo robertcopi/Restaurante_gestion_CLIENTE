@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Categoria, Plato
+from .models import Categoria, Plato, MovimientoPlato
 from apps.inventario.models import RecetaInsumo, Insumo
 
 class RecetaInsumoSerializer(serializers.ModelSerializer):
@@ -28,6 +28,15 @@ class CategoriaSerializer(serializers.ModelSerializer):
         model = Categoria
         fields = '__all__'
 
+class MovimientoPlatoSerializer(serializers.ModelSerializer):
+    usuario_nombre = serializers.CharField(source='usuario.username', read_only=True)
+    plato_nombre = serializers.CharField(source='plato.nombre', read_only=True)
+    
+    class Meta:
+        model = MovimientoPlato
+        fields = '__all__'
+
+
 class PlatoSerializer(serializers.ModelSerializer):
     """Serializer para platos con información de disponibilidad e insumos."""
     categoria_nombre = serializers.ReadOnlyField(source='categoria.nombre')
@@ -46,7 +55,8 @@ class PlatoSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'nombre', 'descripcion', 'categoria', 'categoria_nombre',
             'precio_actual', 'tiempo_preparacion_min', 'imagen', 'imagen_url',
-            'disponible', 'activo', 'receta', 'receta_ids',
+            'disponible', 'activo', 'control_stock', 'stock_actual', 'stock_minimo', 
+            'receta', 'receta_ids',
             'created_at', 'updated_at'
         ]
-        read_only_fields = ['created_at', 'updated_at', 'imagen_url']
+        read_only_fields = ['created_at', 'updated_at', 'imagen_url', 'stock_actual']

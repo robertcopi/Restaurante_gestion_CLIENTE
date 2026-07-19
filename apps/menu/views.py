@@ -207,6 +207,54 @@ class PlatoViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_404_NOT_FOUND
             )
 
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated, EsAdmin])
+    def ajustar_stock(self, request, pk=None):
+        """POST /api/menu/platos/{id}/ajustar_stock/"""
+        plato = self.get_object()
+        
+        try:
+            cantidad = int(request.data.get('cantidad', 0))
+            tipo = request.data.get('tipo', 'AJUSTE')
+            motivo = request.data.get('motivo', 'Ajuste manual')
+        except ValueError:
+            return Response({'error': 'Cantidad inválida'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        if cantidad == 0:
+            return Response({'error': 'La cantidad no puede ser 0'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        from django.db import transaction
+        from apps.menu.models import MovimientoPlato
+        
+        with transaction.atomic():
+            plato = Plato.objects.select_for_update().get(pk=pk)
+            plato.stock_actual += cantidad
+            
+            if plato.stock_actual > 0:
+                plato.disponible = True
+            elif plato.stock_actual <= 0:
+                plato.disponible = False
+                
+            plato.save(update_fields=['stock_actual', 'disponible'])
+            
+            MovimientoPlato.objects.create(
+                plato=plato,
+                usuario=request.user,
+                tipo=tipo,
+                cantidad=cantidad,
+                motivo=motivo
+            )
+            
+        return Response({'mensaje': 'Stock actualizado', 'stock_actual': plato.stock_actual, 'disponible': plato.disponible})
+
+    @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated, EsAdmin])
+    def historial_stock(self, request, pk=None):
+        """GET /api/menu/platos/{id}/historial_stock/"""
+        plato = self.get_object()
+        movimientos = plato.movimientos_stock.all()
+        from apps.menu.serializers import MovimientoPlatoSerializer
+        serializer = MovimientoPlatoSerializer(movimientos, many=True)
+        return Response(serializer.data)
+
 
 @require_GET
 def catalogo_api(request):

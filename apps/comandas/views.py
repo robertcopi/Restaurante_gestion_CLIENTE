@@ -363,10 +363,17 @@ def api_marcar_pedido_entregado(request, pk):
             )
 
         ahora = timezone.now()
+        
+        from apps.menu.services import descontar_stock_plato
+        # Convertir a lista para usar las instancias en el loop
+        for linea in list(lineas_listas):
+            descontar_stock_plato(linea, request.user)
+
         lineas_listas.update(
             estado=LineaComanda.Estado.ENTREGADO,
             fecha_entregado=ahora,
         )
+
 
         comanda.marcar_como_lista()
 
@@ -557,6 +564,12 @@ def kds_view(request):
     """Renderiza el template del Kitchen Display System."""
     zonas = Zona.objects.filter(activo=True).order_by('nombre')
     return render(request, 'cocina/kds.html', {'zonas': zonas})
+
+@login_required
+@rol_requerido('COCINERO', 'ADMIN')
+def stock_platos_view(request):
+    """Renderiza el panel de gestión de stock de platos."""
+    return render(request, 'cocina/stock_platos.html')
 
 
 # ─────────────────────────────────────────────────────────────────────────────

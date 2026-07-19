@@ -135,6 +135,8 @@ class LineaComanda(models.Model):
         help_text='Motivo de anulación del plato.'
     )
     
+    stock_descontado = models.BooleanField(default=False, help_text='Indica si ya se descontó del stock del plato')
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

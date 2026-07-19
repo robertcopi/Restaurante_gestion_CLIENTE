@@ -101,7 +101,7 @@
         if (document.fonts && document.fonts.load) {
             document.fonts.load('24px "Material Symbols Outlined"')
                 .then(() => document.documentElement.classList.add('icons-ready'))
-                .catch(() => {});
+                .catch(() => { });
         }
     </script>
 </head>
@@ -130,21 +130,14 @@
                         class="text-sm font-semibold text-on-surface-variant hover:text-white transition">Reservar
                         Mesa</a>
 
-                    <div x-show="itemCount > 0" x-cloak class="w-px h-6 bg-white/10 mx-2"></div>
 
-                    <a href="{% url 'clientes:carrito' %}"
-                        x-show="itemCount > 0" x-cloak
-                        class="relative text-on-surface-variant hover:text-white transition flex items-center">
-                        <span class="material-symbols-outlined">shopping_cart</span>
-                        <span x-text="itemCount"
-                            class="absolute -top-2 -right-2 bg-secondary text-background text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center"></span>
-                    </a>
 
                     {% if user.is_authenticated and user.rol.nombre == 'CLIENTE' %}
                     <a href="{% url 'clientes:mis_reservas' %}"
                         class="text-sm font-semibold text-on-surface hover:text-primary transition flex items-center gap-1">
                         <span class="material-symbols-outlined text-base">person</span>
-                        <span>{% if user.perfil_cliente %}{{ user.perfil_cliente.nombres|default:user.username }}{% else %}{{ user.username }}{% endif %}</span>
+                        <span>{% if user.perfil_cliente %}{{ user.perfil_cliente.nombres|default:user.username }}{% else
+                            %}{{ user.username }}{% endif %}</span>
                     </a>
                     <form action="{% url 'logout' %}" method="post" class="inline" @submit="clearCartForLogout()">
                         {% csrf_token %}

@@ -51,9 +51,11 @@
     <section class="relative overflow-hidden border-b border-white/10">
         <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=90&w=1800"
             alt="Mesa reservada en TICUY" class="absolute inset-0 h-full w-full object-cover">
-        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.92),rgba(0,0,0,0.58),rgba(0,0,0,0.82))]"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.92),rgba(0,0,0,0.58),rgba(0,0,0,0.82))]">
+        </div>
 
-        <div class="relative z-10 mx-auto grid min-h-[52vh] max-w-7xl gap-10 px-4 pb-12 pt-24 sm:px-6 lg:grid-cols-[1fr_360px] lg:px-8">
+        <div
+            class="relative z-10 mx-auto grid min-h-[52vh] max-w-7xl gap-10 px-4 pb-12 pt-24 sm:px-6 lg:grid-cols-[1fr_360px] lg:px-8">
             <div class="flex max-w-3xl flex-col justify-end">
                 <a href="{% url 'clientes:mis_reservas' %}"
                     class="mb-8 inline-flex w-fit items-center gap-2 border border-white/15 bg-white/[0.06] px-4 py-3 text-xs font-black uppercase tracking-[0.16em] text-white/80 transition hover:border-secondary hover:text-white">
@@ -76,14 +78,16 @@
                         <span class="material-symbols-outlined text-secondary">event_available</span>
                         <div>
                             <p class="font-black text-white">Mesa planificada</p>
-                            <p class="mt-1 text-sm leading-6 text-white/58">El sistema muestra mesas disponibles según fecha y hora.</p>
+                            <p class="mt-1 text-sm leading-6 text-white/58">El sistema muestra mesas disponibles según
+                                fecha y hora.</p>
                         </div>
                     </div>
                     <div class="flex gap-4">
                         <span class="material-symbols-outlined text-[#f0c15a]">restaurant</span>
                         <div>
                             <p class="font-black text-white">Pedido anticipado</p>
-                            <p class="mt-1 text-sm leading-6 text-white/58">Agrega platos y paga para confirmar la atención.</p>
+                            <p class="mt-1 text-sm leading-6 text-white/58">Agrega platos y paga para confirmar la
+                                atención.</p>
                         </div>
                     </div>
                     <div class="border-t border-white/10 pt-5">
@@ -130,15 +134,21 @@
 
                     <div class="grid gap-5 md:grid-cols-2">
                         <div class="md:col-span-2">
-                            <label for="{{ form.cliente_nombre.id_for_label }}" class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Nombre completo *</label>
+                            <label for="{{ form.cliente_nombre.id_for_label }}"
+                                class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Nombre
+                                completo *</label>
                             {{ form.cliente_nombre }}
                         </div>
                         <div>
-                            <label for="{{ form.cliente_telefono.id_for_label }}" class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Teléfono *</label>
+                            <label for="{{ form.cliente_telefono.id_for_label }}"
+                                class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Teléfono
+                                *</label>
                             {{ form.cliente_telefono }}
                         </div>
                         <div>
-                            <label for="{{ form.cliente_email.id_for_label }}" class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Correo electrónico</label>
+                            <label for="{{ form.cliente_email.id_for_label }}"
+                                class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Correo
+                                electrónico</label>
                             {{ form.cliente_email }}
                         </div>
                     </div>
@@ -155,37 +165,45 @@
 
                     <div class="grid gap-5 md:grid-cols-3">
                         <div>
-                            <label for="{{ form.fecha.id_for_label }}" class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Fecha *</label>
+                            <label for="{{ form.fecha.id_for_label }}"
+                                class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Fecha
+                                *</label>
                             {{ form.fecha }}
                         </div>
                         <div>
-                            <label for="{{ form.hora.id_for_label }}" class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Hora *</label>
+                            <label for="{{ form.hora.id_for_label }}"
+                                class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Hora
+                                *</label>
                             {{ form.hora }}
                         </div>
                         <div>
-                            <label for="{{ form.cantidad_personas.id_for_label }}" class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Personas *</label>
+                            <label for="{{ form.cantidad_personas.id_for_label }}"
+                                class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Personas
+                                *</label>
                             {{ form.cantidad_personas }}
                         </div>
                         <div class="md:col-span-3">
-                            <label for="{{ form.mesa.id_for_label }}" class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Mesa opcional</label>
+                            <label for="{{ form.mesa.id_for_label }}"
+                                class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Mesa
+                                opcional</label>
                             {{ form.mesa }}
                         </div>
                         <div class="md:col-span-3">
-                            <label for="{{ form.observaciones.id_for_label }}" class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Observaciones</label>
+                            <label for="{{ form.observaciones.id_for_label }}"
+                                class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Observaciones</label>
                             {{ form.observaciones }}
                         </div>
                     </div>
                 </section>
-
-                {% include 'reservas/_selector_platos.html' %}
             </div>
 
             <aside class="lg:sticky lg:top-24">
                 <div class="border border-white/10 bg-[#11131b] p-5">
-                    <p class="text-[11px] font-black uppercase tracking-[0.24em] text-[#f0c15a]">Confirmación</p>
+                    <p class="text-[11px] font-black uppercase tracking-[0.24em] text-[#f0c15a]">Confirmación
+                    </p>
                     <h2 class="mt-2 text-2xl font-black text-white">Finaliza tu reserva</h2>
                     <p class="mt-4 text-sm leading-7 text-white/55">
-                        Puedes pagar ahora para confirmar o guardar la reserva como pendiente.
+                        Confirma los datos para registrar tu mesa.
                     </p>
 
                     <div class="my-6 space-y-3 border-y border-white/10 py-5 text-sm">
@@ -200,15 +218,10 @@
                     </div>
 
                     <div class="grid gap-3">
-                        <button type="submit" name="accion" value="confirmar_pedido"
-                            class="btn-primary inline-flex min-h-12 items-center justify-center gap-2 px-5 text-xs font-black uppercase tracking-[0.16em]">
-                            Confirmar y pagar
-                            <span class="material-symbols-outlined text-base">payments</span>
-                        </button>
                         <button type="submit" name="accion" value="guardar_pendiente"
-                            class="inline-flex min-h-12 items-center justify-center gap-2 border border-white/15 bg-white/[0.04] px-5 text-xs font-black uppercase tracking-[0.16em] text-white transition hover:border-white/30 hover:bg-white/[0.08]">
-                            Guardar pendiente
-                            <span class="material-symbols-outlined text-base">schedule</span>
+                            class="btn-primary inline-flex min-h-12 items-center justify-center gap-2 px-5 text-xs font-black uppercase tracking-[0.16em]">
+                            Confirmar Reserva
+                            <span class="material-symbols-outlined text-base">check_circle</span>
                         </button>
                     </div>
                 </div>

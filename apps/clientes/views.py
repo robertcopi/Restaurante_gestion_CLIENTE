@@ -55,11 +55,17 @@ def registro_cliente(request):
 
         password = request.POST.get('password')
 
-        dni = request.POST.get('dni')
+        dni = request.POST.get('dni', '')
 
-        telefono = request.POST.get('telefono')
+        telefono = request.POST.get('telefono', '')
 
-        
+        if len(dni) != 8 or not dni.isdigit():
+            messages.error(request, "El DNI/Documento debe contener exactamente 8 números.")
+            return render(request, 'clientes/registro.html')
+
+        if len(telefono) != 9 or not telefono.isdigit():
+            messages.error(request, "El teléfono celular debe contener exactamente 9 números.")
+            return render(request, 'clientes/registro.html')
 
         if Usuario.objects.filter(username=username).exists():
 
@@ -72,6 +78,12 @@ def registro_cliente(request):
         if Usuario.objects.filter(email=email).exists():
 
             messages.error(request, "El correo electrónico ya está registrado.")
+
+            return render(request, 'clientes/registro.html')
+
+        if dni and Usuario.objects.filter(dni=dni).exists():
+
+            messages.error(request, "El DNI ingresado ya se encuentra registrado.")
 
             return render(request, 'clientes/registro.html')
 
@@ -237,9 +249,9 @@ def nueva_reserva(request):
                 else:
                     return redirect('pago_reserva', pk=reserva.pk)
 
-            messages.warning(request, "Reserva guardada como pendiente. Confirme su pedido para activarla.")
+            messages.success(request, "Reserva registrada con éxito.")
 
-            return redirect('confirmar_pedido_reserva', pk=reserva.pk)
+            return redirect('clientes:mis_reservas')
 
         messages.error(request, "Revisa los datos del formulario e intenta de nuevo.")
 
