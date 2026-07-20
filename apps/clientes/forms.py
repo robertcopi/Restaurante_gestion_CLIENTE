@@ -22,10 +22,23 @@ class ClienteReservaForm(ReservaForm):
         self.cliente = cliente
         super().__init__(*args, **kwargs)
 
+        self.fields['cliente_nombre'].required = True
         self.fields['cliente_telefono'].required = True
         self.fields['cliente_dni'].required = True
         self.fields['mesa'].required = False
         self.fields['mesa'].widget.attrs['class'] = 'form-select rounded-xl p-3 reserva-mesa-input'
+
+        self.fields['cliente_nombre'].widget.attrs.update({'required': 'required'})
+        self.fields['cliente_telefono'].widget.attrs.update({'required': 'required'})
+        self.fields['cliente_dni'].widget.attrs.update({'required': 'required'})
+
+        # Expand person limits for the frontend spinner widget
+        self.fields['cantidad_personas'].widget.attrs.update({
+            'min': '1',
+            'max': '6',
+            'required': 'required',
+            'class': 'form-control rounded-xl p-3'
+        })
 
         fecha, hora = parse_fecha_hora_form(
             self.data.get('fecha') if self.data else None,

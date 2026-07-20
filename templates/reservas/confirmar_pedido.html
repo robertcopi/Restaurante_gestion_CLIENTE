@@ -13,19 +13,35 @@
             </a>
             <div>
                 <h2 class="h4 font-bold text-white mb-0">Confirmar Pedido</h2>
-                <p class="text-muted small mb-0">Reserva #RES-{{ reserva.id|stringformat:"04d" }} · {{ reserva.cliente_nombre }}</p>
+                <p class="text-muted small mb-0">Reserva #RES-{{ reserva.id|stringformat:"04d" }} · {{
+                    reserva.cliente_nombre }}</p>
             </div>
         </div>
+
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show glass-card text-white border-0 border-start border-4 border-{{ message.tags|default:'primary' }}"
+                role="alert">
+                {{ message }}
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
 
         <div class="glass-card card-dark p-4 p-md-5 mb-4">
             <div class="row g-3 small">
                 <div class="col-md-4">
                     <div class="text-muted">Fecha y hora</div>
-                    <div class="text-white fw-semibold">{{ reserva.fecha|date:"d M Y" }} · {{ reserva.hora|time:"H:i" }}</div>
+                    <div class="text-white fw-semibold">{{ reserva.fecha|date:"d M Y" }} · {{ reserva.hora|time:"H:i" }}
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <div class="text-muted">Mesa</div>
-                    <div class="text-white fw-semibold">{% if reserva.mesa %}Mesa {{ reserva.mesa.numero }}{% else %}Sin asignar{% endif %}</div>
+                    <div class="text-white fw-semibold">{% if reserva.mesa %}Mesa {{ reserva.mesa.numero }}{% else %}Sin
+                        asignar{% endif %}</div>
                 </div>
                 <div class="col-md-4">
                     <div class="text-muted">Personas</div>

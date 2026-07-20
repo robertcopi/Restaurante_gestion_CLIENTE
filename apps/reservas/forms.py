@@ -20,6 +20,7 @@ class ReservaForm(forms.ModelForm):
         widgets = {
             'fecha': forms.DateInput(attrs={'type': 'date', 'class': 'reserva-fecha-input'}),
             'hora': forms.TimeInput(attrs={'type': 'time', 'class': 'reserva-hora-input'}),
+            'cantidad_personas': forms.NumberInput(attrs={'min': '1', 'max': '6', 'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):

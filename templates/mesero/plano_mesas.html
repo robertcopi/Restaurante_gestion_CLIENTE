@@ -4,8 +4,11 @@
 
 {% block extra_css %}
 <!-- Material Symbols & Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
 
 <style>
     .glass-card {
@@ -14,6 +17,7 @@
         border: 1px solid rgb(var(--border) / 0.1);
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
     }
+
     .mesa-card {
         position: relative;
         padding: 1.5rem;
@@ -27,43 +31,51 @@
         justify-content: space-between;
         min-height: 160px;
     }
+
     .mesa-card.libre {
         background: rgba(78, 222, 163, 0.05);
         border-color: rgba(78, 222, 163, 0.2);
     }
+
     .mesa-card.libre:hover {
         background: rgba(78, 222, 163, 0.1);
         border-color: rgba(78, 222, 163, 0.5);
         transform: translateY(-4px);
         box-shadow: 0 12px 24px -8px rgba(78, 222, 163, 0.3);
     }
+
     .mesa-card.ocupada {
         background: rgba(239, 68, 68, 0.18);
         border-color: rgba(239, 68, 68, 0.45);
-        box-shadow: inset 0 0 20px rgba(239,68,68,0.08);
+        box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.08);
     }
+
     .mesa-card.ocupada:hover {
         background: rgba(239, 68, 68, 0.25);
         border-color: rgba(239, 68, 68, 0.6);
         transform: translateY(-4px);
         box-shadow: 0 12px 24px -8px rgba(239, 68, 68, 0.4);
     }
+
     .mesa-card.entregado {
         background: rgba(251, 191, 36, 0.16);
         border-color: rgba(251, 191, 36, 0.45);
-        box-shadow: inset 0 0 20px rgba(251,191,36,0.07);
+        box-shadow: inset 0 0 20px rgba(251, 191, 36, 0.07);
     }
+
     .mesa-card.entregado:hover {
         background: rgba(251, 191, 36, 0.24);
         border-color: rgba(251, 191, 36, 0.6);
         transform: translateY(-4px);
         box-shadow: 0 12px 24px -8px rgba(251, 191, 36, 0.45);
     }
+
     .mesa-card.por_pagar {
         background: rgba(6, 182, 212, 0.15);
         border-color: rgba(6, 182, 212, 0.4);
-        box-shadow: inset 0 0 20px rgba(6,182,212,0.06);
+        box-shadow: inset 0 0 20px rgba(6, 182, 212, 0.06);
     }
+
     .mesa-card.por_pagar:hover {
         background: rgba(6, 182, 212, 0.22);
         border-color: rgba(6, 182, 212, 0.6);
@@ -76,55 +88,78 @@
         background: rgba(16, 185, 129, 0.15);
         border-color: rgba(16, 185, 129, 0.4);
     }
+
     html.light .mesa-card.libre:hover {
         background: rgba(16, 185, 129, 0.25);
         border-color: rgba(16, 185, 129, 0.6);
         box-shadow: 0 12px 24px -8px rgba(16, 185, 129, 0.4);
     }
+
     html.light .mesa-card.ocupada {
         background: rgba(239, 68, 68, 0.12);
         border-color: rgba(239, 68, 68, 0.4);
     }
+
     html.light .mesa-card.ocupada:hover {
         background: rgba(239, 68, 68, 0.2);
         border-color: rgba(239, 68, 68, 0.6);
         box-shadow: 0 12px 24px -8px rgba(239, 68, 68, 0.4);
     }
+
     html.light .mesa-card.entregado {
         background: rgba(245, 158, 11, 0.16);
         border-color: rgba(245, 158, 11, 0.42);
     }
+
     html.light .mesa-card.entregado:hover {
         background: rgba(245, 158, 11, 0.24);
         border-color: rgba(245, 158, 11, 0.6);
         box-shadow: 0 12px 24px -8px rgba(245, 158, 11, 0.42);
     }
+
     html.light .mesa-card.por_pagar {
         background: rgba(6, 182, 212, 0.12);
         border-color: rgba(6, 182, 212, 0.4);
     }
+
     html.light .mesa-card.por_pagar:hover {
         background: rgba(6, 182, 212, 0.2);
         border-color: rgba(6, 182, 212, 0.6);
         box-shadow: 0 12px 24px -8px rgba(6, 182, 212, 0.4);
     }
-    
+
     /* El icono de mesa de fondo también necesita más opacidad en light mode */
     html.light .mesa-icon-bg {
         opacity: 0.15 !important;
     }
-    .pulse { animation: pulse-anim 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-    @keyframes pulse-anim { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+
+    .pulse {
+        animation: pulse-anim 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes pulse-anim {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: .4;
+        }
+    }
 
     /* ── Drag & Drop: Unión de Mesas ── */
     .mesa-card[draggable="true"] {
         cursor: grab;
     }
+
     .mesa-card[draggable="true"]:active {
         cursor: grabbing;
         opacity: 0.75;
         transform: scale(0.96);
     }
+
     .mesa-card.drag-over {
         border-color: #f97316 !important;
         background: rgba(249, 115, 22, 0.15) !important;
@@ -132,6 +167,7 @@
         box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.35), 0 12px 30px -8px rgba(249, 115, 22, 0.4) !important;
         transition: all 0.15s ease !important;
     }
+
     /* ── Badge de unión ── */
     .union-badge {
         position: absolute;
@@ -146,25 +182,28 @@
         padding: 3px 10px;
         border-radius: 99px;
         white-space: nowrap;
-        box-shadow: 0 2px 8px rgba(249,115,22,0.5);
+        box-shadow: 0 2px 8px rgba(249, 115, 22, 0.5);
         z-index: 10;
         display: flex;
         align-items: center;
         gap: 4px;
         pointer-events: none;
     }
+
     .mesa-card.unida {
         border-color: rgba(249, 115, 22, 0.45) !important;
         box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.2);
     }
+
     .mesa-card.unida-secundaria {
         opacity: 0.7;
     }
+
     .disolver-btn {
         pointer-events: all;
         cursor: pointer;
-        background: rgba(239,68,68,0.15);
-        border: 1px solid rgba(239,68,68,0.3);
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.3);
         color: #fca5a5;
         border-radius: 6px;
         padding: 2px 6px;
@@ -172,41 +211,50 @@
         font-weight: 900;
         transition: all 0.2s;
     }
+
     .disolver-btn:hover {
-        background: rgba(239,68,68,0.3);
+        background: rgba(239, 68, 68, 0.3);
         color: white;
     }
-    html.light .union-badge { box-shadow: 0 2px 8px rgba(249,115,22,0.35); }
+
+    html.light .union-badge {
+        box-shadow: 0 2px 8px rgba(249, 115, 22, 0.35);
+    }
+
     /* ── Card de Unión (ocupa 2 columnas) ── */
     .mesa-card.union-group {
         grid-column: span 2;
         border-color: rgba(249, 115, 22, 0.5) !important;
         background: linear-gradient(135deg,
-            rgba(249,115,22,0.08) 0%,
-            rgba(var(--surface)/0.85) 60%) !important;
-        box-shadow: 0 0 0 1px rgba(249,115,22,0.25), 0 12px 40px -8px rgba(249,115,22,0.2);
+                rgba(249, 115, 22, 0.08) 0%,
+                rgba(var(--surface)/0.85) 60%) !important;
+        box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.25), 0 12px 40px -8px rgba(249, 115, 22, 0.2);
     }
+
     .mesa-card.union-group .union-number {
         font-size: clamp(1.6rem, 4vw, 2.8rem);
         font-weight: 900;
         line-height: 1;
         letter-spacing: -0.03em;
     }
+
     .mesa-card.union-group .union-divider {
         width: 1px;
-        background: rgba(249,115,22,0.3);
+        background: rgba(249, 115, 22, 0.3);
         align-self: stretch;
         margin: 0 1rem;
     }
+
     /* Eliminar estilos de mesas secundarias (no se renderizan) */
     .mesa-card.union-secondary {
         display: none;
     }
+
     .union-pill {
         display: inline-flex;
         align-items: center;
         gap: 4px;
-        background: linear-gradient(135deg,#f97316,#fb923c);
+        background: linear-gradient(135deg, #f97316, #fb923c);
         color: white;
         font-size: 9px;
         font-weight: 900;
@@ -215,6 +263,7 @@
         border-radius: 99px;
         text-transform: uppercase;
     }
+
     /* Hint drag siempre visible para MOZO y ADMIN en mesas libres */
     .drag-hint {
         display: flex;
@@ -223,7 +272,7 @@
         gap: 4px;
         font-size: 9px;
         font-weight: 900;
-        color: rgba(249,115,22,0.5);
+        color: rgba(249, 115, 22, 0.5);
         text-transform: uppercase;
         letter-spacing: 0.07em;
         margin-top: 4px;
@@ -244,7 +293,8 @@
             <div class="flex items-center gap-3 text-on-surface-variant text-sm">
                 <div class="flex items-center gap-1.5">
                     <span class="w-2 h-2 rounded-full bg-secondary pulse"></span>
-                    <span style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">En vivo</span>
+                    <span style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">En
+                        vivo</span>
                 </div>
                 <span class="opacity-20">•</span>
                 <span class="font-bold text-white"><span x-text="resumen.libres"></span> Libres</span>
@@ -256,18 +306,19 @@
                 <span class="font-bold text-info"><span x-text="resumen.por_pagar"></span> Por Pagar</span>
             </div>
         </div>
-        
-        <div class="flex items-center gap-4">
+
+        <div class="flex flex-wrap items-center gap-2 md:gap-4 w-full md:w-auto">
             {% if user.rol.nombre == 'ADMIN' %}
-            <button @click="modoGestion = !modoGestion" 
-                    class="px-6 py-3 rounded-2xl font-black text-sm transition-all flex items-center gap-2 shadow-lg"
-                    :class="modoGestion ? 'bg-red-500/20 text-red-400 border border-red-500/50' : 'bg-secondary/20 text-secondary border border-secondary/20'">
-                <span class="material-symbols-outlined font-bold text-xl" x-text="modoGestion ? 'cancel' : 'edit_square'"></span>
+            <button @click="modoGestion = !modoGestion"
+                class="flex-1 md:flex-none px-4 md:px-6 py-2.5 md:py-3 rounded-xl md:rounded-2xl font-black text-xs md:text-sm transition-all flex items-center justify-center gap-2 shadow-lg"
+                :class="modoGestion ? 'bg-red-500/20 text-red-400 border border-red-500/50' : 'bg-secondary/20 text-secondary border border-secondary/20'">
+                <span class="material-symbols-outlined font-bold text-xl"
+                    x-text="modoGestion ? 'cancel' : 'edit_square'"></span>
                 <span x-text="modoGestion ? 'Finalizar Edición' : 'Gestionar Mesas'"></span>
             </button>
-            <button x-show="modoGestion" @click="abrirModalNuevaMesa()" 
-                    class="bg-white text-[#160066] px-6 py-3 rounded-2xl font-black text-sm flex items-center gap-2 transition-all shadow-lg animate-bounce">
-                <span class="material-symbols-outlined font-bold text-xl">add</span>
+            <button x-show="modoGestion" @click="abrirModalNuevaMesa()"
+                class="flex-1 md:flex-none bg-white text-[#160066] px-4 md:px-6 py-2.5 md:py-3 rounded-xl md:rounded-2xl font-black text-xs md:text-sm flex items-center justify-center gap-2 transition-all shadow-lg animate-bounce">
+                <span class="material-symbols-outlined font-bold text-lg md:text-xl">add</span>
                 Nueva Mesa
             </button>
             {% endif %}
@@ -275,26 +326,31 @@
             <!-- Botón para MOZO: Modo Unión -->
             {% if user.rol.nombre == 'MOZO' %}
             <button @click="modoUnion = !modoUnion; mesaOrigenUnion = null"
-                    class="px-5 py-3 rounded-2xl font-black text-sm transition-all flex items-center gap-2 shadow-lg border"
-                    :class="modoUnion ? 'bg-orange-500/20 text-orange-400 border-orange-500/40' : 'bg-white/5 text-on-surface-variant border-white/10 hover:border-orange-500/30 hover:text-orange-400'">
-                <span class="material-symbols-outlined font-bold text-xl" x-text="modoUnion ? 'link_off' : 'link'"></span>
+                class="flex-1 md:flex-none px-4 md:px-5 py-2.5 md:py-3 rounded-xl md:rounded-2xl font-black text-xs md:text-sm transition-all flex items-center justify-center gap-2 shadow-lg border"
+                :class="modoUnion ? 'bg-orange-500/20 text-orange-400 border-orange-500/40' : 'bg-white/5 text-on-surface-variant border-white/10 hover:border-orange-500/30 hover:text-orange-400'">
+                <span class="material-symbols-outlined font-bold text-lg md:text-xl"
+                    x-text="modoUnion ? 'link_off' : 'link'"></span>
                 <span x-text="modoUnion ? 'Cancelar Unión' : 'Unir Mesas'"></span>
             </button>
             {% endif %}
 
-            <div class="bg-surface/50 p-1.5 rounded-2xl border border-white/5 flex gap-1">
-                <button class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
-                        :class="pisoActivo === '' ? 'bg-primary text-[#160066]' : 'text-on-surface-variant hover:text-primary'"
-                        @click="pisoActivo = ''">Todos</button>
+            <div
+                class="w-full md:w-auto bg-surface/50 p-1 md:p-1.5 rounded-xl md:rounded-2xl border border-white/5 flex flex-wrap justify-center gap-1 overflow-x-auto hide-scrollbar">
+                <button
+                    class="px-3 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap"
+                    :class="pisoActivo === '' ? 'bg-primary text-[#160066]' : 'text-on-surface-variant hover:text-primary'"
+                    @click="pisoActivo = ''">Todos</button>
                 {% for val, label in pisos %}
-                <button class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
-                        :class="pisoActivo === '{{ val }}' ? 'bg-primary text-[#160066]' : 'text-on-surface-variant hover:text-primary'"
-                        @click="pisoActivo = '{{ val }}'">{{ label }}</button>
+                <button
+                    class="px-3 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap"
+                    :class="pisoActivo === '{{ val }}' ? 'bg-primary text-[#160066]' : 'text-on-surface-variant hover:text-primary'"
+                    @click="pisoActivo = '{{ val }}'">{{ label }}</button>
                 {% endfor %}
             </div>
-            
-            <a @click.prevent="abrirNuevaComanda($event)" href="/mesero/nueva-comanda/" class="bg-primary hover:bg-white text-[#160066] px-6 py-3 rounded-2xl font-black flex items-center gap-2 transition-all shadow-lg shadow-primary/20">
-                <span class="material-symbols-outlined font-bold text-xl">add_circle</span>
+
+            <a @click.prevent="abrirNuevaComanda($event)" href="/mesero/nueva-comanda/"
+                class="w-full md:w-auto bg-primary hover:bg-white text-[#160066] px-4 md:px-6 py-2.5 md:py-3 rounded-xl md:rounded-2xl font-black flex justify-center items-center gap-2 transition-all shadow-lg shadow-primary/20">
+                <span class="material-symbols-outlined font-bold text-lg md:text-xl">add_circle</span>
                 Nueva Comanda
             </a>
         </div>
@@ -314,70 +370,69 @@
                 FIX: Use x-show (not x-if) for event-bearing elements so Alpine
                      binds @click.stop correctly from the x-for scope.
             -->
-            <div class="mesa-card relative flex flex-col"
-                 :class="[
+            <div class="mesa-card relative flex flex-col" :class="[
                      mesa.estado.toLowerCase(), 
                      (mesa.union && mesa.union.es_principal) ? 'union-group' : '',
                      (mesaOrigenUnion && mesaOrigenUnion.id === mesa.id) ? 'ring-4 ring-orange-500 animate-pulse border-orange-500 scale-105 shadow-orange-500/35 z-20' : ''
-                 ]"
-                 @click="abrirDetalle(mesa)"
-                 :draggable="(modoGestion || modoUnion) && mesa.estado === 'LIBRE' ? 'true' : 'false'"
-                 @dragstart="onDragStart(mesa, $event)"
-                 @dragover.prevent="onDragOver(mesa, $event)"
-                 @dragleave="onDragLeave(mesa, $event)"
-                 @drop.prevent="onDrop(mesa, $event)">
+                 ]" @click="abrirDetalle(mesa)"
+                :draggable="(modoGestion || modoUnion) && mesa.estado === 'LIBRE' ? 'true' : 'false'"
+                @dragstart="onDragStart(mesa, $event)" @dragover.prevent="onDragOver(mesa, $event)"
+                @dragleave="onDragLeave(mesa, $event)" @drop.prevent="onDrop(mesa, $event)">
 
                 <!-- HEADER UNION: x-show keeps element in DOM, @click.stop works correctly -->
-                <div x-show="mesa.union && mesa.union.es_principal"
-                     class="flex items-center justify-between mb-3">
+                <div x-show="mesa.union && mesa.union.es_principal" class="flex items-center justify-between mb-3">
                     <div class="union-pill">
-                        <span class="material-symbols-outlined" style="font-size:10px;font-variation-settings:'FILL' 1">link</span>
+                        <span class="material-symbols-outlined"
+                            style="font-size:10px;font-variation-settings:'FILL' 1">link</span>
                         <span x-text="mesa.union ? 'Mesas ' + mesa.union.mesa_numeros.join(' + ') : ''"></span>
                     </div>
                     <!-- DISOLVER: @click.stop works because element is always in DOM via x-show -->
-                    <button class="flex items-center gap-1 text-[9px] font-black uppercase text-red-400/70 hover:text-red-400 px-2 py-1 rounded-lg hover:bg-red-500/10 tracking-widest transition-colors"
-                            @click.stop="mesa.union && disolverUnion(mesa.union.id)">
+                    <button
+                        class="flex items-center gap-1 text-[9px] font-black uppercase text-red-400/70 hover:text-red-400 px-2 py-1 rounded-lg hover:bg-red-500/10 tracking-widest transition-colors"
+                        @click.stop="mesa.union && disolverUnion(mesa.union.id)">
                         <span class="material-symbols-outlined" style="font-size:12px">link_off</span>
                         Disolver
                     </button>
                 </div>
 
                 <!-- NUMERO UNION -->
-                <div x-show="mesa.union && mesa.union.es_principal"
-                     class="flex items-start justify-between mb-4">
+                <div x-show="mesa.union && mesa.union.es_principal" class="flex items-start justify-between mb-4">
                     <div class="flex flex-col">
                         <span class="union-number"
-                              :class="mesa.estado === 'LIBRE' ? 'text-secondary' : (mesa.estado === 'ENTREGADO' ? 'text-warning' : (mesa.estado === 'POR_PAGAR' ? 'text-info' : (mesa.estado === 'LIMPIEZA' ? 'text-secondary/50' : 'text-danger')))"
-                              x-text="mesa.union ? mesa.union.mesa_numeros.join(' + ') : ''"></span>
+                            :class="mesa.estado === 'LIBRE' ? 'text-secondary' : (mesa.estado === 'ENTREGADO' ? 'text-warning' : (mesa.estado === 'POR_PAGAR' ? 'text-info' : (mesa.estado === 'LIMPIEZA' ? 'text-secondary/50' : 'text-danger')))"
+                            x-text="mesa.union ? mesa.union.mesa_numeros.join(' + ') : ''"></span>
                         <span x-show="mesa.comanda && mesa.comanda.nombre_cliente"
-                              class="text-[9px] font-black text-primary uppercase tracking-tight mt-1 truncate max-w-[160px]"
-                              x-text="mesa.comanda ? mesa.comanda.nombre_cliente : ''"></span>
+                            class="text-[9px] font-black text-primary uppercase tracking-tight mt-1 truncate max-w-[160px]"
+                            x-text="mesa.comanda ? mesa.comanda.nombre_cliente : ''"></span>
                         <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mt-1"
-                              x-text="mesa.piso_label"></span>
+                            x-text="mesa.piso_label"></span>
                     </div>
                     <div class="bg-white/5 p-2 rounded-xl border border-white/5">
                         <span class="material-symbols-outlined text-on-surface-variant"
-                              x-text="mesa.estado === 'LIBRE' ? 'table_restaurant' : (mesa.estado === 'ENTREGADO' ? 'room_service' : (mesa.estado === 'POR_PAGAR' ? 'payments' : (mesa.estado === 'LIMPIEZA' ? 'mop' : 'person_pin')))"></span>
+                            x-text="mesa.estado === 'LIBRE' ? 'table_restaurant' : (mesa.estado === 'ENTREGADO' ? 'room_service' : (mesa.estado === 'POR_PAGAR' ? 'payments' : (mesa.estado === 'LIMPIEZA' ? 'mop' : 'person_pin')))"></span>
                     </div>
                 </div>
 
                 <!-- FOOTER UNION -->
                 <div x-show="mesa.union && mesa.union.es_principal"
-                     class="space-y-3 pt-4 border-t border-orange-500/20 mt-auto">
+                    class="space-y-3 pt-4 border-t border-orange-500/20 mt-auto">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-xs text-orange-400">groups</span>
                             <span class="text-xs font-black text-orange-300"
-                                  x-text="mesa.union ? mesa.union.capacidad_total + ' pers. combinadas' : ''"></span>
+                                x-text="mesa.union ? mesa.union.capacidad_total + ' pers. combinadas' : ''"></span>
                         </div>
                         <div x-show="mesa.comanda" class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-xs text-on-surface-variant">schedule</span>
-                            <span class="text-xs font-bold text-white" x-text="mesa.comanda ? mesa.comanda.fecha_apertura : ''"></span>
+                            <span class="text-xs font-bold text-white"
+                                x-text="mesa.comanda ? mesa.comanda.fecha_apertura : ''"></span>
                         </div>
                     </div>
-                    <div x-show="mesa.comanda" class="bg-primary/10 px-3 py-2 rounded-xl flex items-center justify-between">
+                    <div x-show="mesa.comanda"
+                        class="bg-primary/10 px-3 py-2 rounded-xl flex items-center justify-between">
                         <span class="text-[9px] font-black text-primary uppercase tracking-widest">Total</span>
-                        <span class="text-xs font-black text-white" x-text="mesa.comanda ? 'S/. ' + mesa.comanda.total : ''"></span>
+                        <span class="text-xs font-black text-white"
+                            x-text="mesa.comanda ? 'S/. ' + mesa.comanda.total : ''"></span>
                     </div>
                 </div>
 
@@ -386,22 +441,22 @@
                     <div class="flex justify-between items-start">
                         <div class="flex flex-col">
                             <span class="text-4xl font-black leading-none"
-                                  :class="mesa.estado === 'LIBRE' ? 'text-secondary' : (mesa.estado === 'ENTREGADO' ? 'text-warning' : (mesa.estado === 'POR_PAGAR' ? 'text-info' : (mesa.estado === 'LIMPIEZA' ? 'text-secondary opacity-50' : 'text-danger')))"
-                                  x-text="mesa.numero"></span>
+                                :class="mesa.estado === 'LIBRE' ? 'text-secondary' : (mesa.estado === 'ENTREGADO' ? 'text-warning' : (mesa.estado === 'POR_PAGAR' ? 'text-info' : (mesa.estado === 'LIMPIEZA' ? 'text-secondary opacity-50' : 'text-danger')))"
+                                x-text="mesa.numero"></span>
                             <span x-show="mesa.comanda && mesa.comanda.nombre_cliente"
-                                  class="text-[9px] font-black text-primary uppercase tracking-tight mt-1 truncate max-w-[80px]"
-                                  x-text="mesa.comanda ? mesa.comanda.nombre_cliente : ''"></span>
+                                class="text-[9px] font-black text-primary uppercase tracking-tight mt-1 truncate max-w-[80px]"
+                                x-text="mesa.comanda ? mesa.comanda.nombre_cliente : ''"></span>
                             <span x-show="mesa.estado === 'LIMPIEZA'"
-                                  class="text-[10px] font-black text-white/50 uppercase tracking-tight mt-1 truncate">Limpiando Mesa</span>
+                                class="text-[10px] font-black text-white/50 uppercase tracking-tight mt-1 truncate">Limpiando
+                                Mesa</span>
                             <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mt-2"
-                                  x-text="mesa.piso_label"></span>
+                                x-text="mesa.piso_label"></span>
                         </div>
                         <div class="bg-white/5 p-2 rounded-xl border border-white/5 relative">
                             <span class="material-symbols-outlined text-on-surface-variant"
-                                  x-text="mesa.estado === 'LIBRE' ? 'check_circle' : (mesa.estado === 'ENTREGADO' ? 'room_service' : (mesa.estado === 'POR_PAGAR' ? 'payments' : (mesa.estado === 'LIMPIEZA' ? 'mop' : 'person_pin')))"></span>
-                            <button x-show="modoGestion && mesa.estado === 'LIBRE'"
-                                    @click.stop="eliminarMesa(mesa)"
-                                    class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                                x-text="mesa.estado === 'LIBRE' ? 'check_circle' : (mesa.estado === 'ENTREGADO' ? 'room_service' : (mesa.estado === 'POR_PAGAR' ? 'payments' : (mesa.estado === 'LIMPIEZA' ? 'mop' : 'person_pin')))"></span>
+                            <button x-show="modoGestion && mesa.estado === 'LIBRE'" @click.stop="eliminarMesa(mesa)"
+                                class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
                                 <span class="material-symbols-outlined text-sm font-bold">delete</span>
                             </button>
                         </div>
@@ -414,26 +469,30 @@
                             </div>
                             <div x-show="mesa.comanda" class="flex items-center gap-2">
                                 <span class="material-symbols-outlined text-xs text-on-surface-variant">schedule</span>
-                                <span class="text-xs font-bold text-white" x-text="mesa.comanda ? mesa.comanda.fecha_apertura : ''"></span>
+                                <span class="text-xs font-bold text-white"
+                                    x-text="mesa.comanda ? mesa.comanda.fecha_apertura : ''"></span>
                             </div>
                         </div>
-                        <div x-show="mesa.comanda" class="bg-primary/10 px-3 py-2 rounded-xl flex items-center justify-between">
+                        <div x-show="mesa.comanda"
+                            class="bg-primary/10 px-3 py-2 rounded-xl flex items-center justify-between">
                             <span class="text-[9px] font-black text-primary uppercase tracking-widest">Total</span>
-                            <span class="text-xs font-black text-white" x-text="mesa.comanda ? 'S/. ' + mesa.comanda.total : ''"></span>
+                            <span class="text-xs font-black text-white"
+                                x-text="mesa.comanda ? 'S/. ' + mesa.comanda.total : ''"></span>
                         </div>
                         <div x-show="(modoGestion || modoUnion) && mesa.estado === 'LIBRE'" class="drag-hint">
-                            <span class="material-symbols-outlined" style="font-size:10px" x-text="mesaOrigenUnion ? (mesaOrigenUnion.id === mesa.id ? 'check_circle' : 'add_circle') : 'drag_indicator'"></span>
-                            <span x-text="mesaOrigenUnion ? (mesaOrigenUnion.id === mesa.id ? 'Seleccionada' : 'Toca para unir') : 'Arrastra o toca para unir'"></span>
+                            <span class="material-symbols-outlined" style="font-size:10px"
+                                x-text="mesaOrigenUnion ? (mesaOrigenUnion.id === mesa.id ? 'check_circle' : 'add_circle') : 'drag_indicator'"></span>
+                            <span
+                                x-text="mesaOrigenUnion ? (mesaOrigenUnion.id === mesa.id ? 'Seleccionada' : 'Toca para unir') : 'Arrastra o toca para unir'"></span>
                         </div>
                     </div>
                 </div>
 
                 <!-- BG decoration -->
                 <div class="absolute -right-4 -bottom-4 pointer-events-none"
-                     :class="mesa.union ? 'opacity-[0.04]' : 'opacity-5'">
-                    <span class="material-symbols-outlined"
-                          :class="mesa.union ? 'text-[120px]' : 'text-[100px]'"
-                          x-text="mesa.estado === 'LIBRE' ? 'table_restaurant' : (mesa.estado === 'POR_PAGAR' ? 'receipt_long' : (mesa.estado === 'LIMPIEZA' ? 'mop' : 'shopping_cart'))"></span>
+                    :class="mesa.union ? 'opacity-[0.04]' : 'opacity-5'">
+                    <span class="material-symbols-outlined" :class="mesa.union ? 'text-[120px]' : 'text-[100px]'"
+                        x-text="mesa.estado === 'LIBRE' ? 'table_restaurant' : (mesa.estado === 'POR_PAGAR' ? 'receipt_long' : (mesa.estado === 'LIMPIEZA' ? 'mop' : 'shopping_cart'))"></span>
                 </div>
             </div>
         </template>
@@ -442,9 +501,9 @@
     <!-- ── MODAL: Detalle de Comanda ── -->
     <div class="modal fade" id="modalComanda" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content glass-card rounded-[40px] border-white/10 overflow-hidden">
-                
-                <div class="modal-header border-white/5 p-6 bg-white/5">
+            <div class="modal-content glass-card rounded-[24px] md:rounded-[40px] border-white/10 overflow-hidden">
+
+                <div class="modal-header border-white/5 p-4 md:p-6 bg-white/5">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                             <span class="material-symbols-outlined text-2xl font-bold">receipt_long</span>
@@ -458,48 +517,62 @@
                                             Mesas <span x-text="mesaActual.union.mesa_numeros.join(' + ')"></span>
                                         </h5>
                                         <span class="union-pill" style="font-size:8px;padding:2px 8px">
-                                            <span class="material-symbols-outlined" style="font-size:9px;font-variation-settings:'FILL' 1">link</span>
+                                            <span class="material-symbols-outlined"
+                                                style="font-size:9px;font-variation-settings:'FILL' 1">link</span>
                                             Unidas
                                         </span>
                                     </div>
                                 </template>
                                 <template x-if="!mesaActual?.union">
-                                    <h5 class="text-white font-black text-xl mb-0">Mesa <span x-text="mesaActual?.numero"></span></h5>
+                                    <h5 class="text-white font-black text-xl mb-0">Mesa <span
+                                            x-text="mesaActual?.numero"></span></h5>
                                 </template>
                                 <template x-if="mesaActual?.comanda?.nombre_cliente">
-                                    <span class="bg-primary/20 text-primary text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-widest" x-text="mesaActual.comanda.nombre_cliente"></span>
+                                    <span
+                                        class="bg-primary/20 text-primary text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-widest"
+                                        x-text="mesaActual.comanda.nombre_cliente"></span>
                                 </template>
                             </div>
-                            <p class="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest mb-0" 
-                               x-text="'Abierta a las ' + (mesaActual?.comanda?.fecha_apertura ?? '')"></p>
+                            <p class="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest mb-0"
+                                x-text="'Abierta a las ' + (mesaActual?.comanda?.fecha_apertura ?? '')"></p>
                         </div>
                     </div>
-                    <button type="button" class="btn-close btn-close-white opacity-40 hover:opacity-100 transition-opacity" data-bs-dismiss="modal"></button>
+                    <button type="button"
+                        class="btn-close btn-close-white opacity-40 hover:opacity-100 transition-opacity"
+                        data-bs-dismiss="modal"></button>
                 </div>
 
-                <div class="modal-body p-6 space-y-6">
+                <div class="modal-body p-4 md:p-6 space-y-4 md:space-y-6">
                     <!-- Info Badges -->
                     <div class="flex flex-wrap gap-4">
                         <div class="bg-white/5 px-4 py-2 rounded-2xl border border-white/5 flex items-center gap-2">
                             <span class="material-symbols-outlined text-xs text-primary">person</span>
-                            <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Mozo:</span>
+                            <span
+                                class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Mozo:</span>
                             <span class="text-xs font-black text-white" x-text="mesaActual?.comanda?.mesero"></span>
                         </div>
                         <!-- Badge de Comensales (suma capacidades si hay unión) -->
-                        <div class="bg-secondary/10 px-4 py-2 rounded-2xl border border-secondary/20 flex items-center gap-2">
+                        <div
+                            class="bg-secondary/10 px-4 py-2 rounded-2xl border border-secondary/20 flex items-center gap-2">
                             <span class="material-symbols-outlined text-xs text-secondary">groups</span>
-                            <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Capacidad:</span>
-                            <span class="text-xs font-black text-white" x-text="(mesaActual?.union ? mesaActual.union.capacidad_total : mesaActual?.capacidad) + ' personas'"></span>
+                            <span
+                                class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Capacidad:</span>
+                            <span class="text-xs font-black text-white"
+                                x-text="(mesaActual?.union ? mesaActual.union.capacidad_total : mesaActual?.capacidad) + ' personas'"></span>
                         </div>
                         <template x-if="mesaActual?.comanda?.nombre_cliente">
-                            <div class="bg-primary/5 px-4 py-2 rounded-2xl border border-primary/20 flex items-center gap-2">
+                            <div
+                                class="bg-primary/5 px-4 py-2 rounded-2xl border border-primary/20 flex items-center gap-2">
                                 <span class="material-symbols-outlined text-xs text-primary">badge</span>
-                                <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Cliente:</span>
-                                <span class="text-xs font-black text-white uppercase" x-text="mesaActual.comanda.nombre_cliente"></span>
+                                <span
+                                    class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Cliente:</span>
+                                <span class="text-xs font-black text-white uppercase"
+                                    x-text="mesaActual.comanda.nombre_cliente"></span>
                             </div>
                         </template>
                         <template x-if="mesaActual?.comanda?.notas">
-                            <div class="bg-warning/10 px-4 py-2 rounded-2xl border border-warning/20 flex items-center gap-2">
+                            <div
+                                class="bg-warning/10 px-4 py-2 rounded-2xl border border-warning/20 flex items-center gap-2">
                                 <span class="material-symbols-outlined text-xs text-warning">chat_bubble</span>
                                 <span class="text-xs font-bold text-white" x-text="mesaActual?.comanda?.notas"></span>
                             </div>
@@ -509,54 +582,70 @@
                     <!-- Items List -->
                     <div class="space-y-3">
                         <div class="flex items-center justify-between px-2">
-                            <h6 class="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] mb-0">Detalle de Consumo</h6>
-                            <button x-show="mesaActual?.estado !== 'POR_PAGAR'" @click="abrirAgregarLinea()" class="bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1 transition-all">
+                            <h6 class="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] mb-0">
+                                Detalle de Consumo</h6>
+                            <button x-show="mesaActual?.estado !== 'POR_PAGAR'" @click="abrirAgregarLinea()"
+                                class="bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1 transition-all">
                                 <span class="material-symbols-outlined text-[14px] font-bold">add</span>
                                 Añadir Plato
                             </button>
                         </div>
                         <div class="space-y-2">
                             <template x-for="linea in mesaActual?.comanda?.lineas" :key="linea.id">
-                                <div class="bg-white/5 rounded-3xl p-4 border border-white/5 flex items-center justify-between group hover:bg-white/10 transition-all">
+                                <div
+                                    class="bg-white/5 rounded-3xl p-4 border border-white/5 flex items-center justify-between group hover:bg-white/10 transition-all">
                                     <div class="flex items-center gap-4">
                                         <!-- Status Icon -->
-                                        <div class="w-10 h-10 rounded-xl flex items-center justify-center" :style="'background-color: ' + estadoColorBG(linea.estado)">
-                                            <span class="material-symbols-outlined text-xl" :style="'color: ' + estadoColorHex(linea.estado)" x-text="estadoIcon(linea.estado)"></span>
+                                        <div class="w-10 h-10 rounded-xl flex items-center justify-center"
+                                            :style="'background-color: ' + estadoColorBG(linea.estado)">
+                                            <span class="material-symbols-outlined text-xl"
+                                                :style="'color: ' + estadoColorHex(linea.estado)"
+                                                x-text="estadoIcon(linea.estado)"></span>
                                         </div>
-                                        
+
                                         <div>
                                             <div class="flex items-baseline gap-2">
-                                                <span class="text-white font-black text-sm" x-text="linea.cantidad + 'x ' + linea.plato_nombre"></span>
-                                                <span class="text-[10px] font-black uppercase tracking-widest" :style="'color: ' + estadoColorHex(linea.estado)" x-text="linea.estado_label"></span>
+                                                <span class="text-white font-black text-sm"
+                                                    x-text="linea.cantidad + 'x ' + linea.plato_nombre"></span>
+                                                <span class="text-[10px] font-black uppercase tracking-widest"
+                                                    :style="'color: ' + estadoColorHex(linea.estado)"
+                                                    x-text="linea.estado_label"></span>
                                             </div>
                                             <div class="flex items-center gap-2 mt-1" x-show="linea.notas_cocina">
-                                                <span class="material-symbols-outlined text-[10px] text-on-surface-variant">sticky_note</span>
-                                                <span class="text-[10px] font-bold text-on-surface-variant" x-text="linea.notas_cocina"></span>
+                                                <span
+                                                    class="material-symbols-outlined text-[10px] text-on-surface-variant">sticky_note</span>
+                                                <span class="text-[10px] font-bold text-on-surface-variant"
+                                                    x-text="linea.notas_cocina"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="flex items-center gap-4">
                                         <div class="text-right">
-                                            <span class="text-white font-black text-base block" x-text="'S/. ' + linea.subtotal"></span>
+                                            <span class="text-white font-black text-base block"
+                                                x-text="'S/. ' + linea.subtotal"></span>
                                         </div>
-                                        
+
                                         <!-- Actions -->
                                         <div class="flex items-center gap-1">
-                                            <template x-if="linea.estado === 'PENDIENTE' && mesaActual.estado !== 'POR_PAGAR'">
+                                            <template
+                                                x-if="linea.estado === 'PENDIENTE' && mesaActual.estado !== 'POR_PAGAR'">
                                                 <div class="flex gap-1">
-                                                    <button @click.stop="abrirEditarLinea(linea)" 
-                                                            class="w-8 h-8 rounded-lg bg-white/5 hover:bg-primary/20 text-on-surface-variant hover:text-primary flex items-center justify-center transition-all">
+                                                    <button @click.stop="abrirEditarLinea(linea)"
+                                                        class="w-8 h-8 rounded-lg bg-white/5 hover:bg-primary/20 text-on-surface-variant hover:text-primary flex items-center justify-center transition-all">
                                                         <span class="material-symbols-outlined text-[18px]">edit</span>
                                                     </button>
-                                                    <button @click.stop="eliminarLinea(linea)" 
-                                                            class="w-8 h-8 rounded-lg bg-white/5 hover:bg-red-500/20 text-on-surface-variant hover:text-red-400 flex items-center justify-center transition-all">
-                                                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                                                    <button @click.stop="eliminarLinea(linea)"
+                                                        class="w-8 h-8 rounded-lg bg-white/5 hover:bg-red-500/20 text-on-surface-variant hover:text-red-400 flex items-center justify-center transition-all">
+                                                        <span
+                                                            class="material-symbols-outlined text-[18px]">delete</span>
                                                     </button>
                                                 </div>
                                             </template>
-                                            <template x-if="(linea.estado !== 'PENDIENTE' && linea.estado !== 'ANULADO') || mesaActual.estado === 'POR_PAGAR'">
-                                                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-on-surface-variant/30" :title="mesaActual.estado === 'POR_PAGAR' ? 'En espera de pago - No se puede editar' : 'En preparación - No se puede editar'">
+                                            <template
+                                                x-if="(linea.estado !== 'PENDIENTE' && linea.estado !== 'ANULADO') || mesaActual.estado === 'POR_PAGAR'">
+                                                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-on-surface-variant/30"
+                                                    :title="mesaActual.estado === 'POR_PAGAR' ? 'En espera de pago - No se puede editar' : 'En preparación - No se puede editar'">
                                                     <span class="material-symbols-outlined text-[18px]">lock</span>
                                                 </div>
                                             </template>
@@ -568,37 +657,47 @@
                     </div>
                 </div>
 
-                <div class="modal-footer border-white/5 p-6 bg-white/5 justify-between items-center">
-                    <div class="flex flex-col">
-                        <span class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest mb-1">Monto Total</span>
-                        <span class="text-3xl font-black text-primary" x-text="'S/. ' + (mesaActual?.comanda?.total ?? '0.00')"></span>
+                <div class="modal-footer flex-col md:flex-row border-white/5 p-4 md:p-6 bg-white/5 gap-4">
+                    <div
+                        class="flex flex-col w-full md:w-auto bg-black/20 md:bg-transparent p-3 md:p-0 rounded-2xl text-center md:text-left shadow-inner md:shadow-none mb-2 md:mb-0">
+                        <span
+                            class="text-[10px] md:text-[10px] font-black text-primary/70 md:text-on-surface-variant uppercase tracking-[0.3em] md:tracking-widest mb-0.5 md:mb-1">Monto
+                            Total</span>
+                        <span class="text-3xl md:text-3xl font-black text-primary"
+                            x-text="'S/. ' + (mesaActual?.comanda?.total ?? '0.00')"></span>
                     </div>
-                    
-                    <div class="flex gap-4">
-                        <button class="bg-white/5 hover:bg-white/10 text-white px-6 py-4 rounded-[20px] font-black text-sm transition-all border border-white/5" data-bs-dismiss="modal">
+
+                    <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                        <button
+                            class="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-white px-4 md:px-6 py-3 md:py-4 rounded-[16px] md:rounded-[20px] font-black text-sm transition-all border border-white/5"
+                            data-bs-dismiss="modal">
                             Cerrar
                         </button>
-                        <button class="px-6 py-4 rounded-[20px] font-black text-sm transition-all border flex items-center gap-2"
-                                :class="confirmandoEntregar ? 'bg-yellow-500 text-black border-yellow-500 animate-pulse' : 'bg-warning/20 hover:bg-warning/30 text-warning border-warning/30'"
-                                :disabled="entregando || !tienePlatosListos"
-                                @click="marcarPedidoEntregado()">
+                        <button
+                            class="w-full sm:w-auto px-4 md:px-6 py-3 md:py-4 rounded-[16px] md:rounded-[20px] font-black text-sm transition-all border flex items-center justify-center gap-2"
+                            :class="confirmandoEntregar ? 'bg-yellow-500 text-black border-yellow-500 animate-pulse' : 'bg-warning/20 hover:bg-warning/30 text-warning border-warning/30'"
+                            :disabled="entregando || !tienePlatosListos" @click="marcarPedidoEntregado()">
                             <template x-if="!entregando">
                                 <div class="flex items-center gap-2">
                                     <span class="material-symbols-outlined font-bold text-xl">room_service</span>
-                                    <span x-text="confirmandoEntregar ? '¡Confirmar entrega!' : 'Pedido Entregado'"></span>
+                                    <span
+                                        x-text="confirmandoEntregar ? '¡Confirmar entrega!' : 'Pedido Entregado'"></span>
                                 </div>
                             </template>
                             <template x-if="entregando">
                                 <span class="animate-spin material-symbols-outlined">progress_activity</span>
                             </template>
                         </button>
-                        <button class="px-8 py-4 rounded-[24px] font-black text-sm transition-all shadow-xl flex items-center gap-2"
-                                :class="claseBotonLiberar()"
-                                :disabled="liberando || mesaActual?.estado === 'POR_PAGAR'" @click="liberarMesa()">
+                        <button
+                            class="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 rounded-[16px] md:rounded-[24px] font-black text-sm transition-all shadow-xl flex items-center justify-center gap-2"
+                            :class="claseBotonLiberar()" :disabled="liberando || mesaActual?.estado === 'POR_PAGAR'"
+                            @click="liberarMesa()">
                             <template x-if="!liberando">
                                 <div class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined font-bold text-xl" x-text="mesaActual?.estado === 'POR_PAGAR' ? 'hourglass_empty' : (confirmandoLiberar ? 'warning' : 'payments')"></span>
-                                    <span x-text="mesaActual?.estado === 'POR_PAGAR' ? 'Esperando Pago en Caja' : (mesaActual?.comanda?.es_reserva_pendiente ? (confirmandoLiberar ? '¡Confirmar llegada!' : 'Confirmar llegada y enviar a caja') : (confirmandoLiberar ? '¡Confirmar cobro!' : 'Cobrar y Liberar'))"></span>
+                                    <span class="material-symbols-outlined font-bold text-lg md:text-xl"
+                                        x-text="mesaActual?.estado === 'POR_PAGAR' ? 'hourglass_empty' : (confirmandoLiberar ? 'warning' : 'payments')"></span>
+                                    <span
+                                        x-text="mesaActual?.estado === 'POR_PAGAR' ? 'Esperando Pago' : (mesaActual?.comanda?.es_reserva_pendiente ? (confirmandoLiberar ? '¡Llegada!' : 'Marcar Llegada') : (confirmandoLiberar ? '¡Confirmar!' : 'Cobrar'))"></span>
                                 </div>
                             </template>
                             <template x-if="liberando">
@@ -613,22 +712,25 @@
 
     <!-- ── MODAL: Editar Ítem (Plato y Cantidad) ── -->
     <div class="modal fade" id="modalEditarLinea" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content glass-card rounded-[32px] border-white/10 overflow-hidden">
-                <div class="modal-header border-white/5 p-6">
-                    <h5 class="text-white font-black text-xl mb-0">Editar Ítem</h5>
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content glass-card rounded-[24px] border-white/10 overflow-hidden mx-auto">
+                <div class="modal-header border-white/5 p-4 md:p-6">
+                    <h5 class="text-white font-black text-lg md:text-xl mb-0">Editar Ítem</h5>
                     <button type="button" class="btn-close btn-close-white opacity-40" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-6 space-y-5">
+                <div class="modal-body p-4 md:p-6 space-y-5">
                     <!-- Selector de Plato -->
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Cambiar Plato</label>
-                        <select x-model="editForm.plato_id" 
-                                class="w-full bg-surface-container border border-white/10 rounded-2xl py-3 px-4 text-white text-sm focus:ring-primary focus:border-primary transition-all">
+                        <label
+                            class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Cambiar
+                            Plato</label>
+                        <select x-model="editForm.plato_id"
+                            class="w-full bg-surface-container border border-white/10 rounded-2xl py-3 px-4 text-white text-sm focus:ring-primary focus:border-primary transition-all">
                             <template x-for="cat in catalogoFiltrado" :key="cat.id">
                                 <optgroup :label="cat.nombre">
                                     <template x-for="p in cat.platos" :key="p.id">
-                                        <option :value="p.id" x-text="p.nombre + ' - S/. ' + p.precio" :selected="p.id == editForm.plato_id"></option>
+                                        <option :value="p.id" x-text="p.nombre + ' - S/. ' + p.precio"
+                                            :selected="p.id == editForm.plato_id"></option>
                                     </template>
                                 </optgroup>
                             </template>
@@ -637,24 +739,27 @@
 
                     <!-- Cantidad -->
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Cantidad</label>
+                        <label
+                            class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Cantidad</label>
                         <div class="flex items-center gap-4 bg-white/5 p-2 rounded-2xl border border-white/10">
-                            <button @click="if(editForm.cantidad > 1) editForm.cantidad--" 
-                                    class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition-all">
+                            <button @click="if(editForm.cantidad > 1) editForm.cantidad--"
+                                class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition-all">
                                 <span class="material-symbols-outlined">remove</span>
                             </button>
-                            <input type="number" x-model="editForm.cantidad" 
-                                   class="flex-1 bg-transparent border-none text-center text-white font-black text-xl focus:ring-0" readonly>
-                            <button @click="editForm.cantidad++" 
-                                    class="w-10 h-10 rounded-xl bg-primary/20 hover:bg-primary/30 text-primary flex items-center justify-center transition-all">
+                            <input type="number" x-model="editForm.cantidad"
+                                class="flex-1 bg-transparent border-none text-center text-white font-black text-xl focus:ring-0"
+                                readonly>
+                            <button @click="editForm.cantidad++"
+                                class="w-10 h-10 rounded-xl bg-primary/20 hover:bg-primary/30 text-primary flex items-center justify-center transition-all">
                                 <span class="material-symbols-outlined">add</span>
                             </button>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer border-white/5 p-6 bg-white/5">
-                    <button class="bg-primary hover:bg-white text-[#160066] w-full py-4 rounded-2xl font-black text-sm transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-2"
-                            :disabled="editando" @click="guardarCambiosLinea()">
+                    <button
+                        class="bg-primary hover:bg-white text-[#160066] w-full py-4 rounded-2xl font-black text-sm transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-2"
+                        :disabled="editando" @click="guardarCambiosLinea()">
                         <template x-if="!editando">
                             <div class="flex items-center gap-2">
                                 <span class="material-symbols-outlined font-bold text-xl">save</span>
@@ -673,22 +778,25 @@
     <!-- ── MODAL: Agregar Ítem (Añadir Plato) ── -->
     <div class="modal fade" id="modalAgregarLinea" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content glass-card rounded-[32px] border-white/10 overflow-hidden">
-                <div class="modal-header border-white/5 p-6">
-                    <h5 class="text-white font-black text-xl mb-0">Añadir Nuevo Plato</h5>
+            <div class="modal-content glass-card rounded-[24px] border-white/10 overflow-hidden">
+                <div class="modal-header border-white/5 p-4 md:p-6">
+                    <h5 class="text-white font-black text-lg md:text-xl mb-0">Añadir Nuevo Plato</h5>
                     <button type="button" class="btn-close btn-close-white opacity-40" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-6 space-y-5">
+                <div class="modal-body p-4 md:p-6 space-y-4 md:space-y-5">
                     <!-- Selector de Plato -->
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Seleccionar Plato</label>
-                        <select x-model="addForm.plato_id" 
-                                class="w-full bg-surface-container border border-white/10 rounded-2xl py-3 px-4 text-white text-sm focus:ring-primary focus:border-primary transition-all">
+                        <label
+                            class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Seleccionar
+                            Plato</label>
+                        <select x-model="addForm.plato_id"
+                            class="w-full bg-surface-container border border-white/10 rounded-2xl py-3 px-4 text-white text-sm focus:ring-primary focus:border-primary transition-all">
                             <option value="" disabled selected>Elige un plato...</option>
                             <template x-for="cat in catalogoFiltrado" :key="cat.id">
                                 <optgroup :label="cat.nombre">
                                     <template x-for="p in cat.platos" :key="p.id">
-                                        <option :value="p.id" x-text="p.nombre + ' - S/. ' + parseFloat(p.precio).toFixed(2)"></option>
+                                        <option :value="p.id"
+                                            x-text="p.nombre + ' - S/. ' + parseFloat(p.precio).toFixed(2)"></option>
                                     </template>
                                 </optgroup>
                             </template>
@@ -697,32 +805,37 @@
 
                     <!-- Cantidad -->
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Cantidad</label>
+                        <label
+                            class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Cantidad</label>
                         <div class="flex items-center gap-4 bg-white/5 p-2 rounded-2xl border border-white/10">
-                            <button @click="if(addForm.cantidad > 1) addForm.cantidad--" 
-                                    class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition-all">
+                            <button @click="if(addForm.cantidad > 1) addForm.cantidad--"
+                                class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition-all">
                                 <span class="material-symbols-outlined">remove</span>
                             </button>
-                            <input type="number" x-model="addForm.cantidad" 
-                                   class="flex-1 bg-transparent border-none text-center text-white font-black text-xl focus:ring-0" readonly>
-                            <button @click="addForm.cantidad++" 
-                                    class="w-10 h-10 rounded-xl bg-primary/20 hover:bg-primary/30 text-primary flex items-center justify-center transition-all">
+                            <input type="number" x-model="addForm.cantidad"
+                                class="flex-1 bg-transparent border-none text-center text-white font-black text-xl focus:ring-0"
+                                readonly>
+                            <button @click="addForm.cantidad++"
+                                class="w-10 h-10 rounded-xl bg-primary/20 hover:bg-primary/30 text-primary flex items-center justify-center transition-all">
                                 <span class="material-symbols-outlined">add</span>
                             </button>
                         </div>
                     </div>
-                    
+
                     <!-- Notas -->
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Notas para Cocina (Opcional)</label>
+                        <label
+                            class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Notas
+                            para Cocina (Opcional)</label>
                         <input type="text" x-model="addForm.notas"
-                               class="w-full bg-black/20 border border-white/10 rounded-2xl py-3 px-4 text-white text-sm focus:border-primary focus:ring-0 transition-all" 
-                               placeholder="Ej. Sin cebolla, extra salsa..."/>
+                            class="w-full bg-black/20 border border-white/10 rounded-2xl py-3 px-4 text-white text-sm focus:border-primary focus:ring-0 transition-all"
+                            placeholder="Ej. Sin cebolla, extra salsa..." />
                     </div>
                 </div>
                 <div class="modal-footer border-white/5 p-6 bg-white/5">
-                    <button class="bg-primary hover:bg-white text-[#160066] w-full py-4 rounded-2xl font-black text-sm transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-2"
-                            :disabled="agregando || !addForm.plato_id" @click="agregarNuevaLinea()">
+                    <button
+                        class="bg-primary hover:bg-white text-[#160066] w-full py-4 rounded-2xl font-black text-sm transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-2"
+                        :disabled="agregando || !addForm.plato_id" @click="agregarNuevaLinea()">
                         <template x-if="!agregando">
                             <div class="flex items-center gap-2">
                                 <span class="material-symbols-outlined font-bold text-xl">add_circle</span>
@@ -741,39 +854,46 @@
     <!-- ── MODAL: Nueva Mesa (Solo Admin) ── -->
     <div class="modal fade" id="modalNuevaMesa" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content glass-card rounded-[32px] border-white/10 overflow-hidden">
-                <div class="modal-header border-white/5 p-6 bg-white/5">
+            <div class="modal-content glass-card rounded-[24px] md:rounded-[32px] border-white/10 overflow-hidden">
+                <div class="modal-header border-white/5 p-4 md:p-6 bg-white/5">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
-                            <span class="material-symbols-outlined text-2xl font-bold">table_restaurant</span>
+                        <div
+                            class="w-10 md:w-12 h-10 md:h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
+                            <span
+                                class="material-symbols-outlined text-xl md:text-2xl font-bold">table_restaurant</span>
                         </div>
-                        <h5 class="text-white font-black text-xl mb-0">Nueva Mesa</h5>
+                        <h5 class="text-white font-black text-lg md:text-xl mb-0">Nueva Mesa</h5>
                     </div>
                     <button type="button" class="btn-close btn-close-white opacity-40" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-6 space-y-5">
-                    <div class="grid grid-cols-2 gap-4">
+                <div class="modal-body p-4 md:p-6 space-y-4 md:space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <!-- Número -->
                         <div class="space-y-2">
-                            <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Número de Mesa</label>
-                            <input type="number" x-model="nuevaMesaForm.numero" 
-                                   class="w-full bg-surface-container border border-white/10 rounded-2xl py-3 px-4 text-white text-xl font-black focus:ring-secondary focus:border-secondary transition-all"
-                                   placeholder="00">
+                            <label
+                                class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Número
+                                de Mesa</label>
+                            <input type="number" x-model="nuevaMesaForm.numero"
+                                class="w-full bg-surface-container border border-white/10 rounded-2xl py-3 px-4 text-white text-xl font-black focus:ring-secondary focus:border-secondary transition-all"
+                                placeholder="00">
                         </div>
                         <!-- Capacidad -->
                         <div class="space-y-2">
-                            <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Capacidad</label>
-                            <input type="number" x-model="nuevaMesaForm.capacidad" 
-                                   class="w-full bg-surface-container border border-white/10 rounded-2xl py-3 px-4 text-white text-xl font-black focus:ring-secondary focus:border-secondary transition-all"
-                                   placeholder="4">
+                            <label
+                                class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Capacidad</label>
+                            <input type="number" x-model="nuevaMesaForm.capacidad"
+                                class="w-full bg-surface-container border border-white/10 rounded-2xl py-3 px-4 text-white text-xl font-black focus:ring-secondary focus:border-secondary transition-all"
+                                placeholder="4">
                         </div>
                     </div>
 
                     <!-- Zona -->
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Ubicación / Zona</label>
-                        <select x-model="nuevaMesaForm.zona_id" 
-                                class="w-full bg-surface-container border border-white/10 rounded-2xl py-3 px-4 text-white text-sm focus:ring-secondary focus:border-secondary transition-all">
+                        <label
+                            class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest px-1">Ubicación
+                            / Zona</label>
+                        <select x-model="nuevaMesaForm.zona_id"
+                            class="w-full bg-surface-container border border-white/10 rounded-2xl py-3 px-4 text-white text-sm focus:ring-secondary focus:border-secondary transition-all">
                             <option value="" disabled selected>Selecciona zona...</option>
                             {% for val, label in pisos %}
                             <option value="{{ val }}">{{ label }}</option>
@@ -781,9 +901,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="modal-footer border-white/5 p-6 bg-white/5">
-                    <button class="bg-secondary hover:bg-white text-[#0a3622] w-full py-4 rounded-2xl font-black text-sm transition-all shadow-xl shadow-secondary/20 flex items-center justify-center gap-2"
-                            :disabled="creandoMesa" @click="crearMesa()">
+                <div class="modal-footer border-white/5 p-4 md:p-6 bg-white/5">
+                    <button
+                        class="bg-secondary hover:bg-white text-[#0a3622] w-full py-3 md:py-4 rounded-xl md:rounded-2xl font-black text-sm transition-all shadow-xl shadow-secondary/20 flex items-center justify-center gap-2"
+                        :disabled="creandoMesa" @click="crearMesa()">
                         <template x-if="!creandoMesa">
                             <div class="flex items-center gap-2">
                                 <span class="material-symbols-outlined font-bold text-xl">add_circle</span>
@@ -802,20 +923,24 @@
     <!-- ── MODAL: Confirmar Unión de Mesas ── -->
     <div class="modal fade" id="modalConfirmarUnion" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width:500px">
-            <div class="modal-content glass-card rounded-[32px] border-white/10 overflow-hidden">
-                <div class="modal-header border-white/5 p-6 bg-white/5">
+            <div
+                class="modal-content glass-card rounded-[24px] md:rounded-[32px] border-white/10 overflow-hidden mx-auto w-[95%] sm:w-full">
+                <div class="modal-header border-white/5 p-4 md:p-6 bg-white/5">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:rgba(249,115,22,0.15)">
-                            <span class="material-symbols-outlined text-2xl font-bold" style="color:#f97316">link</span>
+                        <div class="w-10 md:w-12 h-10 md:h-12 rounded-2xl flex items-center justify-center"
+                            style="background:rgba(249,115,22,0.15)">
+                            <span class="material-symbols-outlined text-xl md:text-2xl font-bold"
+                                style="color:#f97316">link</span>
                         </div>
                         <div>
-                            <h5 class="text-white font-black text-xl mb-0">Unir Mesas</h5>
-                            <p class="text-on-surface-variant text-xs font-bold mb-0">Puedes unir hasta 3 mesas</p>
+                            <h5 class="text-white font-black text-lg md:text-xl mb-0">Unir Mesas</h5>
+                            <p class="text-on-surface-variant text-[10px] md:text-xs font-bold mb-0">Puedes unir hasta 3
+                                mesas</p>
                         </div>
                     </div>
                     <button type="button" class="btn-close btn-close-white opacity-40" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-5 space-y-4">
+                <div class="modal-body p-4 md:p-5 space-y-4">
 
                     <!-- Vista previa de las mesas a unir -->
                     <template x-if="unionPendiente">
@@ -824,20 +949,28 @@
                             <div class="flex items-center justify-center gap-3 py-1 flex-wrap">
                                 <!-- Mesa origen (principal) -->
                                 <div class="text-center">
-                                    <div class="w-16 h-16 rounded-2xl bg-secondary/10 border-2 border-secondary/30 flex items-center justify-center mx-auto mb-1">
-                                        <span class="text-2xl font-black text-secondary" x-text="unionPendiente.origen.numero"></span>
+                                    <div
+                                        class="w-16 h-16 rounded-2xl bg-secondary/10 border-2 border-secondary/30 flex items-center justify-center mx-auto mb-1">
+                                        <span class="text-2xl font-black text-secondary"
+                                            x-text="unionPendiente.origen.numero"></span>
                                     </div>
-                                    <span class="text-[9px] text-on-surface-variant font-black uppercase tracking-widest" x-text="unionPendiente.origen.capacidad + ' pers.'"></span>
+                                    <span
+                                        class="text-[9px] text-on-surface-variant font-black uppercase tracking-widest"
+                                        x-text="unionPendiente.origen.capacidad + ' pers.'"></span>
                                 </div>
 
                                 <span class="material-symbols-outlined text-orange-400 text-2xl">add_link</span>
 
                                 <!-- Mesa destino (1a secundaria) -->
                                 <div class="text-center">
-                                    <div class="w-16 h-16 rounded-2xl bg-secondary/10 border-2 border-secondary/30 flex items-center justify-center mx-auto mb-1">
-                                        <span class="text-2xl font-black text-secondary" x-text="unionPendiente.destino.numero"></span>
+                                    <div
+                                        class="w-16 h-16 rounded-2xl bg-secondary/10 border-2 border-secondary/30 flex items-center justify-center mx-auto mb-1">
+                                        <span class="text-2xl font-black text-secondary"
+                                            x-text="unionPendiente.destino.numero"></span>
                                     </div>
-                                    <span class="text-[9px] text-on-surface-variant font-black uppercase tracking-widest" x-text="unionPendiente.destino.capacidad + ' pers.'"></span>
+                                    <span
+                                        class="text-[9px] text-on-surface-variant font-black uppercase tracking-widest"
+                                        x-text="unionPendiente.destino.capacidad + ' pers.'"></span>
                                 </div>
 
                                 <!-- Mesa extra (3a, opcional) -->
@@ -845,14 +978,19 @@
                                     <div class="flex items-center gap-3">
                                         <span class="material-symbols-outlined text-orange-400 text-2xl">add_link</span>
                                         <div class="text-center">
-                                            <div class="w-16 h-16 rounded-2xl bg-orange-500/15 border-2 border-orange-500/40 flex items-center justify-center mx-auto mb-1 relative">
-                                                <span class="text-2xl font-black text-orange-300" x-text="unionPendiente.mesa_extra.numero"></span>
-                                                <button class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center text-[10px] font-black hover:bg-red-400"
-                                                        @click="removerTerceraMesa()">
+                                            <div
+                                                class="w-16 h-16 rounded-2xl bg-orange-500/15 border-2 border-orange-500/40 flex items-center justify-center mx-auto mb-1 relative">
+                                                <span class="text-2xl font-black text-orange-300"
+                                                    x-text="unionPendiente.mesa_extra.numero"></span>
+                                                <button
+                                                    class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center text-[10px] font-black hover:bg-red-400"
+                                                    @click="removerTerceraMesa()">
                                                     ✕
                                                 </button>
                                             </div>
-                                            <span class="text-[9px] text-on-surface-variant font-black uppercase tracking-widest" x-text="unionPendiente.mesa_extra.capacidad + ' pers.'"></span>
+                                            <span
+                                                class="text-[9px] text-on-surface-variant font-black uppercase tracking-widest"
+                                                x-text="unionPendiente.mesa_extra.capacidad + ' pers.'"></span>
                                         </div>
                                     </div>
                                 </template>
@@ -860,13 +998,21 @@
 
                             <!-- Capacidad total editable -->
                             <div class="text-center mt-2 mb-1">
-                                <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest block mb-2">Capacidad Total de la Unión</label>
+                                <label
+                                    class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest block mb-2">Capacidad
+                                    Total de la Unión</label>
                                 <div class="flex items-center justify-center gap-3">
-                                    <button class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white border border-white/10 transition-colors" @click="if(unionPendiente.capacidad_personalizada > 1) unionPendiente.capacidad_personalizada--">
+                                    <button
+                                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white border border-white/10 transition-colors"
+                                        @click="if(unionPendiente.capacidad_personalizada > 1) unionPendiente.capacidad_personalizada--">
                                         <span class="material-symbols-outlined text-sm">remove</span>
                                     </button>
-                                    <input type="number" x-model="unionPendiente.capacidad_personalizada" class="bg-transparent text-white font-black text-3xl text-center w-20 focus:outline-none focus:ring-0 border-none p-0 m-0" min="1">
-                                    <button class="w-10 h-10 rounded-full bg-primary/20 hover:bg-primary/30 flex items-center justify-center text-primary border border-primary/20 transition-colors" @click="unionPendiente.capacidad_personalizada++">
+                                    <input type="number" x-model="unionPendiente.capacidad_personalizada"
+                                        class="bg-transparent text-white font-black text-3xl text-center w-20 focus:outline-none focus:ring-0 border-none p-0 m-0"
+                                        min="1">
+                                    <button
+                                        class="w-10 h-10 rounded-full bg-primary/20 hover:bg-primary/30 flex items-center justify-center text-primary border border-primary/20 transition-colors"
+                                        @click="unionPendiente.capacidad_personalizada++">
                                         <span class="material-symbols-outlined text-sm">add</span>
                                     </button>
                                 </div>
@@ -875,48 +1021,51 @@
                             <!-- Selector de 3a mesa (opcional) — custom dropdown -->
                             <template x-if="!unionPendiente.mesa_extra">
                                 <div class="bg-white/5 border border-white/10 rounded-2xl p-3"
-                                     x-data="{ open: false, label: '— Sin 3ª mesa —' }">
-                                    <p class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest mb-2">
-                                        <span class="material-symbols-outlined text-[12px] align-middle">add_circle</span>
+                                    x-data="{ open: false, label: '— Sin 3ª mesa —' }">
+                                    <p
+                                        class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest mb-2">
+                                        <span
+                                            class="material-symbols-outlined text-[12px] align-middle">add_circle</span>
                                         Agregar 3ª mesa (opcional)
                                     </p>
                                     <!-- Trigger button -->
                                     <div class="relative">
                                         <button type="button"
-                                                class="w-full flex items-center justify-between gap-2 rounded-xl border border-white/20 px-3 py-2 text-sm font-bold transition-colors"
-                                                style="background-color:#1e2235;color:#e2e8f0;"
-                                                @click="open = !open"
-                                                @keydown.escape="open = false">
+                                            class="w-full flex items-center justify-between gap-2 rounded-xl border border-white/20 px-3 py-2 text-sm font-bold transition-colors"
+                                            style="background-color:#1e2235;color:#e2e8f0;" @click="open = !open"
+                                            @keydown.escape="open = false">
                                             <span x-text="label"></span>
-                                            <span class="material-symbols-outlined text-[16px] transition-transform" :class="open ? 'rotate-180' : ''">expand_more</span>
+                                            <span class="material-symbols-outlined text-[16px] transition-transform"
+                                                :class="open ? 'rotate-180' : ''">expand_more</span>
                                         </button>
 
                                         <!-- Dropdown list -->
-                                        <div x-show="open"
-                                             x-transition:enter="transition ease-out duration-100"
-                                             x-transition:enter-start="opacity-0 translate-y-1"
-                                             x-transition:enter-end="opacity-100 translate-y-0"
-                                             x-transition:leave="transition ease-in duration-75"
-                                             x-transition:leave-start="opacity-100 translate-y-0"
-                                             x-transition:leave-end="opacity-0 translate-y-1"
-                                             @click.outside="open = false"
-                                             class="absolute z-50 left-0 right-0 mt-1 rounded-xl border border-white/20 shadow-2xl overflow-y-auto"
-                                             style="background-color:#1e2235; top: calc(100% + 4px); max-height:200px;">
+                                        <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                                            x-transition:enter-start="opacity-0 translate-y-1"
+                                            x-transition:enter-end="opacity-100 translate-y-0"
+                                            x-transition:leave="transition ease-in duration-75"
+                                            x-transition:leave-start="opacity-100 translate-y-0"
+                                            x-transition:leave-end="opacity-0 translate-y-1"
+                                            @click.outside="open = false"
+                                            class="absolute z-50 left-0 right-0 mt-1 rounded-xl border border-white/20 shadow-2xl overflow-y-auto"
+                                            style="background-color:#1e2235; top: calc(100% + 4px); max-height:200px;">
                                             <!-- Opción: sin mesa -->
                                             <button type="button"
-                                                    class="w-full text-left px-3 py-2 text-sm font-bold transition-colors hover:bg-orange-500/20"
-                                                    style="color:#94a3b8;"
-                                                    @click="label = '— Sin 3ª mesa —'; open = false;">
+                                                class="w-full text-left px-3 py-2 text-sm font-bold transition-colors hover:bg-orange-500/20"
+                                                style="color:#94a3b8;"
+                                                @click="label = '— Sin 3ª mesa —'; open = false;">
                                                 — Sin 3ª mesa —
                                             </button>
                                             <!-- Opciones dinámicas -->
                                             <template x-for="m in mesasParaTercera" :key="m.id">
                                                 <button type="button"
-                                                        class="w-full text-left px-3 py-2 text-sm font-bold transition-colors hover:bg-orange-500/20"
-                                                        style="color:#e2e8f0; border-top: 1px solid rgba(255,255,255,0.06);"
-                                                        @click="label = 'Mesa ' + m.numero + ' (' + m.capacidad + ' pers.)'; seleccionarTerceraMesa(m.id); open = false;">
-                                                    <span class="text-orange-400 font-black" x-text="'Mesa ' + m.numero"></span>
-                                                    <span class="text-white/50 ml-1" x-text="'(' + m.capacidad + ' pers.) · ' + m.piso_label"></span>
+                                                    class="w-full text-left px-3 py-2 text-sm font-bold transition-colors hover:bg-orange-500/20"
+                                                    style="color:#e2e8f0; border-top: 1px solid rgba(255,255,255,0.06);"
+                                                    @click="label = 'Mesa ' + m.numero + ' (' + m.capacidad + ' pers.)'; seleccionarTerceraMesa(m.id); open = false;">
+                                                    <span class="text-orange-400 font-black"
+                                                        x-text="'Mesa ' + m.numero"></span>
+                                                    <span class="text-white/50 ml-1"
+                                                        x-text="'(' + m.capacidad + ' pers.) · ' + m.piso_label"></span>
                                                 </button>
                                             </template>
                                         </div>
@@ -929,19 +1078,22 @@
                     <!-- Info box -->
                     <div class="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-3 flex items-start gap-2">
                         <span class="material-symbols-outlined text-orange-400 text-lg flex-shrink-0">info</span>
-                        <p class="text-orange-200 text-xs font-bold leading-relaxed m-0">
-                            La capacidad se sumará y las mesas aparecerán como una sola unidad. La unión se disuelve al cobrar o manualmente con el botón Disolver.
+                        <p class="text-orange-200 text-[10px] sm:text-xs font-bold leading-relaxed m-0">
+                            La capacidad se sumará y las mesas aparecerán como una sola unidad. La unión se disuelve al
+                            cobrar o manualmente.
                         </p>
                     </div>
                 </div>
-                <div class="modal-footer border-white/5 p-4 bg-white/5 gap-3">
-                    <button class="flex-1 bg-white/5 hover:bg-white/10 text-white py-3 rounded-2xl font-black text-sm transition-all border border-white/5" data-bs-dismiss="modal">
+                <div class="modal-footer border-white/5 p-4 bg-white/5 flex-col md:flex-row gap-3">
+                    <button
+                        class="w-full md:w-[48%] bg-white/5 hover:bg-white/10 text-white py-3 rounded-xl md:rounded-2xl font-black text-sm transition-all border border-white/5"
+                        data-bs-dismiss="modal">
                         Cancelar
                     </button>
-                    <button class="flex-1 py-3 rounded-2xl font-black text-sm transition-all shadow-lg flex items-center justify-center gap-2"
-                            style="background:linear-gradient(135deg,#f97316,#fb923c);color:white"
-                            :disabled="uniendoMesas"
-                            @click="confirmarUnion()">
+                    <button
+                        class="w-full md:flex-1 py-3 rounded-xl md:rounded-2xl font-black text-sm transition-all shadow-lg flex items-center justify-center gap-2"
+                        style="background:linear-gradient(135deg,#f97316,#fb923c);color:white" :disabled="uniendoMesas"
+                        @click="confirmarUnion()">
                         <template x-if="!uniendoMesas">
                             <div class="flex items-center gap-2">
                                 <span class="material-symbols-outlined font-bold">link</span>
@@ -962,7 +1114,8 @@
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content glass-card rounded-[28px] border-white/10 overflow-hidden">
                 <div class="modal-body p-6 text-center space-y-4">
-                    <div class="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center" style="background:rgba(239,68,68,0.15)">
+                    <div class="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center"
+                        style="background:rgba(239,68,68,0.15)">
                         <span class="material-symbols-outlined text-3xl text-red-400">link_off</span>
                     </div>
                     <div>
@@ -972,13 +1125,13 @@
                         </p>
                     </div>
                     <div class="flex gap-3 pt-2">
-                        <button class="flex-1 bg-white/5 hover:bg-white/10 text-white py-3 rounded-2xl font-black text-sm transition-all border border-white/5"
-                                data-bs-dismiss="modal">
+                        <button
+                            class="flex-1 bg-white/5 hover:bg-white/10 text-white py-3 rounded-2xl font-black text-sm transition-all border border-white/5"
+                            data-bs-dismiss="modal">
                             Cancelar
                         </button>
                         <button class="flex-1 py-3 rounded-2xl font-black text-sm text-white transition-all shadow-lg"
-                                style="background:linear-gradient(135deg,#ef4444,#f87171)"
-                                @click="confirmarDisolver()">
+                            style="background:linear-gradient(135deg,#ef4444,#f87171)" @click="confirmarDisolver()">
                             <span class="material-symbols-outlined text-sm align-middle">link_off</span>
                             Disolver
                         </button>
@@ -992,7 +1145,8 @@
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content glass-card rounded-[28px] border-white/10 overflow-hidden">
                 <div class="modal-body p-6 text-center space-y-4">
-                    <div class="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center" style="background:rgba(255,255,255,0.1)">
+                    <div class="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center"
+                        style="background:rgba(255,255,255,0.1)">
                         <span class="material-symbols-outlined text-3xl text-white">mop</span>
                     </div>
                     <div>
@@ -1002,16 +1156,19 @@
                         </p>
                     </div>
                     <div class="flex gap-3 pt-2">
-                        <button class="flex-1 bg-white/5 hover:bg-white/10 text-white py-3 rounded-2xl font-black text-sm transition-all border border-white/5"
-                                data-bs-dismiss="modal">
+                        <button
+                            class="flex-1 bg-white/5 hover:bg-white/10 text-white py-3 rounded-2xl font-black text-sm transition-all border border-white/5"
+                            data-bs-dismiss="modal">
                             Cancelar
                         </button>
-                        <button class="flex-1 py-3 rounded-2xl font-black text-sm text-[#160066] transition-all shadow-lg"
-                                style="background:linear-gradient(135deg,#a3e635,#84cc16)"
-                                @click="terminarLimpieza()"
-                                :disabled="marcandoLimpieza">
-                            <span class="material-symbols-outlined text-sm align-middle" x-show="!marcandoLimpieza">check_circle</span>
-                            <span class="material-symbols-outlined text-sm align-middle animate-spin" x-show="marcandoLimpieza">progress_activity</span>
+                        <button
+                            class="flex-1 py-3 rounded-2xl font-black text-sm text-[#160066] transition-all shadow-lg"
+                            style="background:linear-gradient(135deg,#a3e635,#84cc16)" @click="terminarLimpieza()"
+                            :disabled="marcandoLimpieza">
+                            <span class="material-symbols-outlined text-sm align-middle"
+                                x-show="!marcandoLimpieza">check_circle</span>
+                            <span class="material-symbols-outlined text-sm align-middle animate-spin"
+                                x-show="marcandoLimpieza">progress_activity</span>
                             <span x-text="marcandoLimpieza ? 'Liberando...' : 'Lista'"></span>
                         </button>
                     </div>
@@ -1021,11 +1178,13 @@
     </div>
 
     <!-- ── MODAL: Caja no abierta (aviso para MOZO) ── -->
-    <div class="modal fade" id="modalSinCaja" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal fade" id="modalSinCaja" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content glass-card rounded-[28px] border-white/10 overflow-hidden">
                 <div class="modal-body p-6 text-center space-y-4">
-                    <div class="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center" style="background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.3)">
+                    <div class="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center"
+                        style="background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.3)">
                         <span class="material-symbols-outlined text-3xl" style="color:#fbbf24">lock_clock</span>
                     </div>
                     <div>
@@ -1036,14 +1195,15 @@
                         </p>
                     </div>
                     <div class="flex gap-3 pt-2">
-                        <button id="btnSinCajaCancelar" class="flex-1 bg-white/5 hover:bg-white/10 text-white py-3 rounded-2xl font-black text-sm transition-all border border-white/5 flex items-center justify-center gap-1"
-                                data-bs-dismiss="modal">
+                        <button id="btnSinCajaCancelar"
+                            class="flex-1 bg-white/5 hover:bg-white/10 text-white py-3 rounded-2xl font-black text-sm transition-all border border-white/5 flex items-center justify-center gap-1"
+                            data-bs-dismiss="modal">
                             <span class="material-symbols-outlined text-sm">arrow_back</span>
                             Cancelar
                         </button>
-                        <button id="btnSinCajaContinuar" class="flex-1 py-3 rounded-2xl font-black text-sm text-white transition-all shadow-lg flex items-center justify-center gap-1"
-                                style="background:linear-gradient(135deg,#f59e0b,#fbbf24)"
-                                data-bs-dismiss="modal">
+                        <button id="btnSinCajaContinuar"
+                            class="flex-1 py-3 rounded-2xl font-black text-sm text-white transition-all shadow-lg flex items-center justify-center gap-1"
+                            style="background:linear-gradient(135deg,#f59e0b,#fbbf24)" data-bs-dismiss="modal">
                             <span class="material-symbols-outlined text-sm">check_circle</span>
                             Sí, continuar
                         </button>
@@ -1054,28 +1214,28 @@
     </div>
 
     <!-- Banner flotante para Modo Unión con Clics -->
-    <div x-show="modoUnion && mesaOrigenUnion"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0 translate-y-10"
-         x-transition:enter-end="opacity-100 translate-y-0"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100 translate-y-0"
-         x-transition:leave-end="opacity-0 translate-y-10"
-         class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4 pointer-events-none">
-        <div class="glass-card bg-[#1e2235]/95 border border-orange-500/40 rounded-3xl p-4 shadow-2xl flex items-center justify-between gap-4 pointer-events-auto">
+    <div x-show="modoUnion && mesaOrigenUnion" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-y-10" x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 translate-y-10"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4 pointer-events-none">
+        <div
+            class="glass-card bg-[#1e2235]/95 border border-orange-500/40 rounded-3xl p-4 shadow-2xl flex items-center justify-between gap-4 pointer-events-auto">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-orange-400 animate-pulse">
+                <div
+                    class="w-10 h-10 rounded-2xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-orange-400 animate-pulse">
                     <span class="material-symbols-outlined font-bold">link</span>
                 </div>
                 <div>
                     <h6 class="text-white font-black text-sm mb-0.5">Unión de Mesas Activa</h6>
                     <p class="text-on-surface-variant text-[11px] font-bold mb-0">
-                        Seleccionada: <strong class="text-orange-400">Mesa <span x-text="mesaOrigenUnion?.numero"></span></strong>. Toca otra mesa libre para unir.
+                        Seleccionada: <strong class="text-orange-400">Mesa <span
+                                x-text="mesaOrigenUnion?.numero"></span></strong>. Toca otra mesa libre para unir.
                     </p>
                 </div>
             </div>
-            <button @click="mesaOrigenUnion = null" 
-                    class="bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl px-3 py-1.5 text-[10px] font-black uppercase tracking-wider transition-all">
+            <button @click="mesaOrigenUnion = null"
+                class="bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl px-3 py-1.5 text-[10px] font-black uppercase tracking-wider transition-all">
                 Deseleccionar
             </button>
         </div>
@@ -1086,660 +1246,660 @@
 
 {% block extra_js %}
 <script>
-function planoApp() {
-    return {
-        mesas: [],
-        pisoActivo: '',
-        mesaActual: null,
-        catalogo: [],
-        platosInactivos: [],
-        lineaAEditar: null,
-        editForm: {
-            plato_id: null,
-            cantidad: 1
-        },
-        addForm: {
-            plato_id: '',
-            cantidad: 1,
-            notas: ''
-        },
-        cargando: true,
-        liberando: false,
-        editando: false,
-        agregando: false,
-        entregando: false,
-        _modal: null,
-        _modalEdit: null,
-        _modalAgregar: null,
-        _pollingTimer: null,
-        confirmandoLiberar: false,
-        confirmandoEntregar: false,
-
-        // Gestión de Mesas (Admin)
-        modoGestion: false,
-        creandoMesa: false,
-        nuevaMesaForm: {
-            numero: '',
-            capacidad: 4,
-            zona_id: ''
-        },
-        _modalNuevaMesa: null,
-
-        // Modo Unión (MOZO y ADMIN)
-        modoUnion: false,
-        mesaOrigenUnion: null,
-
-        // Drag & Drop — Uniones
-        _dragMesa: null,
-        unionPendiente: null,
-        uniendoMesas: false,
-        _modalUnion: null,
-
-        // Disolver unión — ID pendiente de confirmar
-        disolverPendienteId: null,
-        _modalDisolver: null,
-
-        // Modal Limpieza
-        _modalLimpieza: null,
-        marcandoLimpieza: false,
-
-        async inicializar() {
-            this._modal = new bootstrap.Modal(document.getElementById('modalComanda'));
-            this._modalEdit = new bootstrap.Modal(document.getElementById('modalEditarLinea'));
-            this._modalAgregar = new bootstrap.Modal(document.getElementById('modalAgregarLinea'));
-            this._modalNuevaMesa = new bootstrap.Modal(document.getElementById('modalNuevaMesa'));
-            this._modalUnion = new bootstrap.Modal(document.getElementById('modalConfirmarUnion'));
-            this._modalDisolver = new bootstrap.Modal(document.getElementById('modalConfirmarDisolver'));
-            this._modalLimpieza = new bootstrap.Modal(document.getElementById('modalLimpieza'));
-
-            // ── Verificar turno de caja (aviso para MOZO) ──────────────────────
-            const rolUsuario = '{{ user.rol.nombre|upper }}';
-            if (rolUsuario === 'MOZO' || rolUsuario === 'MESERO') {
-                try {
-                    const respTurno = await fetch('/caja/api/turno-activo/', {
-                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                        credentials: 'same-origin'
-                    });
-                    const dataTurno = await respTurno.json();
-                    if (!dataTurno.activo) {
-                        const modalSinCaja = new bootstrap.Modal(
-                            document.getElementById('modalSinCaja'),
-                            { backdrop: 'static', keyboard: false }
-                        );
-                        modalSinCaja.show();
-                    }
-                } catch (e) {
-                    console.warn('No se pudo verificar el turno de caja:', e);
-                }
-            }
-            // ─────────────────────────────────────────────────────────────────
-
-            await Promise.all([
-                this.cargarEstado(),
-                this.cargarCatalogo()
-            ]);
-            this._pollingTimer = setInterval(() => this.cargarEstado(), 10000);
-
-            this.$el.addEventListener('alpine:destroy', () => {
-                clearInterval(this._pollingTimer);
-            });
-        },
-
-        async cargarEstado() {
-            try {
-                const resp = await fetch('/api/mesas/estado-actual/');
-                const data = await resp.json();
-                this.mesas = data.mesas;
-                this.platosInactivos = data.platos_inactivos || [];
-                this.cargando = false;
-
-                if (this.mesaActual) {
-                    const actualizada = data.mesas.find(m => m.id === this.mesaActual.id);
-                    if (actualizada) this.mesaActual = actualizada;
-                }
-            } catch (e) {
-                console.error('Error en polling:', e);
-            }
-        },
-
-        async cargarCatalogo() {
-            try {
-                const resp = await fetch('/api/menu/catalogo/');
-                const data = await resp.json();
-                this.catalogo = data.categorias;
-            } catch (e) {
-                console.error('Error cargando catálogo:', e);
-            }
-        },
-
-        get mesasFiltradas() {
-            if (!this.pisoActivo) return this.mesas;
-            return this.mesas.filter(m => String(m.piso) === String(this.pisoActivo));
-        },
-
-        get catalogoFiltrado() {
-            // Filtrar platos que están en la lista de inactivos
-            const inactivosSet = new Set(this.platosInactivos);
-            return this.catalogo.map(cat => {
-                return {
-                    ...cat,
-                    platos: cat.platos.filter(p => !inactivosSet.has(p.id))
-                };
-            }).filter(cat => cat.platos.length > 0);
-        },
-
-        // Filtra las mesas secundarias de uniones (se muestran integradas en el card principal)
-        get mesasRenderizadas() {
-            return this.mesasFiltradas.filter(m => {
-                // Ocultar mesas que son secundarias de una unión
-                if (m.union && !m.union.es_principal) return false;
-                return true;
-            });
-        },
-
-        get resumen() {
-            return {
-                libres: this.mesas.filter(m => m.estado === 'LIBRE').length,
-                ocupadas: this.mesas.filter(m => m.estado === 'OCUPADA').length,
-                entregadas: this.mesas.filter(m => m.estado === 'ENTREGADO').length,
-                por_pagar: this.mesas.filter(m => m.estado === 'POR_PAGAR').length,
-            };
-        },
-
-        get tienePlatosListos() {
-            if (!this.mesaActual?.comanda?.lineas) return false;
-            return this.mesaActual.comanda.lineas.some(l => l.estado === 'LISTO');
-        },
-
-        async abrirNuevaComanda(e) {
-            const href = e.target.closest('a').href;
-            try {
-                const resp = await fetch('/caja/api/turno-activo/', {
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                    credentials: 'same-origin'
-                });
-                const data = await resp.json();
-                if (!data.activo) {
-                    // Mostrar modal de advertencia
-                    const modalEl = document.getElementById('modalSinCaja');
-                    const modal = bootstrap.Modal.getOrCreateInstance(modalEl, { backdrop: 'static', keyboard: false });
-                    // Configurar el botón Continuar para navegar
-                    document.getElementById('btnSinCajaContinuar').onclick = () => { window.location.href = href; };
-                    // El botón Cancelar solo cierra el modal (data-bs-dismiss ya lo hace)
-                    modal.show();
-                    return;
-                }
-            } catch(err) {
-                console.warn('No se pudo verificar caja:', err);
-            }
-            window.location.href = href;
-        },
-
-        abrirDetalle(mesa) {
-            if (this.modoUnion && mesa.estado === 'LIBRE') {
-                this.seleccionarMesaUnionClick(mesa);
-                return;
-            }
-            if (mesa.estado === 'LIBRE') return;
-            if (mesa.estado === 'LIMPIEZA') {
-                this.mesaActual = mesa;
-                this._modalLimpieza.show();
-                return;
-            }
-            this.mesaActual = mesa;
-            this._modal.show();
-        },
-
-        seleccionarMesaUnionClick(mesa) {
-            if (mesa.estado !== 'LIBRE') {
-                alert('Solo se pueden unir mesas que estén LIBRES.');
-                return;
-            }
-            if (!this.mesaOrigenUnion) {
-                // Seleccionar primera mesa
-                this.mesaOrigenUnion = mesa;
-            } else {
-                // Si hace click en la misma mesa, deselecciona
-                if (this.mesaOrigenUnion.id === mesa.id) {
-                    this.mesaOrigenUnion = null;
-                    return;
-                }
-                // Si es otra mesa libre, abrir modal de unión
-                this.unionPendiente = {
-                    origen: this.mesaOrigenUnion,
-                    destino: mesa,
-                    mesa_extra: null,
-                    capacidad_personalizada: this.mesaOrigenUnion.capacidad + mesa.capacidad
-                };
-                this.mesaOrigenUnion = null;
-                this._modalUnion.show();
-            }
-        },
-
-        async terminarLimpieza() {
-            if (!this.mesaActual || this.marcandoLimpieza) return;
-            this.marcandoLimpieza = true;
-            try {
-                const resp = await fetch(`/api/mesas/${this.mesaActual.id}/limpiada/`, {
-                    method: 'POST',
-                    headers: { 'X-CSRFToken': this._getCsrfToken() }
-                });
-                const data = await resp.json();
-                if (data.ok) {
-                    this._modalLimpieza.hide();
-                    this.mesaActual = null;
-                    await this.cargarEstado();
-                } else {
-                    alert(data.error || 'No se pudo marcar la limpieza como terminada');
-                }
-            } catch (e) {
-                console.error('Error:', e);
-                alert('Error de conexión');
-            } finally {
-                this.marcandoLimpieza = false;
-            }
-        },
-
-        async liberarMesa() {
-            if (!this.confirmandoLiberar) {
-                this.confirmandoLiberar = true;
-                setTimeout(() => { this.confirmandoLiberar = false; }, 4000);
-                return;
-            }
-            this.confirmandoLiberar = false;
-            this.liberando = true;
-            try {
-                const resp = await fetch(`/api/comandas/mesa/${this.mesaActual.id}/liberar/`, {
-                    method: 'POST',
-                    headers: { 
-                        'X-CSRFToken': this._getCsrfToken(),
-                        'Content-Type': 'application/json'
-                    },
-                });
-                const data = await resp.json();
-                if (data.ok) {
-                    this._modal.hide();
-                    this.mesaActual = null;
-                    await this.cargarEstado();
-                } else {
-                    alert(data.error || 'Error al liberar mesa');
-                }
-            } catch (e) {
-                console.error('Error liberando mesa:', e);
-                alert('Error de conexión');
-            } finally {
-                this.liberando = false;
-            }
-        },
-
-        async marcarPedidoEntregado() {
-            if (!this.mesaActual?.comanda?.id) return;
-            if (!this.tienePlatosListos) {
-                alert('No hay platos listos para marcar como entregados.');
-                return;
-            }
-            if (!this.confirmandoEntregar) {
-                this.confirmandoEntregar = true;
-                setTimeout(() => { this.confirmandoEntregar = false; }, 4000);
-                return;
-            }
-            this.confirmandoEntregar = false;
-            this.entregando = true;
-            try {
-                const resp = await fetch(`/api/comandas/${this.mesaActual.comanda.id}/entregar/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': this._getCsrfToken(),
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await resp.json();
-                if (data.ok) {
-                    await this.cargarEstado();
-                } else {
-                    alert(data.error || 'No se pudo marcar el pedido como entregado');
-                }
-            } catch (e) {
-                console.error('Error marcando pedido entregado:', e);
-                alert('Error de conexión');
-            } finally {
-                this.entregando = false;
-                this.confirmandoEntregar = false;
-            }
-        },
-
-        claseBotonLiberar() {
-            if (this.confirmandoLiberar) return 'bg-red-500 text-white shadow-red-500/20 animate-pulse';
-            if (this.mesaActual && this.mesaActual.estado === 'POR_PAGAR') return 'bg-primary/30 text-[#160066] opacity-50';
-            return 'bg-primary hover:bg-white text-[#160066] shadow-primary/20';
-        },
-
-        async eliminarLinea(linea) {
-            if (!confirm(`¿Eliminar "${linea.plato_nombre}" del pedido?`)) return;
-            
-            try {
-                const resp = await fetch(`/api/comandas/linea/${linea.id}/editar/`, {
-                    method: 'DELETE',
-                    headers: { 'X-CSRFToken': this._getCsrfToken() },
-                });
-                const data = await resp.json();
-                if (data.ok) {
-                    await this.cargarEstado();
-                } else {
-                    alert(data.error || 'No se pudo eliminar el plato');
-                }
-            } catch (e) {
-                console.error('Error eliminando línea:', e);
-                alert('Error de conexión');
-            }
-        },
-
-        abrirEditarLinea(linea) {
-            this.lineaAEditar = linea;
-            this.editForm = {
-                plato_id: linea.plato_id,
-                cantidad: linea.cantidad
-            };
-            this._modalEdit.show();
-        },
-
-        async guardarCambiosLinea() {
-            this.editando = true;
-            try {
-                const resp = await fetch(`/api/comandas/linea/${this.lineaAEditar.id}/editar/`, {
-                    method: 'PATCH',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': this._getCsrfToken() 
-                    },
-                    body: JSON.stringify(this.editForm)
-                });
-                const data = await resp.json();
-                if (data.ok) {
-                    this._modalEdit.hide();
-                    await this.cargarEstado();
-                } else {
-                    alert(data.error || 'No se pudo editar el plato');
-                }
-            } catch (e) {
-                console.error('Error guardando línea:', e);
-                alert('Error de conexión');
-            } finally {
-                this.editando = false;
-            }
-        },
-
-        abrirAgregarLinea() {
-            this.addForm = {
+    function planoApp() {
+        return {
+            mesas: [],
+            pisoActivo: '',
+            mesaActual: null,
+            catalogo: [],
+            platosInactivos: [],
+            lineaAEditar: null,
+            editForm: {
+                plato_id: null,
+                cantidad: 1
+            },
+            addForm: {
                 plato_id: '',
                 cantidad: 1,
                 notas: ''
-            };
-            this._modalAgregar.show();
-        },
+            },
+            cargando: true,
+            liberando: false,
+            editando: false,
+            agregando: false,
+            entregando: false,
+            _modal: null,
+            _modalEdit: null,
+            _modalAgregar: null,
+            _pollingTimer: null,
+            confirmandoLiberar: false,
+            confirmandoEntregar: false,
 
-        async agregarNuevaLinea() {
-            if (!this.addForm.plato_id) {
-                alert('Selecciona un plato para añadir.');
-                return;
-            }
-            this.agregando = true;
-            try {
-                const resp = await fetch(`/api/comandas/${this.mesaActual.comanda.id}/platos/`, {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': this._getCsrfToken() 
-                    },
-                    body: JSON.stringify(this.addForm)
-                });
-                const data = await resp.json();
-                if (data.ok) {
-                    this._modalAgregar.hide();
-                    await this.cargarEstado(); // Refresh table state
-                } else {
-                    alert(data.error || 'No se pudo añadir el plato');
+            // Gestión de Mesas (Admin)
+            modoGestion: false,
+            creandoMesa: false,
+            nuevaMesaForm: {
+                numero: '',
+                capacidad: 4,
+                zona_id: ''
+            },
+            _modalNuevaMesa: null,
+
+            // Modo Unión (MOZO y ADMIN)
+            modoUnion: false,
+            mesaOrigenUnion: null,
+
+            // Drag & Drop — Uniones
+            _dragMesa: null,
+            unionPendiente: null,
+            uniendoMesas: false,
+            _modalUnion: null,
+
+            // Disolver unión — ID pendiente de confirmar
+            disolverPendienteId: null,
+            _modalDisolver: null,
+
+            // Modal Limpieza
+            _modalLimpieza: null,
+            marcandoLimpieza: false,
+
+            async inicializar() {
+                this._modal = new bootstrap.Modal(document.getElementById('modalComanda'));
+                this._modalEdit = new bootstrap.Modal(document.getElementById('modalEditarLinea'));
+                this._modalAgregar = new bootstrap.Modal(document.getElementById('modalAgregarLinea'));
+                this._modalNuevaMesa = new bootstrap.Modal(document.getElementById('modalNuevaMesa'));
+                this._modalUnion = new bootstrap.Modal(document.getElementById('modalConfirmarUnion'));
+                this._modalDisolver = new bootstrap.Modal(document.getElementById('modalConfirmarDisolver'));
+                this._modalLimpieza = new bootstrap.Modal(document.getElementById('modalLimpieza'));
+
+                // ── Verificar turno de caja (aviso para MOZO) ──────────────────────
+                const rolUsuario = '{{ user.rol.nombre|upper }}';
+                if (rolUsuario === 'MOZO' || rolUsuario === 'MESERO') {
+                    try {
+                        const respTurno = await fetch('/caja/api/turno-activo/', {
+                            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                            credentials: 'same-origin'
+                        });
+                        const dataTurno = await respTurno.json();
+                        if (!dataTurno.activo) {
+                            const modalSinCaja = new bootstrap.Modal(
+                                document.getElementById('modalSinCaja'),
+                                { backdrop: 'static', keyboard: false }
+                            );
+                            modalSinCaja.show();
+                        }
+                    } catch (e) {
+                        console.warn('No se pudo verificar el turno de caja:', e);
+                    }
                 }
-            } catch (e) {
-                console.error('Error añadiendo plato:', e);
-                alert('Error de conexión');
-            } finally {
-                this.agregando = false;
-            }
-        },
+                // ─────────────────────────────────────────────────────────────────
 
-        // ── DRAG & DROP — UNIONES DE MESAS ──
-        onDragStart(mesa, event) {
-            if ((!this.modoGestion && !this.modoUnion) || mesa.estado !== 'LIBRE') return;
-            this._dragMesa = mesa;
-            event.dataTransfer.effectAllowed = 'link';
-            event.dataTransfer.setData('text/plain', mesa.id);
-        },
+                await Promise.all([
+                    this.cargarEstado(),
+                    this.cargarCatalogo()
+                ]);
+                this._pollingTimer = setInterval(() => this.cargarEstado(), 10000);
 
-        onDragOver(mesa, event) {
-            if (!this._dragMesa || this._dragMesa.id === mesa.id) return;
-            if (mesa.estado !== 'LIBRE') return;
-            event.currentTarget.classList.add('drag-over');
-        },
+                this.$el.addEventListener('alpine:destroy', () => {
+                    clearInterval(this._pollingTimer);
+                });
+            },
 
-        onDragLeave(mesa, event) {
-            event.currentTarget.classList.remove('drag-over');
-        },
+            async cargarEstado() {
+                try {
+                    const resp = await fetch('/api/mesas/estado-actual/');
+                    const data = await resp.json();
+                    this.mesas = data.mesas;
+                    this.platosInactivos = data.platos_inactivos || [];
+                    this.cargando = false;
 
-        onDrop(mesa, event) {
-            event.currentTarget.classList.remove('drag-over');
-            if (!this._dragMesa || this._dragMesa.id === mesa.id) return;
-            if (mesa.estado !== 'LIBRE' || this._dragMesa.estado !== 'LIBRE') {
-                alert('Solo se pueden unir mesas que estén LIBRES.');
+                    if (this.mesaActual) {
+                        const actualizada = data.mesas.find(m => m.id === this.mesaActual.id);
+                        if (actualizada) this.mesaActual = actualizada;
+                    }
+                } catch (e) {
+                    console.error('Error en polling:', e);
+                }
+            },
+
+            async cargarCatalogo() {
+                try {
+                    const resp = await fetch('/api/menu/catalogo/');
+                    const data = await resp.json();
+                    this.catalogo = data.categorias;
+                } catch (e) {
+                    console.error('Error cargando catálogo:', e);
+                }
+            },
+
+            get mesasFiltradas() {
+                if (!this.pisoActivo) return this.mesas;
+                return this.mesas.filter(m => String(m.piso) === String(this.pisoActivo));
+            },
+
+            get catalogoFiltrado() {
+                // Filtrar platos que están en la lista de inactivos
+                const inactivosSet = new Set(this.platosInactivos);
+                return this.catalogo.map(cat => {
+                    return {
+                        ...cat,
+                        platos: cat.platos.filter(p => !inactivosSet.has(p.id))
+                    };
+                }).filter(cat => cat.platos.length > 0);
+            },
+
+            // Filtra las mesas secundarias de uniones (se muestran integradas en el card principal)
+            get mesasRenderizadas() {
+                return this.mesasFiltradas.filter(m => {
+                    // Ocultar mesas que son secundarias de una unión
+                    if (m.union && !m.union.es_principal) return false;
+                    return true;
+                });
+            },
+
+            get resumen() {
+                return {
+                    libres: this.mesas.filter(m => m.estado === 'LIBRE').length,
+                    ocupadas: this.mesas.filter(m => m.estado === 'OCUPADA').length,
+                    entregadas: this.mesas.filter(m => m.estado === 'ENTREGADO').length,
+                    por_pagar: this.mesas.filter(m => m.estado === 'POR_PAGAR').length,
+                };
+            },
+
+            get tienePlatosListos() {
+                if (!this.mesaActual?.comanda?.lineas) return false;
+                return this.mesaActual.comanda.lineas.some(l => l.estado === 'LISTO');
+            },
+
+            async abrirNuevaComanda(e) {
+                const href = e.target.closest('a').href;
+                try {
+                    const resp = await fetch('/caja/api/turno-activo/', {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                        credentials: 'same-origin'
+                    });
+                    const data = await resp.json();
+                    if (!data.activo) {
+                        // Mostrar modal de advertencia
+                        const modalEl = document.getElementById('modalSinCaja');
+                        const modal = bootstrap.Modal.getOrCreateInstance(modalEl, { backdrop: 'static', keyboard: false });
+                        // Configurar el botón Continuar para navegar
+                        document.getElementById('btnSinCajaContinuar').onclick = () => { window.location.href = href; };
+                        // El botón Cancelar solo cierra el modal (data-bs-dismiss ya lo hace)
+                        modal.show();
+                        return;
+                    }
+                } catch (err) {
+                    console.warn('No se pudo verificar caja:', err);
+                }
+                window.location.href = href;
+            },
+
+            abrirDetalle(mesa) {
+                if (this.modoUnion && mesa.estado === 'LIBRE') {
+                    this.seleccionarMesaUnionClick(mesa);
+                    return;
+                }
+                if (mesa.estado === 'LIBRE') return;
+                if (mesa.estado === 'LIMPIEZA') {
+                    this.mesaActual = mesa;
+                    this._modalLimpieza.show();
+                    return;
+                }
+                this.mesaActual = mesa;
+                this._modal.show();
+            },
+
+            seleccionarMesaUnionClick(mesa) {
+                if (mesa.estado !== 'LIBRE') {
+                    alert('Solo se pueden unir mesas que estén LIBRES.');
+                    return;
+                }
+                if (!this.mesaOrigenUnion) {
+                    // Seleccionar primera mesa
+                    this.mesaOrigenUnion = mesa;
+                } else {
+                    // Si hace click en la misma mesa, deselecciona
+                    if (this.mesaOrigenUnion.id === mesa.id) {
+                        this.mesaOrigenUnion = null;
+                        return;
+                    }
+                    // Si es otra mesa libre, abrir modal de unión
+                    this.unionPendiente = {
+                        origen: this.mesaOrigenUnion,
+                        destino: mesa,
+                        mesa_extra: null,
+                        capacidad_personalizada: this.mesaOrigenUnion.capacidad + mesa.capacidad
+                    };
+                    this.mesaOrigenUnion = null;
+                    this._modalUnion.show();
+                }
+            },
+
+            async terminarLimpieza() {
+                if (!this.mesaActual || this.marcandoLimpieza) return;
+                this.marcandoLimpieza = true;
+                try {
+                    const resp = await fetch(`/api/mesas/${this.mesaActual.id}/limpiada/`, {
+                        method: 'POST',
+                        headers: { 'X-CSRFToken': this._getCsrfToken() }
+                    });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        this._modalLimpieza.hide();
+                        this.mesaActual = null;
+                        await this.cargarEstado();
+                    } else {
+                        alert(data.error || 'No se pudo marcar la limpieza como terminada');
+                    }
+                } catch (e) {
+                    console.error('Error:', e);
+                    alert('Error de conexión');
+                } finally {
+                    this.marcandoLimpieza = false;
+                }
+            },
+
+            async liberarMesa() {
+                if (!this.confirmandoLiberar) {
+                    this.confirmandoLiberar = true;
+                    setTimeout(() => { this.confirmandoLiberar = false; }, 4000);
+                    return;
+                }
+                this.confirmandoLiberar = false;
+                this.liberando = true;
+                try {
+                    const resp = await fetch(`/api/comandas/mesa/${this.mesaActual.id}/liberar/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': this._getCsrfToken(),
+                            'Content-Type': 'application/json'
+                        },
+                    });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        this._modal.hide();
+                        this.mesaActual = null;
+                        await this.cargarEstado();
+                    } else {
+                        alert(data.error || 'Error al liberar mesa');
+                    }
+                } catch (e) {
+                    console.error('Error liberando mesa:', e);
+                    alert('Error de conexión');
+                } finally {
+                    this.liberando = false;
+                }
+            },
+
+            async marcarPedidoEntregado() {
+                if (!this.mesaActual?.comanda?.id) return;
+                if (!this.tienePlatosListos) {
+                    alert('No hay platos listos para marcar como entregados.');
+                    return;
+                }
+                if (!this.confirmandoEntregar) {
+                    this.confirmandoEntregar = true;
+                    setTimeout(() => { this.confirmandoEntregar = false; }, 4000);
+                    return;
+                }
+                this.confirmandoEntregar = false;
+                this.entregando = true;
+                try {
+                    const resp = await fetch(`/api/comandas/${this.mesaActual.comanda.id}/entregar/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': this._getCsrfToken(),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        await this.cargarEstado();
+                    } else {
+                        alert(data.error || 'No se pudo marcar el pedido como entregado');
+                    }
+                } catch (e) {
+                    console.error('Error marcando pedido entregado:', e);
+                    alert('Error de conexión');
+                } finally {
+                    this.entregando = false;
+                    this.confirmandoEntregar = false;
+                }
+            },
+
+            claseBotonLiberar() {
+                if (this.confirmandoLiberar) return 'bg-red-500 text-white shadow-red-500/20 animate-pulse';
+                if (this.mesaActual && this.mesaActual.estado === 'POR_PAGAR') return 'bg-primary/30 text-[#160066] opacity-50';
+                return 'bg-primary hover:bg-white text-[#160066] shadow-primary/20';
+            },
+
+            async eliminarLinea(linea) {
+                if (!confirm(`¿Eliminar "${linea.plato_nombre}" del pedido?`)) return;
+
+                try {
+                    const resp = await fetch(`/api/comandas/linea/${linea.id}/editar/`, {
+                        method: 'DELETE',
+                        headers: { 'X-CSRFToken': this._getCsrfToken() },
+                    });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        await this.cargarEstado();
+                    } else {
+                        alert(data.error || 'No se pudo eliminar el plato');
+                    }
+                } catch (e) {
+                    console.error('Error eliminando línea:', e);
+                    alert('Error de conexión');
+                }
+            },
+
+            abrirEditarLinea(linea) {
+                this.lineaAEditar = linea;
+                this.editForm = {
+                    plato_id: linea.plato_id,
+                    cantidad: linea.cantidad
+                };
+                this._modalEdit.show();
+            },
+
+            async guardarCambiosLinea() {
+                this.editando = true;
+                try {
+                    const resp = await fetch(`/api/comandas/linea/${this.lineaAEditar.id}/editar/`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': this._getCsrfToken()
+                        },
+                        body: JSON.stringify(this.editForm)
+                    });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        this._modalEdit.hide();
+                        await this.cargarEstado();
+                    } else {
+                        alert(data.error || 'No se pudo editar el plato');
+                    }
+                } catch (e) {
+                    console.error('Error guardando línea:', e);
+                    alert('Error de conexión');
+                } finally {
+                    this.editando = false;
+                }
+            },
+
+            abrirAgregarLinea() {
+                this.addForm = {
+                    plato_id: '',
+                    cantidad: 1,
+                    notas: ''
+                };
+                this._modalAgregar.show();
+            },
+
+            async agregarNuevaLinea() {
+                if (!this.addForm.plato_id) {
+                    alert('Selecciona un plato para añadir.');
+                    return;
+                }
+                this.agregando = true;
+                try {
+                    const resp = await fetch(`/api/comandas/${this.mesaActual.comanda.id}/platos/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': this._getCsrfToken()
+                        },
+                        body: JSON.stringify(this.addForm)
+                    });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        this._modalAgregar.hide();
+                        await this.cargarEstado(); // Refresh table state
+                    } else {
+                        alert(data.error || 'No se pudo añadir el plato');
+                    }
+                } catch (e) {
+                    console.error('Error añadiendo plato:', e);
+                    alert('Error de conexión');
+                } finally {
+                    this.agregando = false;
+                }
+            },
+
+            // ── DRAG & DROP — UNIONES DE MESAS ──
+            onDragStart(mesa, event) {
+                if ((!this.modoGestion && !this.modoUnion) || mesa.estado !== 'LIBRE') return;
+                this._dragMesa = mesa;
+                event.dataTransfer.effectAllowed = 'link';
+                event.dataTransfer.setData('text/plain', mesa.id);
+            },
+
+            onDragOver(mesa, event) {
+                if (!this._dragMesa || this._dragMesa.id === mesa.id) return;
+                if (mesa.estado !== 'LIBRE') return;
+                event.currentTarget.classList.add('drag-over');
+            },
+
+            onDragLeave(mesa, event) {
+                event.currentTarget.classList.remove('drag-over');
+            },
+
+            onDrop(mesa, event) {
+                event.currentTarget.classList.remove('drag-over');
+                if (!this._dragMesa || this._dragMesa.id === mesa.id) return;
+                if (mesa.estado !== 'LIBRE' || this._dragMesa.estado !== 'LIBRE') {
+                    alert('Solo se pueden unir mesas que estén LIBRES.');
+                    this._dragMesa = null;
+                    return;
+                }
+                // Abrir modal de confirmación
+                this.unionPendiente = {
+                    origen: this._dragMesa,
+                    destino: mesa,
+                    mesa_extra: null,
+                    capacidad_personalizada: this._dragMesa.capacidad + mesa.capacidad
+                };
                 this._dragMesa = null;
-                return;
-            }
-            // Abrir modal de confirmación
-            this.unionPendiente = {
-                origen: this._dragMesa,
-                destino: mesa,
-                mesa_extra: null,
-                capacidad_personalizada: this._dragMesa.capacidad + mesa.capacidad
-            };
-            this._dragMesa = null;
-            this._modalUnion.show();
-        },
+                this._modalUnion.show();
+            },
 
-        async confirmarUnion() {
-            if (!this.unionPendiente) return;
-            this.uniendoMesas = true;
-            try {
-                const secundarias = [this.unionPendiente.destino.id];
-                if (this.unionPendiente.mesa_extra) {
-                    secundarias.push(this.unionPendiente.mesa_extra.id);
+            async confirmarUnion() {
+                if (!this.unionPendiente) return;
+                this.uniendoMesas = true;
+                try {
+                    const secundarias = [this.unionPendiente.destino.id];
+                    if (this.unionPendiente.mesa_extra) {
+                        secundarias.push(this.unionPendiente.mesa_extra.id);
+                    }
+                    const resp = await fetch('/api/mesas/union/crear/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': this._getCsrfToken()
+                        },
+                        body: JSON.stringify({
+                            mesa_principal_id: this.unionPendiente.origen.id,
+                            mesa_secundaria_ids: secundarias,
+                            capacidad_personalizada: this.unionPendiente.capacidad_personalizada
+                        })
+                    });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        this._modalUnion.hide();
+                        this.unionPendiente = null;
+                        await this.cargarEstado();
+                    } else {
+                        alert(data.error || 'Error al unir mesas');
+                    }
+                } catch (e) {
+                    console.error('Error creando unión:', e);
+                    alert('Error de conexión');
+                } finally {
+                    this.uniendoMesas = false;
                 }
-                const resp = await fetch('/api/mesas/union/crear/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': this._getCsrfToken()
-                    },
-                    body: JSON.stringify({
-                        mesa_principal_id: this.unionPendiente.origen.id,
-                        mesa_secundaria_ids: secundarias,
-                        capacidad_personalizada: this.unionPendiente.capacidad_personalizada
-                    })
-                });
-                const data = await resp.json();
-                if (data.ok) {
-                    this._modalUnion.hide();
-                    this.unionPendiente = null;
-                    await this.cargarEstado();
-                } else {
-                    alert(data.error || 'Error al unir mesas');
+            },
+
+            // Computed: mesas disponibles para ser la 3a en una unión
+            get mesasParaTercera() {
+                if (!this.unionPendiente) return [];
+                const excluidos = new Set([
+                    this.unionPendiente.origen.id,
+                    this.unionPendiente.destino.id
+                ]);
+                return this.mesas.filter(m =>
+                    m.estado === 'LIBRE' &&
+                    !m.union &&
+                    !excluidos.has(m.id)
+                );
+            },
+
+            seleccionarTerceraMesa(mesaId) {
+                if (!mesaId || !this.unionPendiente) return;
+                const mesa = this.mesas.find(m => m.id === parseInt(mesaId));
+                if (mesa) {
+                    this.unionPendiente = { ...this.unionPendiente, mesa_extra: mesa };
+                    this.unionPendiente.capacidad_personalizada += mesa.capacidad;
                 }
-            } catch (e) {
-                console.error('Error creando unión:', e);
-                alert('Error de conexión');
-            } finally {
-                this.uniendoMesas = false;
-            }
-        },
+            },
 
-        // Computed: mesas disponibles para ser la 3a en una unión
-        get mesasParaTercera() {
-            if (!this.unionPendiente) return [];
-            const excluidos = new Set([
-                this.unionPendiente.origen.id,
-                this.unionPendiente.destino.id
-            ]);
-            return this.mesas.filter(m =>
-                m.estado === 'LIBRE' &&
-                !m.union &&
-                !excluidos.has(m.id)
-            );
-        },
-
-        seleccionarTerceraMesa(mesaId) {
-            if (!mesaId || !this.unionPendiente) return;
-            const mesa = this.mesas.find(m => m.id === parseInt(mesaId));
-            if (mesa) {
-                this.unionPendiente = { ...this.unionPendiente, mesa_extra: mesa };
-                this.unionPendiente.capacidad_personalizada += mesa.capacidad;
-            }
-        },
-
-        removerTerceraMesa() {
-            if (this.unionPendiente && this.unionPendiente.mesa_extra) {
-                this.unionPendiente.capacidad_personalizada -= this.unionPendiente.mesa_extra.capacidad;
-                this.unionPendiente.mesa_extra = null;
-            }
-        },
-
-        // Abre el modal de confirmación de disolver (reemplaza confirm())
-        disolverUnion(unionId) {
-            this.disolverPendienteId = unionId;
-            this._modalDisolver.show();
-        },
-
-        async confirmarDisolver() {
-            const unionId = this.disolverPendienteId;
-            if (!unionId) return;
-            this._modalDisolver.hide();
-            this.disolverPendienteId = null;
-            try {
-                const resp = await fetch(`/api/mesas/union/${unionId}/disolver/`, {
-                    method: 'DELETE',
-                    headers: { 'X-CSRFToken': this._getCsrfToken() }
-                });
-                const data = await resp.json();
-                if (data.ok) {
-                    await this.cargarEstado();
-                } else {
-                    alert(data.error || 'No se pudo disolver la unión');
+            removerTerceraMesa() {
+                if (this.unionPendiente && this.unionPendiente.mesa_extra) {
+                    this.unionPendiente.capacidad_personalizada -= this.unionPendiente.mesa_extra.capacidad;
+                    this.unionPendiente.mesa_extra = null;
                 }
-            } catch (e) {
-                console.error('Error disolviendo unión:', e);
-                alert('Error de conexión');
-            }
-        },
+            },
 
-        // ── MÉTODOS DE GESTIÓN (ADMIN) ──
-        abrirModalNuevaMesa() {
-            this.nuevaMesaForm = { numero: '', capacidad: 4, zona_id: '' };
-            this._modalNuevaMesa.show();
-        },
+            // Abre el modal de confirmación de disolver (reemplaza confirm())
+            disolverUnion(unionId) {
+                this.disolverPendienteId = unionId;
+                this._modalDisolver.show();
+            },
 
-        async crearMesa() {
-            if (!this.nuevaMesaForm.numero || !this.nuevaMesaForm.zona_id) {
-                alert('Número y Zona son campos obligatorios.');
-                return;
-            }
-            this.creandoMesa = true;
-            try {
-                const resp = await fetch('/api/mesas/crear/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': this._getCsrfToken()
-                    },
-                    body: JSON.stringify(this.nuevaMesaForm)
-                });
-                const data = await resp.json();
-                if (data.ok) {
-                    this._modalNuevaMesa.hide();
-                    await this.cargarEstado();
-                    // Opcional: Notificación de éxito
-                } else {
-                    alert(data.error || 'Error al crear la mesa');
+            async confirmarDisolver() {
+                const unionId = this.disolverPendienteId;
+                if (!unionId) return;
+                this._modalDisolver.hide();
+                this.disolverPendienteId = null;
+                try {
+                    const resp = await fetch(`/api/mesas/union/${unionId}/disolver/`, {
+                        method: 'DELETE',
+                        headers: { 'X-CSRFToken': this._getCsrfToken() }
+                    });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        await this.cargarEstado();
+                    } else {
+                        alert(data.error || 'No se pudo disolver la unión');
+                    }
+                } catch (e) {
+                    console.error('Error disolviendo unión:', e);
+                    alert('Error de conexión');
                 }
-            } catch (e) {
-                console.error('Error:', e);
-                alert('Error de conexión');
-            } finally {
-                this.creandoMesa = false;
-            }
-        },
+            },
 
-        async eliminarMesa(mesa) {
-            if (!confirm(`¿Estás seguro de eliminar la Mesa ${mesa.numero}?`)) return;
-            
-            try {
-                const resp = await fetch(`/api/mesas/eliminar/${mesa.id}/`, {
-                    method: 'DELETE',
-                    headers: { 'X-CSRFToken': this._getCsrfToken() }
-                });
-                const data = await resp.json();
-                if (data.ok) {
-                    await this.cargarEstado();
-                } else {
-                    alert(data.error || 'Error al eliminar mesa');
+            // ── MÉTODOS DE GESTIÓN (ADMIN) ──
+            abrirModalNuevaMesa() {
+                this.nuevaMesaForm = { numero: '', capacidad: 4, zona_id: '' };
+                this._modalNuevaMesa.show();
+            },
+
+            async crearMesa() {
+                if (!this.nuevaMesaForm.numero || !this.nuevaMesaForm.zona_id) {
+                    alert('Número y Zona son campos obligatorios.');
+                    return;
                 }
-            } catch (e) {
-                console.error('Error:', e);
-                alert('Error de conexión');
+                this.creandoMesa = true;
+                try {
+                    const resp = await fetch('/api/mesas/crear/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': this._getCsrfToken()
+                        },
+                        body: JSON.stringify(this.nuevaMesaForm)
+                    });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        this._modalNuevaMesa.hide();
+                        await this.cargarEstado();
+                        // Opcional: Notificación de éxito
+                    } else {
+                        alert(data.error || 'Error al crear la mesa');
+                    }
+                } catch (e) {
+                    console.error('Error:', e);
+                    alert('Error de conexión');
+                } finally {
+                    this.creandoMesa = false;
+                }
+            },
+
+            async eliminarMesa(mesa) {
+                if (!confirm(`¿Estás seguro de eliminar la Mesa ${mesa.numero}?`)) return;
+
+                try {
+                    const resp = await fetch(`/api/mesas/eliminar/${mesa.id}/`, {
+                        method: 'DELETE',
+                        headers: { 'X-CSRFToken': this._getCsrfToken() }
+                    });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        await this.cargarEstado();
+                    } else {
+                        alert(data.error || 'Error al eliminar mesa');
+                    }
+                } catch (e) {
+                    console.error('Error:', e);
+                    alert('Error de conexión');
+                }
+            },
+
+            estadoColorHex(estado) {
+                const map = {
+                    'PENDIENTE': '#fbbf24',
+                    'EN_PREP': '#f97316',
+                    'EN_PREPARACION': '#f97316',
+                    'LISTO': '#4edea3',
+                    'ENTREGADO': '#22c55e',
+                    'ANULADO': '#ef4444',
+                    'CANCELADO': '#ef4444',
+                };
+                return map[estado] || '#a5a5b1';
+            },
+
+            estadoColorBG(estado) {
+                const map = {
+                    'PENDIENTE': 'rgba(251, 191, 36, 0.1)',
+                    'EN_PREP': 'rgba(249, 115, 22, 0.1)',
+                    'EN_PREPARACION': 'rgba(249, 115, 22, 0.1)',
+                    'LISTO': 'rgba(78, 222, 163, 0.1)',
+                    'ENTREGADO': 'rgba(34, 197, 94, 0.12)',
+                    'ANULADO': 'rgba(239, 68, 68, 0.1)',
+                    'CANCELADO': 'rgba(239, 68, 68, 0.1)',
+                };
+                return map[estado] || 'rgba(165, 165, 177, 0.1)';
+            },
+
+            estadoIcon(estado) {
+                const map = {
+                    'PENDIENTE': 'schedule',
+                    'EN_PREP': 'local_fire_department',
+                    'EN_PREPARACION': 'local_fire_department',
+                    'LISTO': 'check_circle',
+                    'ENTREGADO': 'room_service',
+                    'ANULADO': 'cancel',
+                    'CANCELADO': 'cancel',
+                };
+                return map[estado] || 'help';
+            },
+
+            _getCsrfToken() {
+                const c = document.cookie.split(';').find(c => c.trim().startsWith('csrftoken='));
+                return c ? c.trim().split('=')[1] : '';
             }
-        },
-
-        estadoColorHex(estado) {
-            const map = {
-                'PENDIENTE': '#fbbf24',
-                'EN_PREP': '#f97316',
-                'EN_PREPARACION': '#f97316',
-                'LISTO': '#4edea3',
-                'ENTREGADO': '#22c55e',
-                'ANULADO': '#ef4444',
-                'CANCELADO': '#ef4444',
-            };
-            return map[estado] || '#a5a5b1';
-        },
-
-        estadoColorBG(estado) {
-            const map = {
-                'PENDIENTE': 'rgba(251, 191, 36, 0.1)',
-                'EN_PREP': 'rgba(249, 115, 22, 0.1)',
-                'EN_PREPARACION': 'rgba(249, 115, 22, 0.1)',
-                'LISTO': 'rgba(78, 222, 163, 0.1)',
-                'ENTREGADO': 'rgba(34, 197, 94, 0.12)',
-                'ANULADO': 'rgba(239, 68, 68, 0.1)',
-                'CANCELADO': 'rgba(239, 68, 68, 0.1)',
-            };
-            return map[estado] || 'rgba(165, 165, 177, 0.1)';
-        },
-
-        estadoIcon(estado) {
-            const map = {
-                'PENDIENTE': 'schedule',
-                'EN_PREP': 'local_fire_department',
-                'EN_PREPARACION': 'local_fire_department',
-                'LISTO': 'check_circle',
-                'ENTREGADO': 'room_service',
-                'ANULADO': 'cancel',
-                'CANCELADO': 'cancel',
-            };
-            return map[estado] || 'help';
-        },
-
-        _getCsrfToken() {
-            const c = document.cookie.split(';').find(c => c.trim().startsWith('csrftoken='));
-            return c ? c.trim().split('=')[1] : '';
-        }
-    };
-}
+        };
+    }
 </script>
 {% endblock %}

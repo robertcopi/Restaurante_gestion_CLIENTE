@@ -591,7 +591,6 @@ def _queryset_comandas_kds(zona_id=None):
 
     qs = Comanda.objects.filter(
         estado__in=[Comanda.Estado.ABIERTA, Comanda.Estado.EN_PREPARACION],
-        lineas__estado__in=ESTADOS_LINEA_KDS,
     ).select_related('mesa', 'mesa__zona', 'mozo').prefetch_related(lineas_cocina).distinct()
 
     if zona_id:
@@ -613,15 +612,12 @@ def api_cocina_activas(request):
     ahora = timezone.now()
     data = []
     for idx, c in enumerate(qs, start=1):
-        if not c.lineas_activas:
-            continue
-
-        lineas_visibles = [
-            l for l in c.lineas_activas
-            if l.estado in ESTADOS_LINEA_KDS
-        ]
-        if not lineas_visibles:
-            continue
+        lineas_visibles = []
+        if c.lineas_activas:
+            lineas_visibles = [
+                l for l in c.lineas_activas
+                if l.estado in ESTADOS_LINEA_KDS
+            ]
 
         # Detectar urgencia: alguna línea supera su tiempo estimado
         tiene_urgencia = False
@@ -703,7 +699,7 @@ def api_cocina_cambiar_estado(request, pk):
 
         # Validar transiciones permitidas
         transiciones_ok = {
-            LineaComanda.Estado.PENDIENTE: [LineaComanda.Estado.EN_PREP, LineaComanda.Estado.ANULADO],
+            LineaComanda.Estado.PENDIENTE: [LineaComanda.Estado.EN_PREP, LineaComanda.Estado.LISTO, LineaComanda.Estado.ANULADO],
             LineaComanda.Estado.EN_PREP:   [LineaComanda.Estado.LISTO, LineaComanda.Estado.ANULADO],
             LineaComanda.Estado.LISTO:     [LineaComanda.Estado.ANULADO],
         }
@@ -731,6 +727,9 @@ def api_cocina_cambiar_estado(request, pk):
             linea.fecha_inicio_prep = ahora
         elif nuevo_estado == LineaComanda.Estado.LISTO:
             linea.fecha_listo = ahora
+            if linea.estado == LineaComanda.Estado.PENDIENTE:
+                # Si salta director de Pendiente a Listo, simulamos el inicio.
+                linea.fecha_inicio_prep = ahora
             # Auditoría: calcular tiempo real de preparación en segundos
             if linea.fecha_inicio_prep:
                 linea.tiempo_real_preparacion_seg = int((ahora - linea.fecha_inicio_prep).total_seconds())

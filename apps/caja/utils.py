@@ -99,7 +99,7 @@ def generar_pdf_boleta(pago, qr_url=None):
     
     # ─── ENCABEZADO (Basado en el diseño de la imagen) ────────────────────────
     c.setFont("Helvetica-Bold", 14)
-    c.drawCentredString(ancho_ticket / 2, y, "RESTAURANT OS")
+    c.drawCentredString(ancho_ticket / 2, y, "TICUY")
     y -= 6 * mm_unit
     
     c.setFont("Helvetica", 9)
@@ -197,9 +197,9 @@ def generar_pdf_boleta(pago, qr_url=None):
     else:
         pagos_transaccion = [pago]
 
-    monto_total = float(sum(p.monto - p.vuelto for p in pagos_transaccion))
-    if es_prepago_reserva:
-        monto_total = float(reserva_pago.monto)
+    # Calcular el total sumando directamente el costo de los productos del ticket
+    monto_total = sum(float(l.subtotal) for l in lineas)
+    
     igv = monto_total * 0.18
     subtotal = monto_total - igv
     
@@ -227,36 +227,21 @@ def generar_pdf_boleta(pago, qr_url=None):
     y -= 4 * mm_unit
     
     c.setFont("Helvetica", 8)
-    if es_prepago_reserva:
-        metodo_nombre = reserva_pago.get_metodo_display().upper()
-        c.drawString(12*mm, y, metodo_nombre)
-        c.drawRightString(ancho_ticket - 12*mm, y, f"S/ {float(reserva_pago.monto):.2f}")
-        y -= 4 * mm_unit
-        if reserva_pago.metodo in ('YAPE', 'PLIN') and reserva_pago.referencia:
-            c.setFont("Helvetica", 7)
-            c.drawString(12*mm, y, f"N° Operación : {reserva_pago.referencia}")
-            y -= 4 * mm_unit
-            c.setFont("Helvetica", 8)
-        elif reserva_pago.metodo == 'TARJETA':
-            c.setFont("Helvetica", 7)
-            if reserva_pago.titular_tarjeta:
-                c.drawString(12*mm, y, f"Titular : {reserva_pago.titular_tarjeta.upper()}")
-                y -= 4 * mm_unit
-            if reserva_pago.ultimos_digitos_tarjeta:
-                c.drawString(12*mm, y, f"Tarjeta : ****{reserva_pago.ultimos_digitos_tarjeta}")
-                y -= 4 * mm_unit
-            c.setFont("Helvetica", 8)
-    else:
-        for p_tr in pagos_transaccion:
+    
+    for p_tr in pagos_transaccion:
+        try:
             metodo_nombre = p_tr.metodo_pago.nombre.upper()
-            c.drawString(12*mm, y, metodo_nombre)
-            c.drawRightString(ancho_ticket - 12*mm, y, f"S/ {float(p_tr.monto):.2f}")
+        except AttributeError:
+            metodo_nombre = "EFECTIVO" # Fallback en caso esté suelto
+            
+        c.drawString(12*mm, y, metodo_nombre)
+        c.drawRightString(ancho_ticket - 12*mm, y, f"S/ {float(p_tr.monto):.2f}")
+        y -= 4 * mm_unit
+        if getattr(p_tr, 'referencia', None):
+            c.setFont("Helvetica", 7)
+            c.drawString(12*mm, y, f"Ref. : {p_tr.referencia}")
             y -= 4 * mm_unit
-            if p_tr.referencia:
-                c.setFont("Helvetica", 7)
-                c.drawString(12*mm, y, f"Ref. : {p_tr.referencia}")
-                y -= 4 * mm_unit
-                c.setFont("Helvetica", 8)
+            c.setFont("Helvetica", 8)
     total_efectivo_recibido = sum(float(p.monto) for p in pagos_transaccion if p.metodo_pago.codigo == 'EFECTIVO')
     total_vuelto = sum(float(p.vuelto) for p in pagos_transaccion)
     
@@ -290,7 +275,7 @@ def generar_pdf_boleta(pago, qr_url=None):
     c.drawCentredString(ancho_ticket / 2, y, "¡GRACIAS POR VISITARNOS!")
     y -= 4 * mm_unit
     c.setFont("Helvetica", 7)
-    c.drawCentredString(ancho_ticket / 2, y, "Esperamos volver a verte pronto en RestaurantOS.")
+    c.drawCentredString(ancho_ticket / 2, y, "Esperamos volver a verte pronto en TICUY.")
     y -= 8 * mm_unit
     
     # QR Code Real

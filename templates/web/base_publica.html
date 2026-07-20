@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="es" class="dark">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}TICUY - Restaurante Campestre{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'ticuy_logo_bg.png' %}" />
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
@@ -19,8 +21,10 @@
     <style>
         :root {
             color-scheme: dark;
-            --primary: 198 191 255;
-            --secondary: 78 222 163;
+            --primary: 220 38 38;
+            /* Red 600 */
+            --secondary: 185 28 28;
+            /* Red 700 */
             --bg: 12 14 20;
             --surface: 26 29 39;
             --border: 255 255 255;
@@ -114,8 +118,8 @@
             <div class="flex justify-between h-16 items-center">
                 <!-- Logo -->
                 <a href="{% url 'index' %}" class="flex items-center gap-2">
-                    <div class="bg-gradient-to-br from-primary to-secondary p-1.5 rounded-lg flex">
-                        <span class="material-symbols-outlined text-background font-bold">restaurant</span>
+                    <div class="bg-white p-1 rounded-lg flex shadow-lg">
+                        <img src="{% static 'ticuy_logo_bg.png' %}" class="w-7 h-7 object-cover rounded-md" alt="Logo">
                     </div>
                     <span class="text-lg font-black tracking-tight text-white">TICUY</span>
                 </a>
@@ -136,7 +140,13 @@
                     <a href="{% url 'clientes:mis_reservas' %}"
                         class="text-sm font-semibold text-on-surface hover:text-primary transition flex items-center gap-1">
                         <span class="material-symbols-outlined text-base">person</span>
-                        <span>{% if user.perfil_cliente %}{{ user.perfil_cliente.nombres|default:user.username }}{% else %}{{ user.username }}{% endif %}</span>
+                        <span>
+                            {% if user.perfil_cliente %}
+                            {{ user.perfil_cliente.nombres|default:user.username }}
+                            {% else %}
+                            {{ user.username }}
+                            {% endif %}
+                        </span>
                     </a>
                     <form action="{% url 'logout' %}" method="post" class="inline" @submit="clearCartForLogout()">
                         {% csrf_token %}

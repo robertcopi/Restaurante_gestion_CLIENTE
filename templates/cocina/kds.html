@@ -7,45 +7,49 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'cocina/kds.css' %}">
 <style>
-  #main-wrapper .kds-layout {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100vh - 0px);
-    padding: 0 !important;
-    margin: 0;
-    max-width: 100%;
-    background: #f0f2f5;
-  }
-  #main-wrapper .kds-inner-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-    height: 56px;
-    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
-    color: #fff;
-  }
-  #main-wrapper .kds-main {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-    background: #f0f2f5;
-  }
-  #main-wrapper .kds-grid {
-    flex: 1;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 16px;
-    align-content: start;
-  }
-  #main-wrapper .kds-sidebar {
-    width: 240px;
-    flex-shrink: 0;
-    padding: 20px;
-    background: #fff;
-    border-left: 1px solid #e0e0e0;
-  }
+    #main-wrapper .kds-layout {
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100vh - 0px);
+        padding: 0 !important;
+        margin: 0;
+        max-width: 100%;
+        background: #f0f2f5;
+    }
+
+    #main-wrapper .kds-inner-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        height: 56px;
+        background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+        color: #fff;
+    }
+
+    #main-wrapper .kds-main {
+        display: flex;
+        flex: 1;
+        min-height: 0;
+        background: #f0f2f5;
+    }
+
+    #main-wrapper .kds-grid {
+        flex: 1;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 16px;
+        align-content: start;
+    }
+
+    #main-wrapper .kds-sidebar {
+        width: 240px;
+        flex-shrink: 0;
+        padding: 20px;
+        background: #fff;
+        border-left: 1px solid #e0e0e0;
+    }
 </style>
 {% endblock %}
 
@@ -92,9 +96,11 @@
                 <span class="kds-summary__label">Pedidos urgentes:</span>
                 <span class="kds-summary__value kds-summary__value--urgent" id="pedidos-urgentes">0</span>
             </div>
-            <div class="kds-summary__item" style="margin-top: 8px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 12px;">
+            <div class="kds-summary__item"
+                style="margin-top: 8px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 12px;">
                 <span class="kds-summary__label" style="font-size: 0.8rem;">Recién llegados:</span>
-                <span class="kds-summary__value" style="font-size: 1rem; color: var(--kds-warning);" id="pedidos-recien-llegados">0</span>
+                <span class="kds-summary__value" style="font-size: 1rem; color: var(--kds-warning);"
+                    id="pedidos-recien-llegados">0</span>
             </div>
         </div>
 
@@ -148,13 +154,9 @@
             <label class="kds-modal__label" for="modal-motivo">
                 Motivo de anulación <span class="kds-modal__required">*obligatorio</span>
             </label>
-            <textarea
-                id="modal-motivo"
-                class="kds-modal__textarea"
-                placeholder="Escribe el motivo de la anulación (ej: ingrediente agotado, error de pedido...)"
-                rows="3"
-                maxlength="200"
-            ></textarea>
+            <textarea id="modal-motivo" class="kds-modal__textarea"
+                placeholder="Escribe el motivo de la anulación (ej: ingrediente agotado, error de pedido...)" rows="3"
+                maxlength="200"></textarea>
             <span class="kds-modal__counter"><span id="modal-chars">0</span>/200</span>
             <p class="kds-modal__error" id="modal-error" style="display:none;">
                 Debes ingresar un motivo para anular este plato.
@@ -164,7 +166,8 @@
             <button class="kds-modal__btn kds-modal__btn--cancel" onclick="KDS.cerrarModalAnulacion()">
                 Volver
             </button>
-            <button class="kds-modal__btn kds-modal__btn--confirm" id="modal-confirmar" onclick="KDS.confirmarAnulacion()">
+            <button class="kds-modal__btn kds-modal__btn--confirm" id="modal-confirmar"
+                onclick="KDS.confirmarAnulacion()">
                 Confirmar Anulación
             </button>
         </div>
@@ -184,5 +187,5 @@
         csrfToken: '{{ csrf_token }}',
     };
 </script>
-<script src="{% static 'cocina/kds.js' %}"></script>
+<script src="{% static 'cocina/kds.js' %}?v=2"></script>
 {% endblock %}

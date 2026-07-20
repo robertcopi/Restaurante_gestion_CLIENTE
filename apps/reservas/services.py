@@ -130,8 +130,6 @@ def guardar_platos_reserva(reserva, platos_data):
 
 
 def confirmar_pedido_reserva(reserva):
-    if not reserva.platos.exists():
-        raise ValueError('Debe seleccionar al menos un plato para confirmar el pedido.')
 
     if not hasattr(reserva, 'pago') or reserva.pago.estado != 'PAGADO':
         raise ValueError('Debe completar el pago antes de confirmar la reserva.')
@@ -145,8 +143,6 @@ def confirmar_pedido_reserva(reserva):
 
 
 def procesar_pago_reserva(reserva, metodo, referencia='', titular_tarjeta='', ultimos_digitos_tarjeta=''):
-    if not reserva.platos.exists():
-        raise ValueError('La reserva no tiene platos seleccionados.')
 
     if metodo not in dict(ReservaPago.METODOS):
         raise ValueError('Método de pago no válido.')
@@ -305,8 +301,6 @@ def confirmar_llegada_cliente(reserva, usuario):
         raise ValueError('La llegada de este cliente ya fue confirmada.')
     if not reserva.mesa_id:
         raise ValueError('Asigne una mesa antes de confirmar la llegada.')
-    if not reserva.platos.exists():
-        raise ValueError('La reserva no tiene platos para enviar a cocina.')
 
     mesa = reserva.mesa
     if mesa.estado not in (Mesa.Estado.LIBRE, Mesa.Estado.RESERVADA):

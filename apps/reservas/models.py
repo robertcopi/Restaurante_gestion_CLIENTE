@@ -144,7 +144,6 @@ class Reserva(models.Model):
             and self.pedido_confirmado
             and not self.cliente_llego
             and self.mesa_id is not None
-            and self.platos.exists()
         )
 
 

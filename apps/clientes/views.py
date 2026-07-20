@@ -234,25 +234,19 @@ def nueva_reserva(request):
         platos_cantidades = {plato_id: qty for plato_id, qty in parse_platos_post(request.POST)}
 
         if form.is_valid():
-
             reserva = form.save()
-
             platos_data = parse_platos_post(request.POST)
-
             if platos_data:
-
                 guardar_platos_reserva(reserva, platos_data)
-
             if confirmar:
                 if not platos_data:
                     messages.error(request, "Debe seleccionar al menos un plato para continuar al pago.")
                 else:
                     return redirect('pago_reserva', pk=reserva.pk)
-
             messages.success(request, "Reserva registrada con éxito.")
-
             return redirect('index')
 
+        print("ERRORES VALIDACION:", form.errors)
         messages.error(request, "Revisa los datos del formulario e intenta de nuevo.")
 
     else:

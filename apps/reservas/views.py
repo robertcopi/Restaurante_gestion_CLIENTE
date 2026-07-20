@@ -159,14 +159,27 @@ def crear_reserva(request):
         platos_cantidades = {plato_id: qty for plato_id, qty in parse_platos_post(request.POST)}
         if reserva is None:
             messages.error(request, 'Hubo un error con la reserva. Verifica los datos.')
-        elif resultado == 'pago':
-            return redirect('pago_reserva', pk=reserva.pk)
-        elif request.POST.get('accion') == 'confirmar_pedido':
-            messages.error(request, 'Debe seleccionar al menos un plato para continuar al pago.')
-            return redirect('confirmar_pedido_reserva', pk=reserva.pk)
         else:
-            messages.warning(request, 'Reserva guardada como pendiente. Seleccione platos y confirme el pedido.')
-            return redirect('confirmar_pedido_reserva', pk=reserva.pk)
+            accion = request.POST.get('accion')
+            if accion == 'confirmar_pedido':
+                if not reserva.mesa:
+                    messages.error(request, 'Atención: Debe seleccionar una MESA antes de poder confirmar un pedido directo / llegada al restaurante.')
+                    # Borramos la reserva recién creada si era un intento de pedido directo fallido para evitar basura
+                    reserva.delete()
+                    return redirect('lista_reservas')
+
+                reserva.estado = 'CONFIRMADA'
+                reserva.pedido_confirmado = True
+                reserva.save(update_fields=['estado', 'pedido_confirmado'])
+                try:
+                    comanda = confirmar_llegada_cliente(reserva, request.user)
+                    messages.success(request, f'Mesa ocupada. Comanda enviada a la mesa {reserva.mesa.numero}.')
+                except ValueError as exc:
+                    messages.error(request, str(exc))
+                return redirect('lista_reservas')
+            else:
+                messages.success(request, 'Reserva guardada como pendiente.')
+                return redirect('lista_reservas')
     else:
         form = ReservaForm()
         platos_cantidades = {}
@@ -195,9 +208,6 @@ def confirmar_pedido_reserva(request, pk):
         platos_data = parse_platos_post(request.POST)
         if platos_data:
             guardar_platos_reserva(reserva, platos_data)
-        if not reserva.platos.exists():
-            messages.error(request, 'Debe seleccionar al menos un plato para continuar al pago.')
-            return redirect('confirmar_pedido_reserva', pk=pk)
         return redirect('pago_reserva', pk=pk)
 
     context = {
@@ -216,7 +226,7 @@ def cambiar_estado_reserva(request, pk):
         if nuevo_estado in dict(Reserva.ESTADOS).keys():
             reserva.estado = nuevo_estado
             if nuevo_estado == 'CONFIRMADA':
-                reserva.pedido_confirmado = reserva.platos.exists()
+                reserva.pedido_confirmado = True
             if nuevo_estado in ['CANCELADA', 'NO_ASISTIO', 'FINALIZADA']:
                 liberar_mesa_reserva(reserva)
             reserva.save()

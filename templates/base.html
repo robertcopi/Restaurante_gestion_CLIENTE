@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="es" class="{% if not config_global.tema_oscuro %}light{% else %}dark{% endif %}">
 
 <head>
@@ -6,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}RestaurantOS — Módulo Mesero{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}Sistema de gestión para restaurantes{% endblock %}" />
+  <link rel="icon" type="image/png" href="{% static 'ticuy_logo_bg.png' %}" />
 
   <!-- Tailwind CSS & Google Fonts -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -547,20 +549,24 @@
       <span class="material-symbols-outlined" style="font-size:1.25rem">menu</span>
     </button>
     <a href="{% url 'index' %}" style="display:flex;align-items:center;gap:0.5rem;text-decoration:none;">
-      <div
-        style="background:linear-gradient(135deg,rgb(var(--primary)),rgb(var(--secondary)));padding:0.35rem;border-radius:0.6rem;display:flex;">
-        <span class="material-symbols-outlined"
-          style="font-size:1.1rem;color:rgb(var(--bg));font-weight:700;">restaurant</span>
+      <div style="padding:0.1rem;border-radius:0.6rem;display:flex;background:white;">
+        <img src="{% static 'ticuy_logo_bg.png' %}"
+          style="width:2rem;height:2rem;object-fit:cover;border-radius:0.5rem;" alt="Logo">
       </div>
-      <span style="font-size:0.95rem;font-weight:900;color:rgb(var(--on-surface));">RestaurantOS</span>
+      <span style="font-size:1.1rem;font-weight:900;color:rgb(var(--on-surface));">TICUY</span>
     </a>
     {% if user.is_authenticated %}
     <div style="margin-left:auto;display:flex;align-items:center;gap:0.5rem;">
       {% if user.rol.nombre == 'ADMIN' or user.rol.nombre == 'MOZO' %}
       <button onclick="toggleTemaGlobal()" class="hamburger" title="Cambiar tema"
         style="background:rgb(var(--primary)/0.12);color:rgb(var(--primary));">
-        <span class="material-symbols-outlined" style="font-size:1.1rem;">{% if config_global.tema_oscuro %}light_mode{%
-          else %}dark_mode{% endif %}</span>
+        <span class="material-symbols-outlined" style="font-size:1.1rem;">
+          {% if config_global.tema_oscuro %}
+          light_mode
+          {% else %}
+          dark_mode
+          {% endif %}
+        </span>
       </button>
       {% endif %}
     </div>
@@ -584,11 +590,12 @@
     <!-- Header / Logo -->
     <div class="sidebar-header" style="justify-content: flex-start;">
       <a href="{% url 'index' %}" class="sidebar-logo">
-        <div class="logo-icon">
-          <span class="material-symbols-outlined"
-            style="font-size:1.15rem;color:rgb(var(--bg));font-weight:700;">restaurant</span>
+        <div
+          style="background:white; border-radius:0.65rem; padding: 2px; width: 2.25rem; height: 2.25rem; flex-shrink: 0; box-shadow: 0 4px 12px -2px rgb(var(--primary)/0.3); display: flex; align-items: center; justify-content: center;">
+          <img src="{% static 'ticuy_logo_bg.png' %}"
+            style="width:100%;height:100%;object-fit:cover;border-radius:0.5rem;" alt="Logo">
         </div>
-        <span class="logo-text">RestaurantOS</span>
+        <span class="logo-text" style="font-size: 1.25rem;">TICUY</span>
       </a>
     </div>
 

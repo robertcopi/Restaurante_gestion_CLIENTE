@@ -6,6 +6,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Iniciar Sesión — TICUY</title>
+    <link rel="icon" type="image/png" href="{% static 'ticuy_logo_bg.png' %}" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
@@ -16,8 +17,10 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         :root {
-            --primary: 198 191 255;
-            --secondary: 78 222 163;
+            --primary: 220 38 38;
+            /* Red 600 */
+            --secondary: 185 28 28;
+            /* Red 700 */
             --bg: 12 14 20;
             --surface: 26 29 39;
             --border: 255 255 255;
@@ -26,8 +29,10 @@
         }
 
         html.light {
-            --primary: 67 56 202;
-            --secondary: 16 185 129;
+            --primary: 123 14 0;
+            /* Maroon TICUY */
+            --secondary: 90 10 0;
+            /* Oscuro */
             --bg: 243 244 246;
             --surface: 255 255 255;
             --border: 0 0 0;
@@ -85,13 +90,10 @@
     </script>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-6 antialiased selection:bg-primary/30 relative">
-    <!-- Background Image with Overlay -->
-    <div class="fixed inset-0 z-0 overflow-hidden bg-white">
-        <img src="{% static 'ticuy_logo_bg.png' %}" class="w-full h-full object-contain p-20" alt="Background">
-        <!-- Overlay Gradiente Suave -->
-        <div class="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-black/30 backdrop-blur-[1px]">
-        </div>
+<body class="min-h-screen relative antialiased selection:bg-primary/30 bg-white">
+    <!-- Overlay Gradiente Suave para fondo blanco -->
+    <div
+        class="fixed inset-0 z-0 bg-gradient-to-br from-black/20 via-transparent to-black/30 backdrop-blur-[1px] pointer-events-none">
     </div>
 
     <!-- Background Glows -->
@@ -102,95 +104,107 @@
         class="fixed bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-secondary/10 rounded-full blur-[160px] pointer-events-none z-1">
     </div>
 
-    <main class="w-full max-w-[440px] relative z-10" x-data="{ showPass: false }">
-        <!-- Glassmorphism Container -->
-        <div
-            class="glass-card p-10 rounded-[48px] flex flex-col gap-8 border border-white/10 shadow-2xl shadow-black/50">
+    <!-- Contenedor Principal Centrado -->
+    <div
+        class="relative z-10 w-full min-h-screen max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-32 p-6">
 
-            <!-- Logo Section -->
-            <div class="flex flex-col items-center gap-4 text-center">
-                <div
-                    class="w-20 h-20 rounded-[32px] bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-2xl shadow-primary/30 mb-2">
-                    <span class="material-symbols-outlined text-background text-4xl font-bold">restaurant</span>
-                </div>
-                <h1 class="font-display text-4xl font-black tracking-tight text-gradient">TICUY</h1>
-                <p class="font-sans text-white/60 text-sm font-medium">Command Center for Modern Dining</p>
-            </div>
-
-            <!-- Error Messages -->
-            {% if form.errors %}
-            <div
-                class="bg-red-500/20 border border-red-500/30 text-red-100 p-4 rounded-2xl text-sm flex items-center gap-3 animate-pulse">
-                <span class="material-symbols-outlined text-lg">error</span>
-                <span class="font-bold">Usuario o contraseña incorrectos.</span>
-            </div>
-            {% endif %}
-
-            <!-- Login Form -->
-            <form class="flex flex-col gap-6" method="post" action="{% url 'login' %}">
-                {% csrf_token %}
-
-                <!-- Username Field -->
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black text-white/80 uppercase tracking-[0.2em] ml-1"
-                        for="id_username">Usuario</label>
-                    <div class="relative group">
-                        <input
-                            class="w-full bg-white/10 dark:bg-white/10 border border-white/20 text-on-surface dark:text-white placeholder:text-on-surface-variant/50 rounded-2xl py-4 pl-12 pr-5 focus:ring-2 focus:ring-primary focus:border-transparent transition-all font-semibold backdrop-blur-md"
-                            placeholder="Ej: admin_colega" type="text" name="username" id="id_username" required
-                            autofocus />
-                        <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none z-20">
-                            <span
-                                class="material-symbols-outlined text-on-surface-variant dark:text-white/50 group-focus-within:text-primary transition-colors text-xl">person</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Password Field -->
-                <div class="space-y-2">
-                    <div class="flex justify-between items-center">
-                        <label class="text-[10px] font-black text-white/80 uppercase tracking-[0.2em] ml-1"
-                            for="id_password">Contraseña</label>
-                    </div>
-                    <div class="relative group">
-                        <input
-                            class="w-full bg-white/10 dark:bg-white/10 border border-white/20 text-on-surface dark:text-white placeholder:text-on-surface-variant/50 rounded-2xl py-4 pl-12 pr-12 focus:ring-2 focus:ring-primary focus:border-transparent transition-all font-semibold backdrop-blur-md"
-                            placeholder="••••••••••••" :type="showPass ? 'text' : 'password'" type="password"
-                            name="password" id="id_password" required />
-
-                        <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none z-20">
-                            <span
-                                class="material-symbols-outlined text-on-surface-variant dark:text-white/50 group-focus-within:text-primary transition-colors text-xl">lock</span>
-                        </div>
-
-                        <!-- Toggle Password Visibility -->
-                        <button type="button" @click="showPass = !showPass"
-                            class="absolute inset-y-0 right-0 pr-4 flex items-center text-on-surface-variant/50 hover:text-primary transition-colors z-30">
-                            <span class="material-symbols-outlined text-xl"
-                                x-text="showPass ? 'visibility_off' : 'visibility'"></span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <button
-                    class="w-full bg-primary hover:bg-white text-[#160066] font-black text-lg py-4 rounded-[24px] shadow-2xl shadow-primary/30 active:scale-[0.97] transition-all duration-300 mt-4 flex items-center justify-center gap-2"
-                    type="submit">
-                    <span>Entrar al Sistema</span>
-                    <span class="material-symbols-outlined font-bold">arrow_forward</span>
-                </button>
-            </form>
-
-            <!-- Footer Links -->
-            <div class="flex flex-col items-center gap-6 pt-4 border-t border-white/10">
-                <a href="{% url 'clientes:registro' %}"
-                    class="text-white/80 hover:text-primary transition-colors text-sm font-semibold flex items-center gap-2">
-                    <span class="material-symbols-outlined text-lg">person_add</span>
-                    ¿No tienes cuenta? Regístrate como cliente
-                </a>
-            </div>
+        <!-- Logo Lado Izquierdo Centro -->
+        <div class="w-full lg:w-1/2 flex justify-center py-8">
+            <img src="{% static 'ticuy_logo_bg.png' %}"
+                class="w-full max-w-[280px] lg:max-w-md xl:max-w-[500px] h-auto object-contain drop-shadow-xl"
+                alt="Logo TICUY">
         </div>
-    </main>
+
+        <!-- Caja Lado Derecho Centro -->
+        <main class="w-full max-w-[440px] lg:w-1/2 flex justify-center" x-data="{ showPass: false }">
+            <!-- Glassmorphism Container -->
+            <div
+                class="w-full glass-card p-10 rounded-[48px] flex flex-col gap-8 border border-white/10 shadow-2xl shadow-black/50">
+
+                <!-- Logo Section -->
+                <div class="flex flex-col items-center gap-4 text-center">
+                    <img src="{% static 'ticuy_logo_bg.png' %}"
+                        class="w-24 h-24 rounded-[32px] object-cover bg-white p-1 shadow-2xl shadow-primary/30 mb-2"
+                        alt="Logo">
+                    <h1 class="font-display text-4xl font-black tracking-tight text-gradient">TICUY</h1>
+                    <p class="font-sans text-white/60 text-sm font-medium">Command Center for Modern Dining</p>
+                </div>
+
+                <!-- Error Messages -->
+                {% if form.errors %}
+                <div
+                    class="bg-red-500/20 border border-red-500/30 text-red-100 p-4 rounded-2xl text-sm flex items-center gap-3 animate-pulse">
+                    <span class="material-symbols-outlined text-lg">error</span>
+                    <span class="font-bold">Usuario o contraseña incorrectos.</span>
+                </div>
+                {% endif %}
+
+                <!-- Login Form -->
+                <form class="flex flex-col gap-6" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+
+                    <!-- Username Field -->
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black text-white/80 uppercase tracking-[0.2em] ml-1"
+                            for="id_username">Usuario</label>
+                        <div class="relative group">
+                            <input
+                                class="w-full bg-white/10 dark:bg-white/10 border border-white/20 text-on-surface dark:text-white placeholder:text-on-surface-variant/50 rounded-2xl py-4 pl-12 pr-5 focus:ring-2 focus:ring-primary focus:border-transparent transition-all font-semibold backdrop-blur-md"
+                                placeholder="Ej: admin_colega" type="text" name="username" id="id_username" required
+                                autofocus />
+                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none z-20">
+                                <span
+                                    class="material-symbols-outlined text-on-surface-variant dark:text-white/50 group-focus-within:text-primary transition-colors text-xl">person</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <label class="text-[10px] font-black text-white/80 uppercase tracking-[0.2em] ml-1"
+                                for="id_password">Contraseña</label>
+                        </div>
+                        <div class="relative group">
+                            <input
+                                class="w-full bg-white/10 dark:bg-white/10 border border-white/20 text-on-surface dark:text-white placeholder:text-on-surface-variant/50 rounded-2xl py-4 pl-12 pr-12 focus:ring-2 focus:ring-primary focus:border-transparent transition-all font-semibold backdrop-blur-md"
+                                placeholder="••••••••••••" :type="showPass ? 'text' : 'password'" type="password"
+                                name="password" id="id_password" required />
+
+                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none z-20">
+                                <span
+                                    class="material-symbols-outlined text-on-surface-variant dark:text-white/50 group-focus-within:text-primary transition-colors text-xl">lock</span>
+                            </div>
+
+                            <!-- Toggle Password Visibility -->
+                            <button type="button" @click="showPass = !showPass"
+                                class="absolute inset-y-0 right-0 pr-4 flex items-center text-on-surface-variant/50 hover:text-primary transition-colors z-30">
+                                <span class="material-symbols-outlined text-xl"
+                                    x-text="showPass ? 'visibility_off' : 'visibility'"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button
+                        class="w-full bg-primary hover:bg-white text-[#160066] font-black text-lg py-4 rounded-[24px] shadow-2xl shadow-primary/30 active:scale-[0.97] transition-all duration-300 mt-4 flex items-center justify-center gap-2"
+                        type="submit">
+                        <span>Entrar al Sistema</span>
+                        <span class="material-symbols-outlined font-bold">arrow_forward</span>
+                    </button>
+                </form>
+
+                <!-- Footer Links -->
+                <div class="flex flex-col items-center gap-6 pt-4 border-t border-white/10">
+                    <a href="{% url 'clientes:registro' %}"
+                        class="text-white/80 hover:text-primary transition-colors text-sm font-semibold flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">person_add</span>
+                        ¿No tienes cuenta? Regístrate como cliente
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div> <!-- End Contenedor Principal Centrado -->
 
     <!-- Support Context Section -->
     <footer class="fixed bottom-8 w-full flex justify-center pointer-events-none opacity-40">

@@ -100,28 +100,28 @@
       const prevIds = new Set(comandas.map(c => c.id));
       const newOrders = data.filter(c => !prevIds.has(c.id));
       if (newOrders.length > 0 && comandas.length > 0) showToast(`🔔 ${newOrders.length} nuevo(s) pedido(s)`, 'warning');
-      
+
       // Ordenar por prioridad (urgente > alerta > normal) y luego por antigüedad
       data.sort((a, b) => {
-          const tA = new Date(a.fecha_apertura).getTime();
-          const tB = new Date(b.fecha_apertura).getTime();
-          const minsA = Math.floor((Date.now() - tA) / 60000);
-          const minsB = Math.floor((Date.now() - tB) / 60000);
-          
-          let priorityA = 0;
-          if (minsA >= MINS_URGENTE) priorityA = 2;
-          else if (minsA >= MINS_ALERTA) priorityA = 1;
-          
-          let priorityB = 0;
-          if (minsB >= MINS_URGENTE) priorityB = 2;
-          else if (minsB >= MINS_ALERTA) priorityB = 1;
-          
-          if (priorityA !== priorityB) {
-              return priorityB - priorityA; // Mayor prioridad primero
-          }
-          return tA - tB; // Mismo nivel: más antiguo primero
+        const tA = new Date(a.fecha_apertura).getTime();
+        const tB = new Date(b.fecha_apertura).getTime();
+        const minsA = Math.floor((Date.now() - tA) / 60000);
+        const minsB = Math.floor((Date.now() - tB) / 60000);
+
+        let priorityA = 0;
+        if (minsA >= MINS_URGENTE) priorityA = 2;
+        else if (minsA >= MINS_ALERTA) priorityA = 1;
+
+        let priorityB = 0;
+        if (minsB >= MINS_URGENTE) priorityB = 2;
+        else if (minsB >= MINS_ALERTA) priorityB = 1;
+
+        if (priorityA !== priorityB) {
+          return priorityB - priorityA; // Mayor prioridad primero
+        }
+        return tA - tB; // Mismo nivel: más antiguo primero
       });
-      
+
       comandas = data; renderComandas(); fetchResumen();
     } catch (err) {
       console.error('Error fetching comandas:', err);
@@ -139,8 +139,8 @@
       const z = filtroZona.value; let url = `${KDS_CONFIG.apiBaseUrl}/resumen/`; if (z) url += `?zona=${z}`;
       const r = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin' });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      const d = await r.json(); 
-      totalPedidosEl.textContent = d.total_pedidos; 
+      const d = await r.json();
+      totalPedidosEl.textContent = d.total_pedidos;
       pedidosUrgentesEl.textContent = d.pedidos_urgentes;
       const recienLlegadosEl = document.getElementById('pedidos-recien-llegados');
       if (recienLlegadosEl) recienLlegadosEl.textContent = d.recien_llegados || 0;
@@ -373,9 +373,9 @@
 
   function getContextualButtons(l) {
     switch (l.estado) {
-      case 'PENDIENTE': return `<button class="kds-btn kds-btn--recibir" onclick="KDS.cambiarEstado(${l.id},'EN_PREP')">Recibir</button><button class="kds-btn kds-btn--cancelar" onclick="KDS.abrirModalAnulacion(${l.id},'${escapeHtml(l.plato_nombre)}',${l.cantidad})">Cancelar</button>`;
-      case 'EN_PREP': return `<button class="kds-btn kds-btn--servir" onclick="KDS.cambiarEstado(${l.id},'LISTO')">Servir</button><button class="kds-btn kds-btn--cancelar" onclick="KDS.abrirModalAnulacion(${l.id},'${escapeHtml(l.plato_nombre)}',${l.cantidad})">Cancelar</button>`;
-      case 'LISTO': return `<button class="kds-btn kds-btn--cancelar" onclick="KDS.abrirModalAnulacion(${l.id},'${escapeHtml(l.plato_nombre)}',${l.cantidad})">Cancelar</button>`;
+      case 'PENDIENTE': return `<button class="kds-btn kds-btn--servir" onclick="KDS.cambiarEstado(${l.id},'LISTO')">Servir</button>`;
+      case 'EN_PREP': return `<button class="kds-btn kds-btn--servir" onclick="KDS.cambiarEstado(${l.id},'LISTO')">Servir</button>`;
+      case 'LISTO': return '';
       default: return '';
     }
   }

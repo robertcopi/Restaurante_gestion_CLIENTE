@@ -54,7 +54,7 @@
                     data-nombre="{{ reserva.cliente_nombre|escape }}"
                     data-telefono="{{ reserva.cliente_telefono|default:''|escape }}"
                     data-email="{{ reserva.cliente_email|default:''|escape }}"
-                    data-documento="{% if reserva.cliente %}{{ reserva.cliente.numero_documento|escape }}{% endif %}"
+                    data-documento="{% if reserva.cliente_dni %}{{ reserva.cliente_dni|escape }}{% elif reserva.cliente %}{{ reserva.cliente.numero_documento|escape }}{% endif %}"
                     data-fecha="{{ reserva.fecha|date:'d M Y' }}" data-hora="{{ reserva.hora|time:'h:i A' }}"
                     data-mesa="{% if reserva.mesa %}Mesa {{ reserva.mesa.numero }} ({{ reserva.mesa.zona.nombre }}){% else %}Sin asignar{% endif %}"
                     data-personas="{{ reserva.cantidad_personas }}"
