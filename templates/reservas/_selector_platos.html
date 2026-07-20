@@ -24,25 +24,63 @@
                 {% for plato in categoria.platos.all %}
                 {% if plato.activo and plato.disponible %}
                 <article
-                    class="group border border-white/10 bg-white/[0.035] p-4 transition hover:border-white/25 hover:bg-white/[0.06]">
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="min-w-0">
-                            <p class="truncate text-base font-black text-white">{{ plato.nombre }}</p>
-                            <p class="mt-1 text-sm font-black text-secondary">S/ {{ plato.precio_actual }}</p>
+                    class="group overflow-hidden border border-white/10 bg-[#151720] transition duration-300 hover:-translate-y-1 hover:border-white/25 flex flex-col">
+                    <div class="relative aspect-[4/3] w-full overflow-hidden bg-[#10121a]">
+                        {% if plato.imagen_url %}
+                        <img src="{{ plato.imagen_url }}" alt="{{ plato.nombre }}"
+                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                        {% else %}
+                        <img src="/static/imagendelogin.png" alt="{{ plato.nombre }}"
+                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                        {% endif %}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
                         </div>
-                        <span
-                            class="shrink-0 border border-white/10 bg-black/25 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white/45">
-                            {{ categoria.nombre }}
-                        </span>
+                        <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                            <div>
+                                <p class="text-[11px] font-black uppercase tracking-[0.18em] text-white/70">
+                                    {{ categoria.nombre }}
+                                </p>
+                                <h4 class="mt-1 text-2xl font-black leading-tight text-white">{{ plato.nombre }}
+                                </h4>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mt-4 flex items-center justify-between gap-4 border-t border-white/10 pt-4">
-                        <label for="plato_{{ plato.id }}"
-                            class="text-xs font-black uppercase tracking-[0.16em] text-white/45">Cantidad</label>
-                        <input id="plato_{{ plato.id }}" type="number" name="plato_{{ plato.id }}" min="0" max="99"
-                            value="{{ platos_cantidades|get_item:plato.id }}"
-                            class="plato-qty h-11 w-20 rounded-none border border-white/15 bg-[#0a0b0f] text-center text-sm font-black text-white focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
-                            data-precio="{{ plato.precio_actual|unlocalize }}" data-nombre="{{ plato.nombre|escape }}">
+                    <div class="flex min-h-[132px] flex-col justify-between p-5 grow">
+                        {% if plato.descripcion %}
+                        <p class="text-sm leading-7 text-on-surface-variant">{{ plato.descripcion }}</p>
+                        {% else %}
+                        <p class="text-sm leading-7 text-on-surface-variant">
+                            Preparado al momento con sabor de casa y una presentación pensada para abrir el
+                            apetito.
+                        </p>
+                        {% endif %}
+
+                        <div class="mt-5 flex justify-between items-center w-full pt-4">
+                            <div class="flex items-center gap-4">
+                                <span class="text-[11px] font-black uppercase tracking-[0.2em] text-secondary">
+                                    Disponible
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2 border border-white/20 bg-[#0a0b0f]">
+                                <button type="button"
+                                    class="w-10 h-11 flex items-center justify-center text-white/50 hover:text-white transition"
+                                    onclick="const i=document.getElementById('plato_{{ plato.id }}'); i.stepDown(); i.dispatchEvent(new Event('input'))">
+                                    <span class="material-symbols-outlined text-base">remove</span>
+                                </button>
+                                <input id="plato_{{ plato.id }}" type="number" name="plato_{{ plato.id }}" min="0"
+                                    max="99" value="{{ platos_cantidades|get_item:plato.id }}"
+                                    class="plato-qty h-11 w-12 bg-transparent border-0 text-center text-lg font-black text-white focus:ring-0 p-0"
+                                    style="-moz-appearance: textfield;"
+                                    data-precio="{{ plato.precio_actual|unlocalize }}"
+                                    data-nombre="{{ plato.nombre|escape }}">
+                                <button type="button"
+                                    class="w-10 h-11 flex items-center justify-center text-white/50 hover:text-white transition"
+                                    onclick="const i=document.getElementById('plato_{{ plato.id }}'); i.stepUp(); i.dispatchEvent(new Event('input'))">
+                                    <span class="material-symbols-outlined text-base">add</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </article>
                 {% endif %}

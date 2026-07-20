@@ -14,7 +14,7 @@ class ReservaForm(forms.ModelForm):
     class Meta:
         model = Reserva
         fields = [
-            'cliente_nombre', 'cliente_telefono', 'cliente_email',
+            'cliente_nombre', 'cliente_dni', 'cliente_telefono', 'cliente_email',
             'cantidad_personas', 'fecha', 'hora', 'mesa', 'observaciones',
         ]
         widgets = {

@@ -136,8 +136,7 @@
                     <a href="{% url 'clientes:mis_reservas' %}"
                         class="text-sm font-semibold text-on-surface hover:text-primary transition flex items-center gap-1">
                         <span class="material-symbols-outlined text-base">person</span>
-                        <span>{% if user.perfil_cliente %}{{ user.perfil_cliente.nombres|default:user.username }}{% else
-                            %}{{ user.username }}{% endif %}</span>
+                        <span>{% if user.perfil_cliente %}{{ user.perfil_cliente.nombres|default:user.username }}{% else %}{{ user.username }}{% endif %}</span>
                     </a>
                     <form action="{% url 'logout' %}" method="post" class="inline" @submit="clearCartForLogout()">
                         {% csrf_token %}

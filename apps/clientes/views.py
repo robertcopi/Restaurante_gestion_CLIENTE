@@ -251,7 +251,7 @@ def nueva_reserva(request):
 
             messages.success(request, "Reserva registrada con éxito.")
 
-            return redirect('clientes:mis_reservas')
+            return redirect('index')
 
         messages.error(request, "Revisa los datos del formulario e intenta de nuevo.")
 
@@ -277,7 +277,16 @@ def home_publica(request):
             return redirect('clientes:mis_reservas')
         if hasattr(request.user, 'rol') and request.user.rol:
             return redirect('dashboard')
-    return render(request, 'web/index.html')
+            
+    context = {}
+    try:
+        context['destacado_lomo'] = Plato.objects.filter(nombre__icontains='lomo').first()
+        context['destacado_ceviche'] = Plato.objects.filter(nombre__icontains='ceviche').first()
+        context['destacado_pisco'] = Plato.objects.filter(nombre__icontains='pisco').first()
+    except Exception:
+        pass
+        
+    return render(request, 'web/index.html', context)
 
 def menu_publico(request):
     categorias = Categoria.objects.filter(activo=True).prefetch_related(

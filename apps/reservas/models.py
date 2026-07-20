@@ -68,6 +68,7 @@ class Reserva(models.Model):
 
     # Datos rápidos del cliente (para reservas sin perfil formal o invitados)
     cliente_nombre = models.CharField(max_length=150, verbose_name="Nombre del Cliente")
+    cliente_dni = models.CharField(max_length=20, blank=True, null=True, verbose_name="DNI / Documento")
     cliente_telefono = models.CharField(max_length=20, verbose_name="Teléfono")
     cliente_email = models.EmailField(blank=True, null=True, verbose_name="Correo Electrónico")
 

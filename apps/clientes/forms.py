@@ -8,6 +8,7 @@ class ClienteReservaForm(ReservaForm):
     class Meta(ReservaForm.Meta):
         fields = [
             'cliente_nombre',
+            'cliente_dni',
             'cliente_telefono',
             'cliente_email',
             'fecha',
@@ -22,6 +23,7 @@ class ClienteReservaForm(ReservaForm):
         super().__init__(*args, **kwargs)
 
         self.fields['cliente_telefono'].required = True
+        self.fields['cliente_dni'].required = True
         self.fields['mesa'].required = False
         self.fields['mesa'].widget.attrs['class'] = 'form-select rounded-xl p-3 reserva-mesa-input'
 
@@ -44,12 +46,30 @@ class ClienteReservaForm(ReservaForm):
         if cliente and not self.is_bound:
             nombre = f"{cliente.nombres} {cliente.apellidos or ''}".strip()
             self.fields['cliente_nombre'].initial = nombre
+            self.fields['cliente_dni'].initial = cliente.numero_documento or ''
             self.fields['cliente_email'].initial = cliente.email or ''
             if cliente.telefono:
                 self.fields['cliente_telefono'].initial = cliente.telefono
 
         if cliente:
             self.fields['cliente_nombre'].widget.attrs['readonly'] = True
+            self.fields['cliente_dni'].widget.attrs['readonly'] = True
+            
+        self.fields['cliente_dni'].widget.attrs.update({
+            'maxlength': '8',
+            'minlength': '8',
+            'pattern': '[0-9]{8}',
+            'onkeypress': 'return event.charCode >= 48 && event.charCode <= 57',
+            'title': 'Debe ingresar exactamente 8 números',
+        })
+        self.fields['cliente_telefono'].widget.attrs.update({
+            'maxlength': '9',
+            'minlength': '9',
+            'pattern': '[0-9]{9}',
+            'onkeypress': 'return event.charCode >= 48 && event.charCode <= 57',
+            'title': 'Debe ingresar exactamente 9 números',
+        })
+
         self.fields['fecha'].widget.attrs.update({'class': 'form-control rounded-xl p-3 reserva-fecha-input'})
         self.fields['hora'].widget.attrs.update({'class': 'form-control rounded-xl p-3 reserva-hora-input'})
 
@@ -57,6 +77,14 @@ class ClienteReservaForm(ReservaForm):
         cleaned_data = super().clean()
         mesa = cleaned_data.get('mesa')
         cantidad = cleaned_data.get('cantidad_personas')
+        dni = cleaned_data.get('cliente_dni')
+        telefono = cleaned_data.get('cliente_telefono')
+
+        if dni and (not dni.isdigit() or len(dni) != 8):
+            self.add_error('cliente_dni', 'El DNI debe contener exactamente 8 números.')
+
+        if telefono and (not telefono.isdigit() or len(telefono) != 9):
+            self.add_error('cliente_telefono', 'El teléfono debe contener exactamente 9 números.')
 
         if mesa and cantidad and cantidad > mesa.capacidad:
             raise forms.ValidationError(

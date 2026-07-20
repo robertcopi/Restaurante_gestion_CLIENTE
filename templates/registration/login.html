@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Iniciar Sesión — RestaurantOS</title>
+    <title>Iniciar Sesión — TICUY</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
@@ -87,10 +87,10 @@
 
 <body class="min-h-screen flex items-center justify-center p-6 antialiased selection:bg-primary/30 relative">
     <!-- Background Image with Overlay -->
-    <div class="fixed inset-0 z-0 overflow-hidden">
-        <img src="{% static 'imagendelogin.png' %}" class="w-full h-full object-cover scale-105" alt="Background">
-        <!-- Overlay Gradiente Oscuro -->
-        <div class="absolute inset-0 bg-gradient-to-br from-black/80 via-black/40 to-black/80 backdrop-blur-[2px]">
+    <div class="fixed inset-0 z-0 overflow-hidden bg-white">
+        <img src="{% static 'ticuy_logo_bg.png' %}" class="w-full h-full object-contain p-20" alt="Background">
+        <!-- Overlay Gradiente Suave -->
+        <div class="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-black/30 backdrop-blur-[1px]">
         </div>
     </div>
 
@@ -113,7 +113,7 @@
                     class="w-20 h-20 rounded-[32px] bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-2xl shadow-primary/30 mb-2">
                     <span class="material-symbols-outlined text-background text-4xl font-bold">restaurant</span>
                 </div>
-                <h1 class="font-display text-4xl font-black tracking-tight text-gradient">RestaurantOS</h1>
+                <h1 class="font-display text-4xl font-black tracking-tight text-gradient">TICUY</h1>
                 <p class="font-sans text-white/60 text-sm font-medium">Command Center for Modern Dining</p>
             </div>
 

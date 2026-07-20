@@ -140,6 +140,12 @@
                             {{ form.cliente_nombre }}
                         </div>
                         <div>
+                            <label for="{{ form.cliente_dni.id_for_label }}"
+                                class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">DNI
+                                *</label>
+                            {{ form.cliente_dni }}
+                        </div>
+                        <div>
                             <label for="{{ form.cliente_telefono.id_for_label }}"
                                 class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-white/50">Teléfono
                                 *</label>
